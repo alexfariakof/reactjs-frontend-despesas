@@ -1,33 +1,13 @@
-# despesas-front
-Frontend criado com react e typescript
 
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_1.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_2.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_3.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_4.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_5.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_6.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_7.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_8.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_9.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_10.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_11jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_12.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_13.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_14.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_15.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_16.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_17.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_18.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_19.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_20.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_21.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_22.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_23.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_24.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_25.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_26.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_27.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_28.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_29.jpg)
-![alt text](https://github.com/alexfariakof/despesas-frontend/blob/a40880db2842c3bbfe9da68b7f872988f47718ab/documents/projeto%20final_30.jpg)
+<h4 align="justify">     
+ O projeto de software em questão é uma aplicação web desenvolvida em React e utilizando a biblioteca Material UI para interface gráfica. O objetivo principal da aplicação é permitir aos usuários um controle mais eficiente de suas despesas pessoais.
+
+A aplicação oferece um conjunto de funcionalidades que permite ao usuário cadastrar suas despesas, bem como categorizá-las de acordo com as suas necessidades. Além disso, é possível acompanhar o saldo disponível e visualizar gráficos e relatórios que apresentam uma visão geral das despesas em diferentes períodos.
+
+A interface do usuário foi desenvolvida com a biblioteca Material UI, o que garante uma aparência moderna e agradável, além de oferecer uma experiência de usuário amigável e intuitiva. A aplicação é responsiva e funciona em diferentes dispositivos, incluindo desktops, tablets e smartphones.
+
+O projeto foi desenvolvido com a utilização de boas práticas de programação, seguindo as diretrizes do React e do Material UI. Também foram utilizadas tecnologias modernas de desenvolvimento, tais como o TypeScript e o Redux, garantindo assim uma maior segurança e estabilidade na aplicação.
+
+Em resumo, o projeto de software em React e Material UI para controle de despesas oferece uma solução moderna e eficiente para o gerenciamento de finanças pessoais, com uma interface amigável e intuitiva e um conjunto completo de funcionalidades que atendem às necessidades dos usuários.
+</h4>
+
