@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-[do]cuments/
+
 
 # User-specific files
 *.rsuser
@@ -355,3 +355,8 @@ MigrationBackup/
 .vscode*
 .vscode/
 .vscode/*
+
+*documents
+documents/
+documents*
+documents/*
