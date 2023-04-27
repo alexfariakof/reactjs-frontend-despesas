@@ -67,8 +67,7 @@ export const Despesas: React.FC = () => {
                 .create(dados)
                 .then((result) => {
                     if (result instanceof Error) {
-                       // alert(result.message);
-                       return false;
+                       alert(result.message);
                     } 
                     else {
                         if (dados.id === 0 && result.message === true) {
@@ -87,7 +86,7 @@ export const Despesas: React.FC = () => {
                 .updateById(Number(id), dados)
                 .then((result) => {
                     if (result instanceof Error) {
-                       // alert(result.message);
+                       alert(result.message);
                     } else {
                         if (true) {
                             navigate('/despesas');
@@ -126,8 +125,7 @@ export const Despesas: React.FC = () => {
             DespesasService.getById(Number(id))
                 .then((result) => {
                     if (result instanceof Error) {
-                       // alert(result.message);
-                       return false;
+                       alert(result.message);
                     }
                     else {
                         handleEdit(result);

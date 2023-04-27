@@ -49,9 +49,7 @@ export const Categorias: React.FC = () => {
                 .create(dados)
                 .then((result) => {
                     if (result instanceof Error) {
-                        //alert(result.message);
-                        return false;
-
+                        alert(result.message);
                     } 
                     else {
                         if (result.message === true) {
@@ -65,8 +63,7 @@ export const Categorias: React.FC = () => {
                 .updateById(dados.id, dados)
                 .then((result) => {
                     if (result instanceof Error) {
-                        //alert(result.message);
-                        return false;
+                        alert(result.message);                        
                     }
                     else {
                         alert('Despesa atualizada com sucesso!');
@@ -82,8 +79,7 @@ export const Categorias: React.FC = () => {
         CategoriasService.getById(id)
             .then((result) => {
                 if (result instanceof Error) {
-                    //alert(result.message);
-                    return false;
+                    alert(result.message);
                 }
                 else {
                     setValues({
@@ -135,8 +131,7 @@ export const Categorias: React.FC = () => {
                 CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
                     .then((result) => {
                         if (result instanceof Error) {
-                            //alert(result.message);
-                            return false;
+                            alert(result.message);
                         }
                         else {
                             setRows(result);

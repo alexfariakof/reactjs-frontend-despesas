@@ -21,8 +21,7 @@ export const Lancamentos = () => {
                 LancamentosService.getByMesAnoByIdUsuario('2022-10-07', Number(localStorage.getItem('idUsuario')))
                     .then((result) => {
                         if (result instanceof Error) {
-                           // alert(result.message);
-                            return;
+                           alert(result.message);
                         }
                         else {
                             setRows(result);
@@ -38,7 +37,7 @@ export const Lancamentos = () => {
                 .deleteById(id)
                 .then((result) => {
                     if (result instanceof Error) {
-                        //alert(result.message);
+                        alert(result.message);
                     }
                     else if (result === true) {                        
                         alert('Despesa exluída com sucesso!');                        
@@ -50,7 +49,7 @@ export const Lancamentos = () => {
                 .deleteById(id)
                 .then((result) => {
                     if (result instanceof Error) {
-                        //alert(result.message);
+                        alert(result.message);
                     }
                     else if (result === true){
                         navigate('/lancamentos');
