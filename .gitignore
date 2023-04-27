@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-documents/
+[do]cuments/
 
 # User-specific files
 *.rsuser
