@@ -1,5 +1,5 @@
 {
-  "name": "inteligent-private-finance",
+  "name": "despesas-frontend-react",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -34,13 +34,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alexfariakof/InteligentFinances.git"
+    "url": "https://github.com/alexfariakof/despesas-frontend-react.git"
   },
   "keywords": [],
   "author": "Alex Ribeiro de Faria",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alexfariakof/InteligentFinances/issues"
+    "url": "https://github.com/alexfariakof/despesas-frontend-react/issues"
   },
   "eslintConfig": {
     "extends": [
