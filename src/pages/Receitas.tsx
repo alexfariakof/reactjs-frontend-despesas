@@ -78,7 +78,8 @@ export const Receitas: React.FC = () => {
                 .updateById(Number(id), dados)
                 .then((result) => {
                     if (result instanceof Error) {
-                        alert(result.message);
+                        //alert(result.message);
+                        return false;
                     } else {
                         if (true) {
                             navigate('/Receitas');
@@ -115,7 +116,8 @@ export const Receitas: React.FC = () => {
             ReceitasService.getById(Number(id))
                 .then((result) => {
                     if (result instanceof Error) {
-                        alert(result.message);
+                        //alert(result.message);
+                        return false;
                     }
                     else {
                         handleEdit(result);
