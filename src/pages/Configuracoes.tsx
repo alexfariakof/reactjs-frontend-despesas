@@ -164,7 +164,7 @@ export const Configuracoes = () => {
                             <Avatar
                                 alt="Alex Ribeiro"
                                 sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                                src="/static/images/avatar/1.jpg" />
+                                src="/assets/Foto_20180912-162041SATURADA.png" />
                         </InputLabel>
                         <input
                             style={{ display: 'none' }}
