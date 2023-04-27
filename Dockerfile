@@ -11,7 +11,7 @@ RUN npm install -P react-chartjs-2 chart.js
 RUN npm install -P dayjs @date-io/dayjs
 RUN npm install -P axios
 
-RUN npm install --production --silent && mv node_modules ../
+RUN npm install -g npm@9.6.5 --production --silent && mv node_modules ../
 
 COPY . .
 EXPOSE 3000

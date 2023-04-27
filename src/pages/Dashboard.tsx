@@ -16,13 +16,14 @@ export const Dashboard = () => {
                 margin={1}
                 padding={1}
                 paddingX={2}
-                height="auto"
+                height="100%"
                 display="flex"
                 flexDirection="column"
                 alignItems="start"
                 component={Paper} 
+                flexGrow={1}
                 >
-                    <BarCharts />
+                    <BarCharts  />
             </Box>
         </LayoutMasterPage>
     );
