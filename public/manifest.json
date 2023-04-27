@@ -1,6 +1,6 @@
 {
-  "short_name": "despesas-anyware",
-  "name": "Despesas Anyware",
+  "short_name": "despesas-react",
+  "name": "Despesas Pessoais",
   "icons": [
     {
       "src": "favicon.ico",

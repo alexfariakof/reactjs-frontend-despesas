@@ -1,0 +1,19 @@
+
+1 - Abra o powershell em modo administrador e Use o coamando "heroku login" para fazer login no Heroku CLI:
+    $ heroku login
+
+2- Criar projto no heroku
+  $ heroku create despesas-frontend-react
+
+3- Publicando aplicação no heroku
+    $ git add .
+    git commit -m "scafold commit"
+    git push heroku main
+
+6- Buildpacks dizm em quetipo de eossistema estamos
+    $ heroku Buildpacks:locale-gen pt_BR.UTF-8
+
+7- install local pt-br
+locale-gen pt_BR.UTF-8
+
+
