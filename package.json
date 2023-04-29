@@ -15,7 +15,6 @@
     "@emotion/styled": "^11.9.3",
     "@faker-js/faker": "^7.5.0",
     "@fontsource/audiowide": "^4.5.9",
-    "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.8.6",
     "@mui/x-date-pickers": "^5.0.3",

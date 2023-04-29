@@ -30,7 +30,7 @@ export const optionsTop = {
         },
         title: {
             display: true,
-            text: 'Lançamentos Ano 2022',
+            text: 'Lançamentos Ano 2023',
         },
     },
 };
