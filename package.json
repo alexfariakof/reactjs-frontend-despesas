@@ -1,5 +1,5 @@
 {
-  "name": "despesas-frontend-react",
+  "name": "inteligent-private-finance",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,8 +11,13 @@
   },
   "dependencies": {
     "@date-io/dayjs": "^2.16.0",
-    "@faker-js/faker": "^7.6.0",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@faker-js/faker": "^7.5.0",
+    "@fontsource/audiowide": "^4.5.9",
+    "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.8.6",
     "@mui/x-date-pickers": "^5.0.3",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
@@ -20,27 +25,32 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
+    "react-number-format": "^5.0.1",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/material": "^5.12.2",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
     "@types/node": "^16.11.60",
     "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.2.1",
+    "@types/react-dom": "^18.0.6",
     "eslint-config-react-app": "^7.0.1",
-    "react-number-format": "^5.0.1",
-    "typescript": "^4.8.3"
+    "jest-editor-support": "^30.2.0",
+    "web-vitals": "^2.1.4"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexfariakof/despesas-frontend-react.git"
+    "url": "git+https://github.com/alexfariakof/InteligentFinances.git"
   },
   "keywords": [],
   "author": "Alex Ribeiro de Faria",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alexfariakof/despesas-frontend-react/issues"
+    "url": "https://github.com/alexfariakof/InteligentFinances/issues"
   },
   "eslintConfig": {
     "extends": [
