@@ -11,7 +11,7 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
-import { Paper, Box, useTheme, useMediaQuery, Theme } from '@mui/material';
+import { useMediaQuery, Theme } from '@mui/material';
 
 ChartJS.register(
     CategoryScale,
@@ -80,9 +80,8 @@ export const data = {
 
 export const BarCharts: React.FC = () => {
    const [chartHeight, setChartHeight] = useState(0);
-    const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
-    const theme = useTheme();
-
+   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+   
     useEffect(() => {
         const handleResize = () => {
           setChartHeight(window.innerHeight * 0.8); // Define a altura do gráfico como 80% da altura da janela

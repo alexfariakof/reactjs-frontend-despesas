@@ -1,5 +1,5 @@
 import { LayoutMasterPage } from '../shared/layouts';
-import { Box, Paper, useMediaQuery, Theme } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 
 import { BarCharts, BarraFerramentas } from '../shared/components';
 
