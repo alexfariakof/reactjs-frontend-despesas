@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 
 type MonthOfYear = {
     [key: string]: string;

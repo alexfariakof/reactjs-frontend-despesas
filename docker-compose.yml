@@ -1,12 +1,12 @@
 version: '3.4'
 
 services:
-  despesas-frontend-react:
-    image: despesas-frontend-react-img
+  despesaspessoaisfrontendreact:
+    image: despesaspessoaisfrontendreact
     build:
       context: .
       dockerfile: ./Dockerfile
     environment:
       NODE_ENV: production
     ports:
-      - 5002:5002
+      - 3000:3000

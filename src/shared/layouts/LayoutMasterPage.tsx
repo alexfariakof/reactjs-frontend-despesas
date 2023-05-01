@@ -35,20 +35,18 @@ export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, t
                         <Relogio />
                     </Box>
                 </Box>
-
-        </Box>
-
-            {
-        barraDeFerramentas && (
-            <Box>
-                {barraDeFerramentas}
             </Box>
-        )
-    }
+            {
+                barraDeFerramentas && (
+                    <Box>
+                        {barraDeFerramentas}
+                    </Box>
+                )
+            }
 
-    <Box height="100%" width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' >
-        {children}
-    </Box>
+            <Box height="100%" width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' >
+                {children}
+            </Box>
         </Box >
     );
 };

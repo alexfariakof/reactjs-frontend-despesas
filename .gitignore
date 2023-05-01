@@ -356,7 +356,9 @@ MigrationBackup/
 .vscode/
 .vscode/*
 
+
 *documents
 documents/
 documents*
 documents/*
+AWS-doker.txt

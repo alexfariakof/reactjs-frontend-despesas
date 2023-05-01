@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b9075e95.css",
+    "main.js": "/static/js/main.308b8806.js",
+    "static/media/audiowide-all-400-normal.woff": "/static/media/audiowide-all-400-normal.8ba5a367d470a1dfb412.woff",
+    "static/media/audiowide-latin-400-normal.woff2": "/static/media/audiowide-latin-400-normal.56cbe5a59cb6a30c3f06.woff2",
+    "static/media/audiowide-latin-ext-400-normal.woff2": "/static/media/audiowide-latin-ext-400-normal.f4b1d860ffbc7c54d90c.woff2",
+    "index.html": "/index.html",
+    "main.b9075e95.css.map": "/static/css/main.b9075e95.css.map",
+    "main.308b8806.js.map": "/static/js/main.308b8806.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b9075e95.css",
+    "static/js/main.308b8806.js"
+  ]
+}

@@ -17,8 +17,11 @@
 **/Dockerfile*
 **/node_modules
 **/npm-debug.log
+**/build
+**/documents
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
 LICENSE
 README.md
+heroku.yml
