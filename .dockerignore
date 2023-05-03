@@ -22,6 +22,7 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/documents
 LICENSE
 README.md
 heroku.yml
