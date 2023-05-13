@@ -7,7 +7,7 @@ export const Dashboard = () => {
     
     return (
         <LayoutMasterPage 
-        titulo='Dashboardd' 
+        titulo='Dashboard' 
         barraDeFerramentas={(
             <BarraFerramentas isOpenDataMesAno={true} btnSalvar={false} btnNovo={false} btnVoltar={false}  />
           )}
