@@ -1,3 +1,7 @@
+<h2 align="center"> 
+    :construction:  Projeto em construção  :construction:
+</h2>
+
 
 <h4 align="justify">     
  O projeto de software em questão é uma aplicação web desenvolvida em React e utilizando a biblioteca Material UI para interface gráfica. O objetivo principal da aplicação é permitir aos usuários um controle mais eficiente de suas despesas pessoais.
@@ -11,3 +15,9 @@ O projeto foi desenvolvido com a utilização de boas práticas de programação
 Em resumo, o projeto de software em React e Material UI para controle de despesas oferece uma solução moderna e eficiente para o gerenciamento de finanças pessoais, com uma interface amigável e intuitiva e um conjunto completo de funcionalidades que atendem às necessidades dos usuários.
 </h4>
 
+<h6 align="justify">
+    Obs.: Não há necessidade de se cadastrar pois é apenas uma demo com as principais funcionalidades da aplicação funcionando de maneira fake sem conecção a API responsável por fazer persistência dos dados.
+</h6>
+<h2 align="left"> 
+# Acesso ao <a href="https://despesas-pessoasis-aws.d26q19cgt5w2n4.amplifyapp.com/" target="_blank" >frontend</a> do projeto
+</h2>
