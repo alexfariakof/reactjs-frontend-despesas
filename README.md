@@ -2,6 +2,9 @@
     :construction:  Projeto em construção  :construction:
 </h2>
 
+<h2 align="left"> 
+# Descrição 
+</h2>
 
 <h4 align="justify">     
  O projeto de software em questão é uma aplicação web desenvolvida em React e utilizando a biblioteca Material UI para interface gráfica. O objetivo principal da aplicação é permitir aos usuários um controle mais eficiente de suas despesas pessoais.
