@@ -15,6 +15,10 @@ Acesso documentação da API no Swagger <a href="http://api-despesas-pessoais-as
 </h2>
 
 <h2 align="left"> 
+Workspace para teste da API Público  <a href="https://www.postman.com/bold-eclipse-872793/workspace/api-despesas-pessoais-azure" target="_blank" >Postman</a>
+</h2>
+
+<h2 align="left"> 
 # Descrição 
 </h2>
 
@@ -33,11 +37,3 @@ Em resumo, o projeto de software em React e Material UI para controle de despesa
 <h6 align="justify">
     Obs.: Não há necessidade de se cadastrar pois é apenas uma demo com as principais funcionalidades da aplicação funcionando de maneira fake sem conexão a API responsável por fazer persistência dos dados e controle de acesso.
 </h6>
-
-<h2 align="left"> 
-Acesso documentação da API no Swagger <a href="http://api-despesas-pessoais-aspnetcore.bwg2czahbvgefufr.eastus.azurecontainer.io/swagger/index.html" target="_blank" >backend do projeto</a>
-</h2>
-
-<h2 align="left"> 
-Workspace para teste da API Público  <a href="https://www.postman.com/bold-eclipse-872793/workspace/api-despesas-pessoais-azure" target="_blank" >Postman</a>
-</h2>
