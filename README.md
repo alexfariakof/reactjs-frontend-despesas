@@ -3,7 +3,7 @@
 </h2>
 
 <h6 align="justify">
-    Obs.: Não há necessidade de se cadastrar pois é apenas uma demo com as principais funcionalidades da aplicação funcionando de maneira fake sem conexão a API responsável por fazer persistência dos dados e controle de acesso.
+    Obs.: Não há necessidade de se cadastrar para acessar ao protótipo frontend pois é apenas uma demo com as principais funcionalidades da aplicação funcionando de maneira fake sem conexão a API responsável por fazer persistência dos dados e controle de acesso.
 </h6>
 <h2 align="center"> 
    DESPESAS PESSOAIS  ReactJs
