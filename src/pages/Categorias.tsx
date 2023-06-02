@@ -4,26 +4,26 @@ import { Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEven
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
-import { CategoriasService, ICategoriaVO } from '../shared/services/api';
+import { CategoriasService, ICategoriaVM } from '../shared/services/api';
 import { Delete, Edit } from '@mui/icons-material';
 import { useDebounce } from '../shared/hooks';
 
 interface State {
     id: number;
-    idTipoCategoria: number;
     descricao: string;
     idUsuario: Number;
+    idTipoCategoria: number;
 }
 
 export const Categorias: React.FC = () => {
     const navigate = useNavigate();
     const { debounce } = useDebounce();
-    const [rows, setRows] = useState<ICategoriaVO[]>([]);
+    const [rows, setRows] = useState<ICategoriaVM[]>([]);
     const [values, setValues] = useState<State>({
         id: 0,
-        idTipoCategoria: 0,
         descricao: '',
-        idUsuario: 0
+        idUsuario: 0,
+        idTipoCategoria: 0
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,12 +36,12 @@ export const Categorias: React.FC = () => {
 
 
     const handleSave = () => {
-        let dados: ICategoriaVO;
+        let dados: ICategoriaVM;
         dados = {
             id: values.id,
-            idTipoCategoria: values.idTipoCategoria,            
             descricao: values.descricao,
             idUsuario: Number(localStorage.getItem('idUsuario')),
+            idTipoCategoria: values.idTipoCategoria 
         };
 
         if (dados.id === 0) {
@@ -128,7 +128,9 @@ export const Categorias: React.FC = () => {
     useEffect(() => {
         return (() => {
             debounce(() => {
-                CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
+                if (values.idTipoCategoria === 0)
+                {
+                    CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
                     .then((result) => {
                         if (result instanceof Error) {
                             alert(result.message);
@@ -136,9 +138,23 @@ export const Categorias: React.FC = () => {
                         else {
                             setRows(result);
                         }
-                    })
-                })
+                    });
+
+                }
+                else
+                {
+                    CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), values.idTipoCategoria)
+                    .then((result) => {
+                        if (result instanceof Error) {
+                            alert(result.message);
+                        }
+                        else {
+                            setRows(result);
+                        }
+                    });
+                }
             });
+        });
         }, [rows]);
 
         return (
@@ -207,33 +223,6 @@ export const Categorias: React.FC = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow >
-                                    <TableCell align='center' width="100vw">
-                                        <IconButton size="small" onClick={() => handleDelete(0, 0)} >
-                                            <Delete />
-                                        </IconButton >
-                                        <IconButton size="small" onClick={() => handleEdit(0)} >
-                                            <Edit />
-                                        </IconButton>
-                                    </TableCell>
-                                    <TableCell>1</TableCell>
-                                    <TableCell>Despesas</TableCell>
-                                    <TableCell>Alimentação</TableCell>
-                                </TableRow >
-                                <TableRow>
-                                    <TableCell align='center'>
-                                        <IconButton size="small" onClick={() => handleDelete(0, 0)} >
-                                            <Delete />
-                                        </IconButton >
-                                        <IconButton size="small" onClick={() => handleEdit(0)} >
-                                            <Edit />
-                                        </IconButton>
-                                    </TableCell>
-                                    <TableCell>2</TableCell>
-                                    <TableCell>Receitas</TableCell>
-                                    <TableCell>Salário</TableCell>
-                                </TableRow>
-
                                 {
                                     rows.map(row => (
                                         <TableRow key={row.id}  >
