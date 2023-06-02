@@ -2,6 +2,9 @@
     :construction:  Projeto em construção  :construction:
 </h2>
 
+<h6 align="justify">
+    Obs.: Não há necessidade de se cadastrar pois é apenas uma demo com as principais funcionalidades da aplicação funcionando de maneira fake sem conexão a API responsável por fazer persistência dos dados e controle de acesso.
+</h6>
 <h2 align="center"> 
    DESPESAS PESSOAIS  ReactJs
 </h2>
@@ -33,7 +36,3 @@ O projeto foi desenvolvido com a utilização de boas práticas de programação
 
 Em resumo, o projeto de software em React e Material UI para controle de despesas oferece uma solução moderna e eficiente para o gerenciamento de finanças pessoais, com uma interface amigável e intuitiva e um conjunto completo de funcionalidades que atendem às necessidades dos usuários.
 </h4>
-
-<h6 align="justify">
-    Obs.: Não há necessidade de se cadastrar pois é apenas uma demo com as principais funcionalidades da aplicação funcionando de maneira fake sem conexão a API responsável por fazer persistência dos dados e controle de acesso.
-</h6>
