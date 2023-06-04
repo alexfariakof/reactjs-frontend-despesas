@@ -1,6 +1,6 @@
 import  axios from 'axios';
 import { environment } from '../../environment';
-import { responseInteceptor, errorInteceptor } from './interceptors';
+import { resposeInterceptor, errorInterceptor } from './interceptors';
 
 
 const Api = axios.create({
@@ -8,11 +8,6 @@ const Api = axios.create({
     withCredentials: false,
     responseType: 'json',
     responseEncoding: 'utf8',
-    headers: {
-    'Content-Type': 'application/json',
-    'Accept':'*/*',
-    'Connection':'keep-alive'
-  },
     validateStatus: function (status) {
       return status >= 200 && status < 300; // default
     }
@@ -26,8 +21,8 @@ const Api = axios.create({
  
 Api.interceptors.response.use(
   
-  (response)  => responseInteceptor(response),
-  (error)  => errorInteceptor(error)
+  (response)  => resposeInterceptor(response),
+  (error)  => errorInterceptor(error)
 );
 
 export { Api };

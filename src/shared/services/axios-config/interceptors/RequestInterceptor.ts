@@ -1,6 +1,6 @@
 import {AxiosRequestHeaders}  from 'axios';
 
-export const requestInteceptor = (requestHeader: AxiosRequestHeaders) => {
+export const requestInterceptor = (requestHeader: AxiosRequestHeaders) => {
     requestHeader = {        
             'Content-Type': 'application/json',
             'crossdomain': 'true'        

@@ -1,3 +1,3 @@
 export *  from './RequestInterceptor'
-export *  from './ResposeInteceptor'
+export *  from './ResposeInterceptor'
 export *  from './ErrorInterceptor'
