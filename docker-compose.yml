@@ -5,7 +5,7 @@ services:
     image: despesas-pessoais-frontend-react-img
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./DockerFile-Production
     environment:
       NODE_ENV: production
     ports:
