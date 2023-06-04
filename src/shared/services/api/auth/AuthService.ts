@@ -46,7 +46,7 @@ const createUsuario = async (dados: Omit<ControleAcessoVM, ''>):  Promise<any | 
     try {
         const  { data } = await Api.post('/ControleAcesso', dados);
         if (data) {
-            return data;
+            return data.message;
         }
 
         return Error('Erro Authservices ao criar usuário.');

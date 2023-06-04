@@ -5,6 +5,13 @@ export const errorInterceptor = (error: AxiosError) => {
         return Promise.reject(new Error('Erro de conecção'));
     }
 
+    if (error.response?.status === 400){
+        var data:any;
+        data = error.response.data; 
+        alert(data.message);
+    }
+
+
     if (error.response?.status === 401){
         // Do something
     }
