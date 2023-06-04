@@ -33,6 +33,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
 
     interface IPrimeiroAcesso {
         nome: string;
+        sobreNome: string;
         telefone: string;
         email: string;
         password: string
@@ -44,6 +45,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
 
     const [valuesPA, setValuesPA] = useState<IPrimeiroAcesso>({
         nome: '',
+        sobreNome: '',
         telefone: '',
         email: '',
         password:'',        
@@ -106,8 +108,10 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     } 
 
     const handleSubimitCreateUsuario = () => {
-        createUsuario(valuesPA.nome, valuesPA.telefone, valuesPA.email, valuesPA.password).then(() => {
+        createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password).then(() => {
+            /*
             valuesPA.nome = '';
+            valuesPA.sobreNome = '';
             valuesPA.telefone = '';
             valuesPA.email = '';
             valuesPA.password = '';
@@ -116,6 +120,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
             valuesPA.showCPassword = false;
             alert('Usuário cadastrado com sucesso!');
             handlePrimeiroAcessoClose();
+            */
         });        
     }
 
@@ -245,6 +250,12 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                             onChange={handleChangePA('nome')}
                             onKeyUp={handleKeyPress}
                         />
+                        <TextField size="small" label="Sobre Nome" inputProps={{ maxLength: 50 }} fullWidth
+                            value={valuesPA.sobreNome}
+                            onChange={handleChangePA('sobreNome')}
+                            onKeyUp={handleKeyPress}
+                        />
+
                         <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth 
                             value={valuesPA.telefone}
                             onChange={handleChangePA('telefone')}
