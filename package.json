@@ -28,7 +28,6 @@
     "react-number-format": "^5.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
-    "@faker-js/faker": "^7.5.0",
     "@types/node": "^16.11.60"
   },
    
