@@ -1,8 +1,9 @@
 import { Api } from "../../axios-config";
 
 
-export interface ControleAcessoVO {
+export interface ControleAcessoVM {
     Nome: string;
+    SobreNome: string;
     Telefone: string;
     Email: string;
     Senha: string
@@ -41,11 +42,11 @@ const recoveryPassword = async (email: string): Promise<any> => {
 
 }
 
-const createUsuario = async (dados: Omit<ControleAcessoVO, ''>):  Promise<any | Error> => {
+const createUsuario = async (dados: Omit<ControleAcessoVM, ''>):  Promise<any | Error> => {
     try {
-        const  { data } = await Api.post<ControleAcessoVO>('/ControleAcesso', dados);
+        const  { data } = await Api.post('/ControleAcesso', dados);
         if (data) {
-            return data;
+            return data.message;
         }
 
         return Error('Erro Authservices ao criar usuário.');

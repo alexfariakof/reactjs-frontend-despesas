@@ -1,13 +1,13 @@
 import { Api } from "../axios-config";
 
-export interface ICategoriaVO {
+export interface ICategoriaVM {
     id:number;
-    idTipoCategoria : number;
     descricao: string;
     idUsuario: number;    
+    idTipoCategoria : number;
 }
 
-const getAll = async (): Promise<ICategoriaVO[] | Error> => {
+const getAll = async (): Promise<ICategoriaVM[] | Error> => {
     try {
         const { data } = await Api.get('/Categoria');
         if (data) {
@@ -21,7 +21,7 @@ const getAll = async (): Promise<ICategoriaVO[] | Error> => {
     }
 };
 
-const getById = async (id: number): Promise<ICategoriaVO | Error> => {
+const getById = async (id: number): Promise<ICategoriaVM | Error> => {
     try {
         const { data } = await Api.get('/Categoria/' + id);
         if (data) {
@@ -35,9 +35,9 @@ const getById = async (id: number): Promise<ICategoriaVO | Error> => {
     }
 };
 
-const getByIdUsuario = async (idUsuario: number): Promise<ICategoriaVO[] | Error> => {
+const getByIdUsuario = async (idUsuario: number): Promise<ICategoriaVM[] | Error> => {
     try {
-        const { data } = await Api.get('/Categoria/byIdUsuario/' + idUsuario);
+        const { data } = await Api.get('/Categoria/GetByIdUsuario/' + idUsuario);
         if (data) {
             return data;
         }
@@ -50,7 +50,7 @@ const getByIdUsuario = async (idUsuario: number): Promise<ICategoriaVO[] | Error
 };
 
 
-const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): Promise<ICategoriaVO[] | Error> => {
+const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): Promise<ICategoriaVM[] | Error> => {
     try {
         const { data } = await Api.get('/Categoria/byTipoCategoria/' + idUsuario + '/' + idTipoCategoria);
         if (data) {
@@ -64,9 +64,9 @@ const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): P
     }
 };
 
-const create = async (dados: Omit<ICategoriaVO, 'id'>): Promise<any | Error> => {
+const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => {
     try {
-        const { data } = await Api.post<ICategoriaVO>('/Categoria', dados );
+        const { data } = await Api.post<ICategoriaVM>('/Categoria', dados );
         if (data) {
             return data
         }
@@ -79,10 +79,10 @@ const create = async (dados: Omit<ICategoriaVO, 'id'>): Promise<any | Error> => 
 };
 
 
-const updateById = async (id: number, dados: ICategoriaVO): Promise<ICategoriaVO | Error> => {
+const updateById = async (id: number, dados: ICategoriaVM): Promise<ICategoriaVM | Error> => {
     try {
         dados.id = id;
-        const { data } = await Api.put<ICategoriaVO>('/Categoria', dados);
+        const { data } = await Api.put<ICategoriaVM>('/Categoria', dados);
         if (data) {
             return data
         }

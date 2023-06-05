@@ -100,22 +100,6 @@ export const Lancamentos = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow >
-                                <TableCell>                         
-                                    <IconButton size="small" onClick={() => handleDelete('Receitas', 0)  } >
-                                        <DeleteIcon />
-                                    </IconButton >
-                                    <IconButton size="small" onClick={() => handleEdit('Recaitas', 0)  } >
-                                        <EditIcon />
-                                    </IconButton>
-                                </TableCell>
-                                <TableCell>18/08/2014</TableCell>
-                                <TableCell>Receitas</TableCell>
-                                <TableCell>R$ 12.250,00</TableCell>
-                                <TableCell>Teste de grid  dinamica </TableCell>
-                                <TableCell>Alimentação</TableCell>
-                            </TableRow>
-
                             {
                                 rows.map(row => (
                                     <TableRow key={Math.floor(Math.random() * 65536)}  >
