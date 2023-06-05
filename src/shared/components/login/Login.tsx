@@ -8,8 +8,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import Modal from '@mui/material/Modal';
 import SaveIcon from '@mui/icons-material/Save';
-import ErrorMessage from "../erro-message/ErroMessage";
-import { AnyARecord } from "dns";
 
 interface ILoginProps {
     children: React.ReactNode;
@@ -40,23 +38,23 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         email: string;
         password: string
         showPassword: boolean;
-        cPassword: string;
+        cPassword: string;        
         showCPassword: boolean;
 
-    }
+    }     
 
     const [valuesPA, setValuesPA] = useState<IPrimeiroAcesso>({
         nome: '',
         sobreNome: '',
         telefone: '',
         email: '',
-        password: '',
+        password:'',        
         showPassword: false,
-        cPassword: '',
+        cPassword:'',        
         showCPassword: false,
     });
 
-
+    
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -98,7 +96,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         });
     };
 
-
+  
 
     const handleSubmit = () => {
         login(values.email, values.password);
@@ -106,25 +104,22 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
 
     const handleSubmitRecoveryPassword = () => {
         recoveryPassword(values.email);
-
-    }
+        
+    } 
 
     const handleSubimitCreateUsuario = () => {
-
-        createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password).then((data: any) => {
-            if (data === true) {
-                valuesPA.nome = '';
-                valuesPA.sobreNome = '';
-                valuesPA.telefone = '';
-                valuesPA.email = '';
-                valuesPA.password = '';
-                valuesPA.showPassword = false;
-                valuesPA.cPassword = '';
-                valuesPA.showCPassword = false;
-                alert('Usuário cadastrado com sucesso!');
-                handlePrimeiroAcessoClose();
-            }
-        });
+        createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password).then(() => {
+            valuesPA.nome = '';
+            valuesPA.sobreNome = '';
+            valuesPA.telefone = '';
+            valuesPA.email = '';
+            valuesPA.password = '';
+            valuesPA.showPassword = false;
+            valuesPA.cPassword = '';
+            valuesPA.showCPassword = false;
+            alert('Usuário cadastrado com sucesso!');
+            handlePrimeiroAcessoClose();
+        });        
     }
 
     const [openPrimeiroAcesso, setPrimeiroAcessoOpen] = useState(false);
@@ -235,7 +230,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                     open={openPrimeiroAcesso}
                     onClose={handlePrimeiroAcessoClose}
                     aria-labelledby="modal-primeiro-acesso"
-                    aria-describedby="modal-modal-description"
+                    aria-describedby="modal-modal-description"                    
                 >
                     <Box
                         gap={1}
@@ -259,16 +254,16 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                             onKeyUp={handleKeyPress}
                         />
 
-                        <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth
+                        <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth 
                             value={valuesPA.telefone}
                             onChange={handleChangePA('telefone')}
-                            onKeyUp={handleKeyPress}
+                            onKeyUp={handleKeyPress}                       
                         />
                         <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
                             value={valuesPA.email}
                             onChange={handleChangePA('email')}
-                            onKeyUp={handleKeyPress}
-                        />
+                            onKeyUp={handleKeyPress}                       
+                         />
                         <FormControl size="small" fullWidth variant="outlined" >
                             <InputLabel htmlFor="txtPAPassword">Senha</InputLabel>
                             <OutlinedInput
