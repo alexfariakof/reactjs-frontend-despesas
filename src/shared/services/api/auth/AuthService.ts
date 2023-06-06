@@ -6,7 +6,8 @@ export interface ControleAcessoVM {
     SobreNome: string;
     Telefone: string;
     Email: string;
-    Senha: string
+    Senha: string;
+    ConfirmaSenha: string;
 } 
 
 const auth = async (email: string, password: string): Promise<any> => {
