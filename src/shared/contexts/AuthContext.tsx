@@ -31,19 +31,14 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
     const handleLogin = useCallback(async (email: string, password: string) => {
         const result = await AuthService.auth(email, password);
-        if (result instanceof Error){
-            return result.message;
-        }   
-        else if (result.authenticated === true) {
+        if (result.authenticated === true) {
             localStorage.setItem('idUsuario', result.usuario.id);
             localStorage.setItem('@dpApiAccess', JSON.stringify(result.accessToken));   
             setAccessToken(result);           
         }
-        localStorage.setItem('idUsuario', '1');
-        localStorage.setItem('@dpApiAccess', JSON.stringify(true));
-        setAccessToken('true');           
-        
-
+        else{
+            alert("Email ou Senha inválidos!");
+        }
     }, []);
 
     const handleLogout = useCallback(() => {
