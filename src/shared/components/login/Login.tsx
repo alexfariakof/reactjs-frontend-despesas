@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Button, Card, CardActions, CardContent, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField, Typography, Avatar, Checkbox, Paper } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Box } from "@mui/system";
@@ -99,34 +100,86 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
   
 
     const handleSubmit = () => {
-        login(values.email, values.password);
+        if (!values.email) {
+            alert("O campo de email está vazio ou nulo.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+        } else if (!isValidEmail(values.email)) {
+            alert("O email inserido não é um email válido.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+
+        } else {
+            login(values.email, values.password);
+        }        
     }
 
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const [emailError, setEmailError] = useState(false);
+  
+    const setEmail = () => {
+      setEmailError(true);
+      if (emailRef.current) {
+        emailRef.current.focus();
+      }
+    };
+
     const handleSubmitRecoveryPassword = () => {
-        recoveryPassword(values.email);
-        
+        if (!values.email) {
+            alert("O campo de email está vazio ou nulo.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+        } else if (!isValidEmail(values.email)) {
+            alert("O email inserido não é email válido.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+        } 
+
+        recoveryPassword(values.email);    
+        setEsqueciSenhaOpen(true);    
     } 
 
     const handleSubimitCreateUsuario = () => {
-        createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password).then(() => {
-            valuesPA.nome = '';
-            valuesPA.sobreNome = '';
-            valuesPA.telefone = '';
-            valuesPA.email = '';
-            valuesPA.password = '';
-            valuesPA.showPassword = false;
-            valuesPA.cPassword = '';
-            valuesPA.showCPassword = false;
-            alert('Usuário cadastrado com sucesso!');
-            handlePrimeiroAcessoClose();
+        if (!valuesPA.email) {
+            alert("O campo de email está vazio ou nulo.");
+            return false;
+        } else if (!isValidEmail(valuesPA.email)) {
+            alert("O email inserido não é email válido.");
+            return false;
+        }  else if (valuesPA.password !== valuesPA.cPassword){
+            alert("Campo Senha e Confirma Senha são diferentes!!");
+            return false;
+        }
+         createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password, valuesPA.cPassword).then((data: any) => {
+            if (data === true) {
+                alert('Usuário cadastrado com sucesso!');
+                valuesPA.nome = '';
+                valuesPA.sobreNome = '';
+                valuesPA.telefone = '';
+                valuesPA.email = '';
+                valuesPA.password = '';
+                valuesPA.showPassword = false;
+                valuesPA.cPassword = '';
+                valuesPA.showCPassword = false;                
+                handlePrimeiroAcessoClose();
+            }
         });        
     }
+
+    const isValidEmail = (email: string): boolean => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      };
 
     const [openPrimeiroAcesso, setPrimeiroAcessoOpen] = useState(false);
     const [openEsqueciSenha, setEsqueciSenhaOpen] = useState(false);
     const handlePrimeiroAcessoOpen = () => { setPrimeiroAcessoOpen(true); };
     const handlePrimeiroAcessoClose = () => setPrimeiroAcessoOpen(false);
-    const handleEsqueciSenhaOpen = () => { handleSubmitRecoveryPassword(); setEsqueciSenhaOpen(true); };
+    const handleEsqueciSenhaOpen = () => { handleSubmitRecoveryPassword(); };
     const handleEsqueciSenhaClose = () => setEsqueciSenhaOpen(false);
 
     if (isAuthenticated) {
@@ -146,6 +199,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                             <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
                                 value={values.email}
                                 onChange={handleChange('email')}
+                                inputRef={emailRef} 
+                                error={emailError}                          
                             />
                             <FormControl size="small" fullWidth variant="outlined" >
                                 <InputLabel htmlFor="txtPassword">Senha</InputLabel>
