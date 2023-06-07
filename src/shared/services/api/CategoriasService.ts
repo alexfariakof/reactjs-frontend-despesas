@@ -1,4 +1,5 @@
-import { Api } from "../axios-config";
+import  createapiInstance   from "../axios-config";
+const api = createapiInstance();
 
 export interface ICategoriaVM {
     id:number;
@@ -9,7 +10,8 @@ export interface ICategoriaVM {
 
 const getAll = async (): Promise<ICategoriaVM[] | Error> => {
     try {
-        const { data } = await Api.get('/Categoria');
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await api.get('/Categoria', { headers: {Authorization: `Bearer ${accessToken}`}});
         if (data) {
             return data;
         }
@@ -21,9 +23,10 @@ const getAll = async (): Promise<ICategoriaVM[] | Error> => {
     }
 };
 
-const getById = async (id: number): Promise<ICategoriaVM | Error> => {
+const getById = async (idCategoria: number): Promise<ICategoriaVM | Error> => {
     try {
-        const { data } = await Api.get('/Categoria/' + id);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await api.get('/Categoria/GetById/' + idCategoria, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
@@ -37,7 +40,12 @@ const getById = async (id: number): Promise<ICategoriaVM | Error> => {
 
 const getByIdUsuario = async (idUsuario: number): Promise<ICategoriaVM[] | Error> => {
     try {
-        const { data } = await Api.get('/Categoria/GetByIdUsuario/' + idUsuario);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await api.get('/Categoria/GetByIdUsuario/' + idUsuario, {
+            headers: {
+                 Authorization: `Bearer ${accessToken}` 
+                }
+            });
         if (data) {
             return data;
         }
@@ -52,7 +60,8 @@ const getByIdUsuario = async (idUsuario: number): Promise<ICategoriaVM[] | Error
 
 const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): Promise<ICategoriaVM[] | Error> => {
     try {
-        const { data } = await Api.get('/Categoria/byTipoCategoria/' + idUsuario + '/' + idTipoCategoria);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await api.get('/Categoria/GetByTipoCategoria/' + idUsuario + '/' + idTipoCategoria, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
@@ -66,7 +75,8 @@ const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): P
 
 const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => {
     try {
-        const { data } = await Api.post<ICategoriaVM>('/Categoria', dados );
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await api.post<ICategoriaVM>('/Categoria', dados, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data
         }
@@ -79,10 +89,11 @@ const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => 
 };
 
 
-const updateById = async (id: number, dados: ICategoriaVM): Promise<ICategoriaVM | Error> => {
+const updateById = async (id: number, dados: ICategoriaVM): Promise<any | Error> => {
     try {
         dados.id = id;
-        const { data } = await Api.put<ICategoriaVM>('/Categoria', dados);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await api.put<ICategoriaVM>('/Categoria', dados, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data
         }
@@ -97,7 +108,8 @@ const updateById = async (id: number, dados: ICategoriaVM): Promise<ICategoriaVM
 
 const deleteById = async (id: number): Promise<any | Error> => { 
     try {
-        const { data } = await Api.delete('/Categoria/' + id);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await api.delete('/Categoria/' + id, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return Boolean(data.message)
         }

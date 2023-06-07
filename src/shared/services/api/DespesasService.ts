@@ -1,7 +1,8 @@
-import { Api } from "../axios-config";
+import  createApiInstance   from "../axios-config";
 import { Dayjs } from "dayjs";
 
-export interface IDespesaVO {
+const Api = createApiInstance();
+export interface IDespesaVM {
     id:number;
     idUsuario: number;
     idCategoria: number;
@@ -11,9 +12,10 @@ export interface IDespesaVO {
     dataVencimento: Dayjs | null;
 }
 
-const getAll = async (): Promise<IDespesaVO[] | Error> => {
-    try {
-        const { data } = await Api.get('/despesa');
+const getAll = async (): Promise<IDespesaVM[] | Error> => {
+    try {        
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await Api.get('/despesa', {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
@@ -25,11 +27,12 @@ const getAll = async (): Promise<IDespesaVO[] | Error> => {
     }
 };
 
-const getById = async (id: number): Promise<IDespesaVO | Error> => {
-    try {
-        const { data } = await Api.get('/despesa/' + id);
+const getById = async (id: number): Promise<IDespesaVM | Error> => {
+    try {        
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await Api.get('/despesa/GetById/' + id, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
-            return data.despesa as IDespesaVO;
+            return data.despesa as IDespesaVM;
         }
 
         return Error('Erro ao pesquisar despesas.');
@@ -39,9 +42,29 @@ const getById = async (id: number): Promise<IDespesaVO | Error> => {
     }
 };
 
-const create = async (dados: Omit<IDespesaVO, 'id'>): Promise<any | Error> => {
+const getByIdUsuario = async (idUsuario: number): Promise<IDespesaVM[] | Error> => {
     try {
-        const { data } = await Api.post<IDespesaVO>('/despesa', dados );
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await Api.get('/despesa/GetByIdUsuario/' + idUsuario, {
+            headers: {
+                 Authorization: `Bearer ${accessToken}` 
+                }
+            });
+        if (data) {
+            return data;
+        }
+
+        return Error('Erro getByIdUsuario ao listar Categorias.');
+    } catch (error) {
+        console.log(error);
+        return Error((error as { message: string }).message || 'Erro getByIdusuario ao listar Categorias.');
+    }
+};
+
+const create = async (dados: Omit<IDespesaVM, 'id'>): Promise<any | Error> => {
+    try {        
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await Api.post<IDespesaVM>('/despesa', dados, {headers: { Authorization: `Bearer ${accessToken}` }} );
         if (data) {
             return data;
         }
@@ -53,10 +76,11 @@ const create = async (dados: Omit<IDespesaVO, 'id'>): Promise<any | Error> => {
     }
 };
 
-const updateById = async (id: number, dados: IDespesaVO): Promise<IDespesaVO | Error> => {
+const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | Error> => {
     try {
-        dados.id = id;
-        const { data } = await Api.put<IDespesaVO>('/despesa', dados);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        dados.id = id;        
+        const { data } = await Api.put<IDespesaVM>('/despesa', dados, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data
         }
@@ -70,8 +94,9 @@ const updateById = async (id: number, dados: IDespesaVO): Promise<IDespesaVO | E
  };
 
 const deleteById = async (id: number): Promise<any | Error> => { 
-    try {
-        const { data } = await Api.delete('/despesa/'+ id);
+    try {        
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await Api.delete('/despesa/'+ id, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data.message === true) {
             return Boolean(data.message);
         }
@@ -87,6 +112,7 @@ const deleteById = async (id: number): Promise<any | Error> => {
 export const DespesasService = {
     getAll,
     getById,
+    getByIdUsuario,
     create,
     updateById,
     deleteById

@@ -19,6 +19,10 @@ interface IBarraFerramentasProps {
     onClickSalvar?: () => void;
     onClickNovo?: () => void;
     onClickVoltar?: () => void;
+    geTextBuscaValue? :() => any;
+    seTextBuscaValue? :(MesAno: any)  => void
+
+
 };
 
 export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({ 
@@ -59,7 +63,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                 </FormControl>
             )}
             {isOpenTxtBusca && (
-                <TextField size="small" placeholder="Pesquisar" />
+                <TextField size="small" placeholder="Pesquisar"  />
             )}
             <Box flex={1} display="flex" justifyContent="end" paddingX={1} gap={1} >
                 {btnSalvar && (

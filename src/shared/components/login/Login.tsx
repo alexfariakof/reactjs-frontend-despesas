@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Button, Card, CardActions, CardContent, FormControl, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField, Typography, Avatar, Checkbox, Paper } from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Box } from "@mui/system";
@@ -8,9 +9,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import Modal from '@mui/material/Modal';
 import SaveIcon from '@mui/icons-material/Save';
-import ErrorMessage from "../erro-message/ErroMessage";
-import { AnyARecord } from "dns";
-
 interface ILoginProps {
     children: React.ReactNode;
 }
@@ -40,23 +38,23 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         email: string;
         password: string
         showPassword: boolean;
-        cPassword: string;
+        cPassword: string;        
         showCPassword: boolean;
 
-    }
+    }     
 
     const [valuesPA, setValuesPA] = useState<IPrimeiroAcesso>({
         nome: '',
         sobreNome: '',
         telefone: '',
         email: '',
-        password: '',
+        password:'',        
         showPassword: false,
-        cPassword: '',
+        cPassword:'',        
         showCPassword: false,
     });
 
-
+    
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -98,21 +96,66 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         });
     };
 
-
+  
 
     const handleSubmit = () => {
-        login(values.email, values.password);
+        if (!values.email) {
+            alert("O campo de email está vazio ou nulo.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+        } else if (!isValidEmail(values.email)) {
+            alert("O email inserido não é um email válido.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+
+        } else {
+            login(values.email, values.password);
+        }        
     }
+
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const [emailError, setEmailError] = useState(false);
+  
+    const setEmail = () => {
+      setEmailError(true);
+      if (emailRef.current) {
+        emailRef.current.focus();
+      }
+    };
 
     const handleSubmitRecoveryPassword = () => {
-        recoveryPassword(values.email);
+        if (!values.email) {
+            alert("O campo de email está vazio ou nulo.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+        } else if (!isValidEmail(values.email)) {
+            alert("O email inserido não é email válido.");
+            setEmailError(true);
+            emailRef.current?.focus();
+            return false;
+        } 
 
-    }
+        recoveryPassword(values.email);    
+        setEsqueciSenhaOpen(true);    
+    } 
 
     const handleSubimitCreateUsuario = () => {
-
-        createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password).then((data: any) => {
+        if (!valuesPA.email) {
+            alert("O campo de email está vazio ou nulo.");
+            return false;
+        } else if (!isValidEmail(valuesPA.email)) {
+            alert("O email inserido não é email válido.");
+            return false;
+        }  else if (valuesPA.password !== valuesPA.cPassword){
+            alert("Campo Senha e Confirma Senha são diferentes!!");
+            return false;
+        }
+         createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password, valuesPA.cPassword).then((data: any) => {
             if (data === true) {
+                alert('Usuário cadastrado com sucesso!');
                 valuesPA.nome = '';
                 valuesPA.sobreNome = '';
                 valuesPA.telefone = '';
@@ -120,18 +163,22 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                 valuesPA.password = '';
                 valuesPA.showPassword = false;
                 valuesPA.cPassword = '';
-                valuesPA.showCPassword = false;
-                alert('Usuário cadastrado com sucesso!');
+                valuesPA.showCPassword = false;                
                 handlePrimeiroAcessoClose();
             }
-        });
+        });        
     }
+
+    const isValidEmail = (email: string): boolean => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      };
 
     const [openPrimeiroAcesso, setPrimeiroAcessoOpen] = useState(false);
     const [openEsqueciSenha, setEsqueciSenhaOpen] = useState(false);
     const handlePrimeiroAcessoOpen = () => { setPrimeiroAcessoOpen(true); };
     const handlePrimeiroAcessoClose = () => setPrimeiroAcessoOpen(false);
-    const handleEsqueciSenhaOpen = () => { handleSubmitRecoveryPassword(); setEsqueciSenhaOpen(true); };
+    const handleEsqueciSenhaOpen = () => { handleSubmitRecoveryPassword(); };
     const handleEsqueciSenhaClose = () => setEsqueciSenhaOpen(false);
 
     if (isAuthenticated) {
@@ -151,6 +198,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                             <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
                                 value={values.email}
                                 onChange={handleChange('email')}
+                                inputRef={emailRef} 
+                                error={emailError}                          
                             />
                             <FormControl size="small" fullWidth variant="outlined" >
                                 <InputLabel htmlFor="txtPassword">Senha</InputLabel>
@@ -235,7 +284,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                     open={openPrimeiroAcesso}
                     onClose={handlePrimeiroAcessoClose}
                     aria-labelledby="modal-primeiro-acesso"
-                    aria-describedby="modal-modal-description"
+                    aria-describedby="modal-modal-description"                    
                 >
                     <Box
                         gap={1}
@@ -259,16 +308,16 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                             onKeyUp={handleKeyPress}
                         />
 
-                        <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth
+                        <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth 
                             value={valuesPA.telefone}
                             onChange={handleChangePA('telefone')}
-                            onKeyUp={handleKeyPress}
+                            onKeyUp={handleKeyPress}                       
                         />
                         <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
                             value={valuesPA.email}
                             onChange={handleChangePA('email')}
-                            onKeyUp={handleKeyPress}
-                        />
+                            onKeyUp={handleKeyPress}                       
+                         />
                         <FormControl size="small" fullWidth variant="outlined" >
                             <InputLabel htmlFor="txtPAPassword">Senha</InputLabel>
                             <OutlinedInput
@@ -317,8 +366,9 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         </FormControl>
                         <Button color='primary' disableElevation variant='contained' startIcon={<SaveIcon />} onClick={handleSubimitCreateUsuario} >Salvar</Button>
                     </Box>
-                </Modal>
-            </Box>
+                </Modal>                  
+            </Box>         
+            
         );
     }
 }
