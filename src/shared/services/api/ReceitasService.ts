@@ -11,7 +11,6 @@ export interface IReceitaVM {
     valor: number;
 }
 
-const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
 const getAll = async (): Promise<IReceitaVM[] | Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
@@ -82,7 +81,7 @@ const updateById = async (id: number, dados: IReceitaVM): Promise<IReceitaVM | E
     try {        
         dados.id = id;        
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.put<IReceitaVM>('/Receita', dados);
+        const { data } = await Api.put<IReceitaVM>('/Receita', dados, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data
         }
