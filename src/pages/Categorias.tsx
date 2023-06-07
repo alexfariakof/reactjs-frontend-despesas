@@ -137,30 +137,28 @@ export const Categorias: React.FC = () => {
   }
 
   useEffect(() => {
-    debounce(() => {
-      if (values.idTipoCategoria === 0) {
-        CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
-          .then((result) => {
-            if (result instanceof Error) {
-              alert(result.message);
-            }
-            else {
-              setRows(result);
-            }
-          });
-      }
-      else {
-        CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), values.idTipoCategoria)
-          .then((result) => {
-            if (result instanceof Error) {
-              alert(result.message);
-            }
-            else {
-              setRows(result);
-            }
-          });
-      }
-    });
+    if (values.idTipoCategoria === 0) {
+      CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+          }
+          else {
+            setRows(result);
+          }
+        });
+    }
+    else {
+      CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), values.idTipoCategoria)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+          }
+          else {
+            setRows(result);
+          }
+        });
+    }
   }, [values.idTipoCategoria]);
 
   return (
