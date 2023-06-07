@@ -116,7 +116,7 @@ export const Receitas: React.FC = () => {
           .then((result: any) => {
                 setCategorias(result);
           });        
-   });
+   }, []);
 
     useEffect(() => {
         if (id !== 0) {
