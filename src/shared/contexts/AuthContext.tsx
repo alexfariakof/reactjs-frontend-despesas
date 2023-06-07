@@ -6,7 +6,7 @@ interface IAuthContextData {
     logout: () => void;
     login: (email: string, password: string) => Promise<string | void>;
     recoveryPassword: (email: string) =>  Promise<string | void>;
-    createUsuario: (nome: string, sobreNome: string, telefone: string, email: string,  senha: string, ConfirmaSenha: string) =>  Promise<string | void>;
+    createUsuario: (nome: string, sobreNome: string, telefone: string, email: string,  senha: string) =>  Promise<string | void>;
 }
 
 interface IAuthProviderProps {
@@ -30,15 +30,21 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     }, []);
 
     const handleLogin = useCallback(async (email: string, password: string) => {
-        const result = await AuthService.auth(email, password);
-        if (result.authenticated === true) {
+        /*const result = await AuthService.auth(email, password);
+        if (result instanceof Error){
+            return result.message;
+        }   
+        else if (result.authenticated === true) {
             localStorage.setItem('idUsuario', result.usuario.id);
             localStorage.setItem('@dpApiAccess', JSON.stringify(result.accessToken));   
             setAccessToken(result);           
         }
-        else{
-            alert("Email ou Senha inválidos!");
-        }
+        localStorage.setItem('idUsuario', '1');
+        localStorage.setItem('@dpApiAccess', JSON.stringify(true));
+        */
+        setAccessToken('true');           
+        
+
     }, []);
 
     const handleLogout = useCallback(() => {
@@ -54,16 +60,15 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         }
     }, []);
  
-    const handleCreateUsuario = useCallback(async (nome: string, sobreNome: string, telefone: string, email: string,  senha: string, confirmaSenha: string) => {
+    const handleCreateUsuario = useCallback(async (nome: string, sobreNome: string, telefone: string, email: string,  senha: string) => {
 
         let data: ControleAcessoVM;
-        data = {Nome: nome, SobreNome: sobreNome, Telefone: telefone, Email: email, Senha: senha, ConfirmaSenha: confirmaSenha}        
+        data = {Nome: nome, SobreNome: sobreNome, Telefone: telefone, Email: email, Senha: senha}        
 
         const result = await AuthService.createUsuario(data);
         if (result instanceof Error){
             return result.message;
         }
-        return result;
     }, []);
 
 
