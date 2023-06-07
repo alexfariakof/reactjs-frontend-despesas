@@ -6,7 +6,7 @@ interface IAuthContextData {
     logout: () => void;
     login: (email: string, password: string) => Promise<string | void>;
     recoveryPassword: (email: string) =>  Promise<string | void>;
-    createUsuario: (nome: string, sobreNome: string, telefone: string, email: string,  senha: string) =>  Promise<string | void>;
+    createUsuario: (nome: string, sobreNome: string, telefone: string, email: string,  senha: string, confirmaSenha: string) =>  Promise<string | void>;
 }
 
 interface IAuthProviderProps {
@@ -60,10 +60,10 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         }
     }, []);
  
-    const handleCreateUsuario = useCallback(async (nome: string, sobreNome: string, telefone: string, email: string,  senha: string) => {
+    const handleCreateUsuario = useCallback(async (nome: string, sobreNome: string, telefone: string, email: string,  senha: string,  confirmaSenha: string) => {
 
         let data: ControleAcessoVM;
-        data = {Nome: nome, SobreNome: sobreNome, Telefone: telefone, Email: email, Senha: senha}        
+        data = {Nome: nome, SobreNome: sobreNome, Telefone: telefone, Email: email, Senha: senha,  ConfirmaSenha: confirmaSenha}        
 
         const result = await AuthService.createUsuario(data);
         if (result instanceof Error){
