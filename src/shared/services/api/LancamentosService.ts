@@ -16,6 +16,7 @@ export interface ILancamentoVM {
 
 const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise<any> => {
     try {
+        /*
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const  { data } = await Api.get('/lancamento/' + mesano + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
@@ -23,6 +24,7 @@ const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise
         }
 
         return Error('Erro ao pesquisar lançãmentos por ano mes.');
+        */
     } catch (error) {
 
          console.log(error);

@@ -1,133 +1,120 @@
-import  createapiInstance   from "../axios-config";
+import createapiInstance from "../axios-config";
+import { faker } from '@faker-js/faker';
+
 const api = createapiInstance();
 
 export interface ICategoriaVM {
-    id:number;
-    descricao: string;
-    idUsuario: number;    
-    idTipoCategoria : number;
+  id: number;
+  descricao: string;
+  idUsuario: number;
+  idTipoCategoria: number;
 }
 
-const getAll = async (): Promise<ICategoriaVM[] | Error> => {
-    try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.get('/Categoria', { headers: {Authorization: `Bearer ${accessToken}`}});
-        if (data) {
-            return data;
-        }
+const generateFakeCategoria = (): ICategoriaVM => {
+  return {
+    id: faker.datatype.number({'min': 2, 'max': 15 }),
+    descricao: faker.helpers.arrayElement(["Alimentação","Benefício","Casa","Imposto","Investimento","Lazer","Outros","Prêmio","Salário","Saúde","Serviços","Transporte"]),
+    idUsuario: 1,
+    idTipoCategoria: faker.datatype.number({'min': 1, 'max': 2 }),
+  };
+};
 
-        return Error('Erro getAll ao listar Categorias.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro getAll ao listar Categorias.');
-    }
+const getAll = async (): Promise<ICategoriaVM[] | Error> => {
+  try {
+    // Simulating API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const fakeCategorias: ICategoriaVM[] = Array.from({ length: 10 }, () => generateFakeCategoria());
+    return fakeCategorias;
+  } catch (error) {
+    console.log(error);
+    return Error('Erro getAll ao listar Categorias.');
+  }
 };
 
 const getById = async (idCategoria: number): Promise<ICategoriaVM | Error> => {
-    try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.get('/Categoria/GetById/' + idCategoria, {headers: { Authorization: `Bearer ${accessToken}` }});
-        if (data) {
-            return data;
-        }
+  try {
+    // Simulating API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-        return Error('Erro getById ao pesquisar Categorias.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro getById ao pesquisar Categorias.');
-    }
+    const fakeCategoria: ICategoriaVM = generateFakeCategoria();
+    return fakeCategoria;
+  } catch (error) {
+    console.log(error);
+    return Error('Erro getById ao pesquisar Categorias.');
+  }
 };
 
 const getByIdUsuario = async (idUsuario: number): Promise<ICategoriaVM[] | Error> => {
-    try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.get('/Categoria/GetByIdUsuario/' + idUsuario, {
-            headers: {
-                 Authorization: `Bearer ${accessToken}` 
-                }
-            });
-        if (data) {
-            return data;
-        }
+  try {
+    // Simulating API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-        return Error('Erro getByIdUsuario ao listar Categorias.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro getByIdusuario ao listar Categorias.');
-    }
+    const fakeCategorias: ICategoriaVM[] = Array.from({ length: 5 }, () => generateFakeCategoria());
+    return fakeCategorias;
+  } catch (error) {
+    console.log(error);
+    return Error('Erro getByIdUsuario ao listar Categorias.');
+  }
 };
 
-
 const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): Promise<ICategoriaVM[] | Error> => {
-    try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.get('/Categoria/GetByTipoCategoria/' + idUsuario + '/' + idTipoCategoria, {headers: { Authorization: `Bearer ${accessToken}` }});
-        if (data) {
-            return data;
-        }
+  try {
+    // Simulating API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-        return Error('Erro getByTipoCategoria ao pesquisar Categorias.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro getByTipoCategoria ao pesquisar Categorias.');
-    }
+    const fakeCategorias: ICategoriaVM[] = Array.from({ length: 3 }, () => generateFakeCategoria());
+    return fakeCategorias;
+  } catch (error) {
+    console.log(error);
+    return Error('Erro getByTipoCategoria ao pesquisar Categorias.');
+  }
 };
 
 const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => {
-    try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.post<ICategoriaVM>('/Categoria', dados, {headers: { Authorization: `Bearer ${accessToken}` }});
-        if (data) {
-            return data
-        }
+  try {
+    // Simulating API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-        return Error('Erro ao criar novo registro de Categoria.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao criar novo registro de Categoria.');
-    }
+    const fakeCategoria: ICategoriaVM = generateFakeCategoria();
+    return fakeCategoria;
+  } catch (error) {
+    console.log(error);
+    return Error('Erro ao criar novo registro de Categoria.');
+  }
 };
 
-
 const updateById = async (id: number, dados: ICategoriaVM): Promise<any | Error> => {
-    try {
-        dados.id = id;
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.put<ICategoriaVM>('/Categoria', dados, {headers: { Authorization: `Bearer ${accessToken}` }});
-        if (data) {
-            return data
-        }
+  try {
+    // Simulating API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-        return Error('Erro ao atualizar registro de Categoria.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao atualizar registro de Categoria.');
-    }
+    const updatedCategoria: ICategoriaVM = { ...dados, id };
+    return updatedCategoria;
+  } catch (error) {
+    console.log(error);
+    return Error('Erro ao atualizar registro de Categoria.');
+  }
+};
 
- };
+const deleteById = async (id: number): Promise<any | Error> => {
+  try {
+    // Simulating API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-const deleteById = async (id: number): Promise<any | Error> => { 
-    try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.delete('/Categoria/' + id, {headers: { Authorization: `Bearer ${accessToken}` }});
-        if (data) {
-            return Boolean(data.message)
-        }
-
-        return Error('Erro ao deletar registro de Categoria.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao deletar registro de Categoria.');
-    }
-
+    return { message: 'Registro de Categoria deletado com sucesso.' };
+  } catch (error) {
+    console.log(error);
+    return Error('Erro ao deletar registro de Categoria.');
+  }
 };
 
 export const CategoriasService = {
-    getAll,
-    getById,
-    getByIdUsuario,
-    getByTipoCategoria,
-    create,
-    updateById,
-    deleteById
+  getAll,
+  getById,
+  getByIdUsuario,
+  getByTipoCategoria,
+  create,
+  updateById,
+  deleteById
 };

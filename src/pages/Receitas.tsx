@@ -111,6 +111,7 @@ export const Receitas: React.FC = () => {
             valor: 0                
         });
     }
+    
     useEffect(() => {
         CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
           .then((result: any) => {

@@ -9,17 +9,23 @@ export const errorInterceptor = (error: AxiosError) => {
 
     if (error.response?.status === 400){        
         data = error.response.data; 
-        alert(data.message);
+        console.log(data.message);
     }
+
+    if (error.response?.status ===  404){
+        data = error.response.data; 
+        console.log(data.message);
+    }
+
 
     if (error.response?.status ===  401){
         data = error.response.data; 
-        alert(data.message);
+        console.log(data.message);
     }
 
     if (error.response?.status ===  415){
         data = error.response.data; 
-        alert(data.message);
+        console.log(data.message);
     }  
 
     return Promise.reject(error);

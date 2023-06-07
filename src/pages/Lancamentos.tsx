@@ -30,7 +30,7 @@ export const Lancamentos = () => {
             });
         });
     }, [rows]);
-    
+
     const handleDelete = (tipoCategoria: string, id: number) => {
         if(tipoCategoria === 'Despesa') {
             DespesasService
@@ -94,26 +94,52 @@ export const Lancamentos = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Array.isArray(rows) && rows.map(row => (
-                                    <TableRow key={Math.floor(Math.random() * 65536)}  >
-                                        <TableCell align='center'>
-                                            <IconButton onClick={() => handleDelete(row.tipoCategoria, row.idDespesa === 0 ?  row.idReceita : row.idDespesa) }>
-                                                <DeleteIcon />
-                                            </IconButton>
-                                            <IconButton onClick={() => handleEdit(row.tipoCategoria, row.idDespesa === 0 ?  row.idReceita : row.idDespesa)  }>
-                                                <EditIcon />
-                                            </IconButton>
-                                        </TableCell>
-                                        <TableCell>{row.data}</TableCell>
-                                        <TableCell>{row.tipo }</TableCell>                                        
-                                        <TableCell>R$ {row.valor}</TableCell>
-                                        <TableCell>{row.descricao}</TableCell>
-                                        <TableCell>{row.tipoCategoria}</TableCell>
-                                    </TableRow>
-                                ))
-                            }
+                        <TableRow >
+                                <TableCell>                         
+                                    <IconButton size="small" onClick={() => handleDelete('Receita', 2)  } >
+                                        <DeleteIcon />
+                                    </IconButton >
+                                    <IconButton size="small" onClick={() => handleEdit('Receita', 2)  } >
+                                        <EditIcon />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell>18/08/2023</TableCell>
+                                <TableCell>Receitas</TableCell>
+                                <TableCell>R$ 8.000,00</TableCell>
+                                <TableCell>Salário recebido em Agosto de 2023</TableCell>
+                                <TableCell>Salário</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>                         
+                                    <IconButton size="small" onClick={() => handleDelete('Despesa', 1)  } >
+                                        <DeleteIcon />
+                                    </IconButton >
+                                    <IconButton size="small" onClick={() => handleEdit('Despesa', 1)  } >
+                                        <EditIcon />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell>06/02/2023</TableCell>
+                                <TableCell>Despesas</TableCell>
+                                <TableCell>R$ 45,89</TableCell>
+                                <TableCell>Almoço no Jirafas</TableCell>
+                                <TableCell>Alimentação</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>                         
+                                    <IconButton size="small" onClick={() => handleDelete('Despesa', 3)  } >
+                                        <DeleteIcon />
+                                    </IconButton >
+                                    <IconButton size="small" onClick={() => handleEdit('Despesa', 3)  } >
+                                        <EditIcon />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell>09/03/2023</TableCell>
+                                <TableCell>Despesas</TableCell>
+                                <TableCell>R$ 850,89</TableCell>
+                                <TableCell>Gastos Avuslsos </TableCell>
+                                <TableCell>Outrod</TableCell>
+                            </TableRow>
                         </TableBody>
-
                     </Table>
                 </TableContainer>
             </Box>
