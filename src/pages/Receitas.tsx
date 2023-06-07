@@ -11,7 +11,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
-import { ReceitasService, IReceitaVO } from '../shared/services/api';
+import { ReceitasService, IReceitaVM, CategoriasService, ICategoriaVM } from '../shared/services/api';
 
 interface State {
     idUsuario: number;
@@ -24,6 +24,7 @@ interface State {
 export const Receitas: React.FC = () => {
     const navigate = useNavigate();
     const { id = 0 } = useParams<'id'>();
+    const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);
     const [values, setValues] = useState<State>({
         idUsuario: 0,
         valor: 0,
@@ -45,7 +46,7 @@ export const Receitas: React.FC = () => {
     };
 
     const handleSave = () => {
-        let dados: IReceitaVO;
+        let dados: IReceitaVM;
         dados = {
             id: Number(id),
             idUsuario: Number(localStorage.getItem('idUsuario')),
@@ -89,7 +90,7 @@ export const Receitas: React.FC = () => {
         }
     }
 
-    const handleEdit = (recetita: IReceitaVO)  => {
+    const handleEdit = (recetita: IReceitaVM)  => {
         
         setValues({
             idUsuario: recetita.idUsuario,
@@ -110,6 +111,12 @@ export const Receitas: React.FC = () => {
             valor: 0                
         });
     }
+    useEffect(() => {
+        CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
+          .then((result: any) => {
+                setCategorias(result);
+          });        
+   });
 
     useEffect(() => {
         if (id !== 0) {
@@ -161,11 +168,11 @@ export const Receitas: React.FC = () => {
                         <MenuItem value={0}>
                             <em>Nenhuma Categoria Selecionada</em>
                         </MenuItem>                        
-                        <MenuItem value={8}>Salário</MenuItem>
-                        <MenuItem value={9}>Prêmio</MenuItem>
-                        <MenuItem value={10}>Investimento</MenuItem>
-                        <MenuItem value={11}>Benefício</MenuItem>
-                        <MenuItem value={12}>Outro</MenuItem>
+                        {Array.isArray(categorias) && categorias.map((categoria) => (
+                            <MenuItem key={categoria.id} value={categoria.id}>
+                                {categoria.descricao}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
                 <FormControl size="small" fullWidth  >

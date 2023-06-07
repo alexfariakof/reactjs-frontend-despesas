@@ -9,7 +9,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import Modal from '@mui/material/Modal';
 import SaveIcon from '@mui/icons-material/Save';
-
 interface ILoginProps {
     children: React.ReactNode;
 }
@@ -367,8 +366,9 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         </FormControl>
                         <Button color='primary' disableElevation variant='contained' startIcon={<SaveIcon />} onClick={handleSubimitCreateUsuario} >Salvar</Button>
                     </Box>
-                </Modal>
-            </Box>
+                </Modal>                  
+            </Box>         
+            
         );
     }
 }

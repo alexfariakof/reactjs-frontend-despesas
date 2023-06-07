@@ -1,4 +1,6 @@
-import { Api } from "../../axios-config";
+import  createApiInstance   from "../../axios-config";
+const Api = createApiInstance();
+
 
 
 export interface ControleAcessoVM {
@@ -9,6 +11,14 @@ export interface ControleAcessoVM {
     Senha: string;
     ConfirmaSenha: string;
 } 
+
+export interface LoginVM {
+    IdUsuario: number;
+    Email:string; 
+    Senha: string;
+     ConfirmaSenha: string;        
+} 
+
 
 const auth = async (email: string, password: string): Promise<any> => {
     try {        
@@ -59,8 +69,31 @@ const createUsuario = async (dados: Omit<ControleAcessoVM, ''>):  Promise<any | 
 
 };
 
+const changePassword = async (password: string): Promise<any> => {
+    try {
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const idUsuario = localStorage.getItem('idUsuario');
+
+        if (accessToken !== undefined && idUsuario !== undefined)
+        {   
+            let dados = { idUsuario: localStorage.getItem('idUsuario') ,  Senha: password };        
+            const  { data } = await Api.post('/ControleAcesso/ChangePassword', dados, {headers: { Authorization: `Bearer ${localStorage.getItem('@dpApiAccess') || ''}` }} );
+            if (data) {
+                return data;
+            }
+        }
+
+        return Error('Erro ao enviar email.');
+    } catch (error) {
+
+         console.log(error);
+        return Error((error as { message: string }).message || 'Erro ao enviar email.');
+    }
+};
+
 export const AuthService = { 
     auth,
     recoveryPassword,
-    createUsuario
+    createUsuario,
+    changePassword
 };

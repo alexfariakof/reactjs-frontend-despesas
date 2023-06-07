@@ -1,6 +1,8 @@
-import { Api } from "../axios-config";
+import  createApiInstance   from "../axios-config";
+const Api = createApiInstance();
 
-export interface ILancamentoVO {
+
+export interface ILancamentoVM {
     id: number;
     idUsuario: number;
     tipo: string;
@@ -9,12 +11,13 @@ export interface ILancamentoVO {
     valor: number;
     data: string;
     descricao: string;
-    categoria: string;
+    tipoCategoria: string;
 } 
 
 const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise<any> => {
     try {
-        const  { data } = await Api.get('/lancamento/' + mesano + '/' + idUsuario);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const  { data } = await Api.get('/lancamento/' + mesano + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
@@ -27,9 +30,10 @@ const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise
     }
 };
 
-const getSaldoByIdUsuario = async (idUsuario: number): Promise<any | ILancamentoVO[] |  Error> => {
+const getSaldoByIdUsuario = async (idUsuario: number): Promise<any | ILancamentoVM[] |  Error> => {
     try {
-        const { data } = await Api.get('/lancamento/saldo/$(idUsuario)');
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const { data } = await Api.get('/lancamento/saldo/$(idUsuario)', {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
