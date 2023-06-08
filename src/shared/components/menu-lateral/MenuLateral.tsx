@@ -7,14 +7,12 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import ListAltIcon from '@mui/icons-material/ListAlt';
-
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAuthContext, useDrawerContext } from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import Saldo from './Saldo';
 import { useDebounce } from '../../hooks/UseDebounce';
-import { ImagemPerfilUsuarioService } from '../../services/api/ImagemPerfilUsuarioService';
-import { string } from 'yargs';
+import { ImagemPerfilUsuarioService, ImagemPerfilUsuarioVM } from '../../services/api/ImagemPerfilUsuarioService';
 
 interface IListItemLinkProps {
     to: string,
@@ -58,7 +56,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick }
 
 export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => {
     const theme = useTheme();
-    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<string | null>(null);
+    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | null>(null);
     const { debounce } = useDebounce();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const { isDrawerOpen, toggleDrawerOpen, drawerOptions  } = useDrawerContext()
@@ -78,7 +76,7 @@ export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => 
                         <Avatar
                             alt="Alex Ribeiro"
                             sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                            src={imagemPerfilUsuario !== null ? imagemPerfilUsuario : "/assets/Foto_20180912-162041SATURADA.png"} />
+                            src={imagemPerfilUsuario !== null ? imagemPerfilUsuario.url : "/assets/Foto_20180912-162041SATURADA.png"} />
                     </Box>
                     <Divider />
                     <Saldo />

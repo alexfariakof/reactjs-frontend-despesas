@@ -1,14 +1,17 @@
 /* eslint-disable react/style-prop-object */
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Avatar, Box, Button, InputLabel, Paper, Typography, useTheme } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
-import { ImagemPerfilUsuarioService } from "../../services/api";
+import { ImagemPerfilUsuarioService, ImagemPerfilUsuarioVM } from "../../services/api";
+import { useDebounce } from "../../hooks/UseDebounce";
 
 const ChangeAvatar: React.FC = () => {
     const theme = useTheme();
     const [file, setFile] = useState<File | any>(null);
     const [fileLoaded, setFileLoaded] = useState<boolean>(false);
-
+    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | null>(null);
+    const { debounce } = useDebounce();
+    
     const handleAvatarUpload = (event: ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = event.target.files?.[0];
         if (uploadedFile) {
@@ -17,17 +20,31 @@ const ChangeAvatar: React.FC = () => {
         }
     };
 
-
+    useEffect(() => {
+        debounce(async () => {
+            setImagemPerfilUsuario(await ImagemPerfilUsuarioService.getImagemPerfilUsuarioByIdUsuario());
+        });
+    });
     
 
     const handleImagePerfil = () => {
         if (file !== null) {
-            ImagemPerfilUsuarioService.createImagemPerfilUsuario(file)
+            if (imagemPerfilUsuario == null) {
+                ImagemPerfilUsuarioService.createImagemPerfilUsuario(file)
+                    .then((result) => {
+                        if (result === true) {
+                            alert("Imagem de perfil usuário incluída com sucesso");
+                        }
+                    });
+            }
+            else{
+                ImagemPerfilUsuarioService.updateImagemPerfilUsuario(file)
                 .then((result) => {
                     if (result === true) {
-                        alert("Imagem de perfil usuário incluída com sucesso");
+                        alert("Imagem de perfil usuário alterada com sucesso");
                     }
                 });
+            }
         } else {
             alert('Nenhuma imagem foi carregada!');
         }
@@ -53,8 +70,7 @@ const ChangeAvatar: React.FC = () => {
                     <Avatar
                         alt="Alex Ribeiro"
                         sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                        src="/assets/imagem_Perfil.png"
-                    />
+                        src={imagemPerfilUsuario !== null ? imagemPerfilUsuario.url : "/assets/imagem_Perfil.png"} />
                 </InputLabel>
                 {fileLoaded && <span style={{ color: 'green', marginBottom:'1em' }}>Arquivo carregado com sucesso!</span>}
                 <input
