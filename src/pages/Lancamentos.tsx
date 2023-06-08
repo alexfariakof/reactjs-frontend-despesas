@@ -11,25 +11,24 @@ import { useNavigate } from 'react-router-dom';
 
 export const Lancamentos = () => {
     const navigate = useNavigate();
-    const { debounce } = useDebounce();
+    const { debounce } = useDebounce(true);
     const theme = useTheme();
     const [rows, setRows] = useState<(Omit<ILancamentoVM, 'id'>[])>([]);
 
     useEffect(() => {
-        return (() => {
-            debounce(() => {
-                LancamentosService.getByMesAnoByIdUsuario('2023-05', Number(localStorage.getItem('idUsuario')))
-                    .then((result) => {
-                        if (result instanceof Error) {
-                           alert(result.message);
-                        }
-                        else {
-                            setRows(result);
-                        }
-                    });
-            });
+        debounce(() => {
+            LancamentosService.getByMesAnoByIdUsuario('2023-05', Number(localStorage.getItem('idUsuario')))
+                .then((result) => {
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    }
+                    else {
+                        setRows(result);
+                    }
+                });
         });
-    }, [rows]);
+
+    }, [debounce, rows]);
     
     const handleDelete = (tipoCategoria: string, id: number) => {
         if(tipoCategoria === 'Despesa') {

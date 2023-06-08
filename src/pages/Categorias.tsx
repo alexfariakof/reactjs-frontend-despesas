@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, IconButton } from "@mui/material";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService, ICategoriaVM } from '../shared/services/api';
-import { Delete, Edit, Height } from '@mui/icons-material';
-import { useDebounce } from '../shared/hooks';
+import { Delete, Edit } from '@mui/icons-material';
 
 interface State {
   id: number;
@@ -17,7 +16,6 @@ interface State {
 
 export const Categorias: React.FC = () => {
   const navigate = useNavigate();
-  const { debounce } = useDebounce();
   const [rows, setRows] = useState<ICategoriaVM[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
@@ -137,7 +135,6 @@ export const Categorias: React.FC = () => {
   }
 
   useEffect(() => {
-    debounce(() => {
       if (values.idTipoCategoria === 0) {
         CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
           .then((result) => {
@@ -160,7 +157,6 @@ export const Categorias: React.FC = () => {
             }
           });
       }
-    });
   }, [values.idTipoCategoria]);
 
   return (

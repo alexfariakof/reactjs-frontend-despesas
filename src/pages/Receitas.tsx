@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Box, Button, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
-import { Save } from '@mui/icons-material';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -12,6 +11,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { ReceitasService, IReceitaVM, CategoriasService, ICategoriaVM } from '../shared/services/api';
+import { useDebounce } from '../shared/hooks';
 
 interface State {
     idUsuario: number;
@@ -23,6 +23,7 @@ interface State {
 
 export const Receitas: React.FC = () => {
     const navigate = useNavigate();
+    const { debounce } = useDebounce(true);
     const { id = 0 } = useParams<'id'>();
     const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);
     const [values, setValues] = useState<State>({
@@ -111,28 +112,30 @@ export const Receitas: React.FC = () => {
             valor: 0                
         });
     }
-    useEffect(() => {
-        CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
-          .then((result: any) => {
-                setCategorias(result);
-          });        
-   });
 
     useEffect(() => {
-        if (id !== 0) {
-            ReceitasService.getById(Number(id))
-                .then((result) => {
-                    if (result instanceof Error) {
-                        alert(result.message);
-                        return false;
-                    }
-                    else {
-                        handleEdit(result);
-                        console.log(result.id);
-                    }
-                });
-        }
-    }, [id])
+        debounce(() => {
+            if (id !== 0) {
+                ReceitasService.getById(Number(id))
+                    .then((result) => {
+                        if (result instanceof Error) {
+                            alert(result.message);
+                            return false;
+                        }
+                        else {
+                            handleEdit(result);
+                            console.log(result.id);
+                        }
+                    });
+            }
+            else {
+                CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
+                    .then((result: any) => {
+                        setCategorias(result);
+                    });
+            }
+        });
+    }, [debounce, id])
 
     return (
 
