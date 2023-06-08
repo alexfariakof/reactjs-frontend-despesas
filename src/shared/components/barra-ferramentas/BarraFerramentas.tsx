@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {  DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 interface IBarraFerramentasProps {
     children?: React.ReactNode;
@@ -39,7 +39,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
 }) => {
 
     const theme = useTheme();
-    const [value, setValue] = useState<Dayjs | null>(null);
+    const [value, setValue] = useState<Dayjs | null>(dayjs());
 
     return (
         <Box height={theme.spacing(5)} marginX={1} padding={1} paddingX={2} display="flex" alignItems="center" gap={1} component={Paper} >
@@ -79,5 +79,4 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
             </Box>
         </Box>
     );
-
 }
