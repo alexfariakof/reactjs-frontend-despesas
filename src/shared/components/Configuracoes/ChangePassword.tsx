@@ -3,6 +3,8 @@ import { useState } from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import SaveIcon from '@mui/icons-material/Save';
+import { AuthService } from "../../services/api";
+import { useAuthContext } from "../../contexts";
 
 interface ITrocaSenha {
     password: string
@@ -12,6 +14,7 @@ interface ITrocaSenha {
 }
 
 const ChangePassword: React.FC = () => {
+    const { logout } = useAuthContext();
     const [valuesTC, setValuesTC] = useState<ITrocaSenha>({
         password: '',
         showPassword: false,
@@ -44,7 +47,21 @@ const ChangePassword: React.FC = () => {
     };
 
     const handleChangePassword = () => {
-        alert('Implementar troca de senha!');
+        if (valuesTC.password !== valuesTC.cPassword) {
+            alert("Campo Senha e Confirma Senha são diferentes!!");
+            return false;
+        }
+        else {
+
+            AuthService.changePassword(valuesTC.password, valuesTC.cPassword)
+                .then((result) => {
+                    if (result === true) {
+                        alert("Senha alterada com sucesso");
+                        localStorage.clear();
+                        logout();
+                    }
+                });
+        }
     }
 
     return (
