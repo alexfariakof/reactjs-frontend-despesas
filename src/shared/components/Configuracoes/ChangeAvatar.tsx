@@ -2,10 +2,11 @@
 import { ChangeEvent, useState } from "react";
 import { Avatar, Box, Button, InputLabel, Paper, Typography, useTheme } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
+import { ImagemPerfilUsuarioService } from "../../services/api";
 
 const ChangeAvatar: React.FC = () => {
     const theme = useTheme();
-    const [file, setFile] = useState<File | null>(null);
+    const [file, setFile] = useState<File | any>(null);
     const [fileLoaded, setFileLoaded] = useState<boolean>(false);
 
     const handleAvatarUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -16,13 +17,26 @@ const ChangeAvatar: React.FC = () => {
         }
     };
 
-    const handleImagePerfil = () => {
-        // Lógica para salvar a imagem do perfil
-    };
 
+    
+
+    const handleImagePerfil = () => {
+        if (file !== null) {
+            ImagemPerfilUsuarioService.createImagemPerfilUsuario(file)
+                .then((result) => {
+                    if (result === true) {
+                        alert("Imagem de perfil usuário incluída com sucesso");
+                    }
+                });
+        } else {
+            alert('Nenhuma imagem foi carregada!');
+        }
+    };
+    
     return (
         <Box
-            gap={1}            
+            gap={1}
+            margin={1}
             padding={1}
             paddingX={2}
             height="100%"
