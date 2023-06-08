@@ -11,6 +11,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAuthContext, useDrawerContext } from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
+import Saldo from './Saldo';
 
 interface IListItemLinkProps {
     to: string,
@@ -68,6 +69,8 @@ export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => 
                             sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
                             src="/assets/Foto_20180912-162041SATURADA.png" />
                     </Box>
+                    <Divider />
+                    <Saldo />
                     <Divider />
                     <Box flex={1}>
                         <List component="nav" >

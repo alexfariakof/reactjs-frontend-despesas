@@ -30,10 +30,11 @@ const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise
     }
 };
 
-const getSaldoByIdUsuario = async (idUsuario: number): Promise<any | ILancamentoVM[] |  Error> => {
+const getSaldoByIdUsuario = async (): Promise<any> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get('/lancamento/saldo/$(idUsuario)', {headers: { Authorization: `Bearer ${accessToken}` }});
+        const idUsuario = Number(localStorage.getItem('idUsuario'));
+        const { data } = await Api.get('/lancamento/Saldo/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
