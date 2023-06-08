@@ -11,28 +11,27 @@ export interface ImagemPerfilUsuarioVM {
 }
 
 
-const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM> => {
+const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | undefined> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const idUsuario = Number(localStorage.getItem('idUsuario'));
     
         const url = `/ImagemPerfilUsuario/GetByIdUsuario/${idUsuario}`;
-    
+        
         const headers = {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'multipart/form-data',
-        };
-    
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'multipart/form-data',
+          };
+      
         const { data } = await Api.get(url, { headers });
     
-        if (data) {
-          return data;
+        if (data.message === true) {
+          return data.imagemPerfilUsuario;
         } else {
-          throw new Error('Erro ao incluir imagem de perfil do usuário!');
+            return undefined;
         }
       } catch (error) {
         console.log(error);
-        throw new Error((error as { message: string }).message || 'Erro ao incluir imagem de perfil do usuário!');
       }        
 
   };

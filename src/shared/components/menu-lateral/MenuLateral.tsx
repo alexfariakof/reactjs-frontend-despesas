@@ -56,7 +56,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick }
 
 export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => {
     const theme = useTheme();
-    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | null>(null);
+    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | undefined>(undefined);
     const { debounce } = useDebounce();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const { isDrawerOpen, toggleDrawerOpen, drawerOptions  } = useDrawerContext()
@@ -76,7 +76,7 @@ export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => 
                         <Avatar
                             alt="Alex Ribeiro"
                             sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                            src={imagemPerfilUsuario !== null ? imagemPerfilUsuario.url : "/assets/Foto_20180912-162041SATURADA.png"} />
+                            src={imagemPerfilUsuario !== undefined ? imagemPerfilUsuario.url : "/assets/imagem_Perfil.png"} />
                     </Box>
                     <Divider />
                     <Saldo />

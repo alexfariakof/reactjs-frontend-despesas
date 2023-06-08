@@ -9,7 +9,7 @@ const ChangeAvatar: React.FC = () => {
     const theme = useTheme();
     const [file, setFile] = useState<File | any>(null);
     const [fileLoaded, setFileLoaded] = useState<boolean>(false);
-    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | null>(null);
+    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | undefined>(undefined);
     const { debounce } = useDebounce();
     
     const handleAvatarUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ const ChangeAvatar: React.FC = () => {
                     <Avatar
                         alt="Alex Ribeiro"
                         sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                        src={imagemPerfilUsuario !== null ? imagemPerfilUsuario.url : "/assets/imagem_Perfil.png"} />
+                        src={imagemPerfilUsuario !== undefined ? imagemPerfilUsuario.url : "/assets/imagem_Perfil.png"} />
                 </InputLabel>
                 {fileLoaded && <span style={{ color: 'green', marginBottom:'1em' }}>Arquivo carregado com sucesso!</span>}
                 <input
