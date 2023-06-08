@@ -12,7 +12,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { ReceitasService, IReceitaVM, CategoriasService, ICategoriaVM } from '../shared/services/api';
-
+import { useDebounce } from '../shared/hooks';
 interface State {
     idUsuario: number;
     idCategoria: string;
@@ -23,6 +23,7 @@ interface State {
 
 export const Receitas: React.FC = () => {
     const navigate = useNavigate();
+    const { debounce } = useDebounce();
     const { id = 0 } = useParams<'id'>();
     const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);
     const [values, setValues] = useState<State>({
@@ -91,14 +92,19 @@ export const Receitas: React.FC = () => {
     }
 
     const handleEdit = (recetita: IReceitaVM)  => {
-        
-        setValues({
-            idUsuario: recetita.idUsuario,
-            idCategoria: recetita.idCategoria.toString(),
-            data: recetita.data,
-            descricao: recetita.descricao,
-            valor: recetita.valor       
+        CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
+        .then((result: any) => {
+            setCategorias(result);
+            setValues({
+                idUsuario: recetita.idUsuario,
+                idCategoria: recetita.idCategoria.toString(),
+                data: recetita.data,
+                descricao: recetita.descricao,
+                valor: recetita.valor       
+            });
         });
+
+ 
 
     }
 
@@ -111,28 +117,30 @@ export const Receitas: React.FC = () => {
             valor: 0                
         });
     }
-    
-    useEffect(() => {
-        CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
-          .then((result: any) => {
-                setCategorias(result);
-          });        
-   }, []);
 
     useEffect(() => {
-        if (id !== 0) {
-            ReceitasService.getById(Number(id))
-                .then((result) => {
-                    if (result instanceof Error) {
-                        alert(result.message);
-                        return false;
-                    }
-                    else {
-                        handleEdit(result);
-                        console.log(result.id);
-                    }
-                });
-        }
+        debounce(() => {
+            if (id !== 0) {
+                ReceitasService.getById(Number(id))
+                    .then((result) => {
+                        if (result instanceof Error) {
+                            alert(result.message);
+                            return false;
+                        }
+                        else {
+                            handleEdit(result);
+                            console.log(result.id);
+                        }
+                    });
+            }
+            else {
+                CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
+                    .then((result: any) => {
+                        setCategorias(result);
+                    });
+
+            }
+        });
     }, [id])
 
     return (

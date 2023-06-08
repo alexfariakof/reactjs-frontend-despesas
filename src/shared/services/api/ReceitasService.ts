@@ -15,9 +15,9 @@ export interface IReceitaVM {
 
 const generateFakeReceita = (): IReceitaVM => {
   return {
-    id: faker.datatype.number({'min': 1, 'max': 3 }),
+    id: faker.datatype.number({'min': 1, 'max': 1 }),
     idUsuario: 1,
-    idCategoria: faker.datatype.number({'min': 2, 'max': 15 }),
+    idCategoria: faker.datatype.number({'min': 9, 'max': 14 }),
     data: faker.date.recent() as unknown as Dayjs,
     descricao: faker.helpers.arrayElement(["Outros","Prêmio","Salário","Saúde","Serviços","Transporte"]),
     valor: faker.datatype.float(),

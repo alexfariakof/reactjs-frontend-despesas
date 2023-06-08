@@ -16,19 +16,18 @@ export const Lancamentos = () => {
     const [rows, setRows] = useState<(Omit<ILancamentoVM, 'id'>[])>([]);
 
     useEffect(() => {
-        return (() => {
-            debounce(() => {
-                LancamentosService.getByMesAnoByIdUsuario('2023-05', Number(localStorage.getItem('idUsuario')))
-                    .then((result) => {
-                        if (result instanceof Error) {
-                           alert(result.message);
-                        }
-                        else {
-                            setRows(result);
-                        }
-                    });
-            });
+        debounce(() => {
+            LancamentosService.getByMesAnoByIdUsuario('2023-05', Number(localStorage.getItem('idUsuario')))
+                .then((result) => {
+                    if (result instanceof Error) {
+                        alert(result.message);
+                    }
+                    else {
+                        setRows(result);
+                    }
+                });
         });
+
     }, [rows]);
 
     const handleDelete = (tipoCategoria: string, id: number) => {
@@ -126,10 +125,10 @@ export const Lancamentos = () => {
                             </TableRow>
                             <TableRow>
                                 <TableCell>                         
-                                    <IconButton size="small" onClick={() => handleDelete('Despesa', 3)  } >
+                                    <IconButton size="small" onClick={() => handleDelete('Despesa', 2)  } >
                                         <DeleteIcon />
                                     </IconButton >
-                                    <IconButton size="small" onClick={() => handleEdit('Despesa', 3)  } >
+                                    <IconButton size="small" onClick={() => handleEdit('Despesa', 2)  } >
                                         <EditIcon />
                                     </IconButton>
                                 </TableCell>
@@ -137,7 +136,7 @@ export const Lancamentos = () => {
                                 <TableCell>Despesas</TableCell>
                                 <TableCell>R$ 850,89</TableCell>
                                 <TableCell>Gastos Avuslsos </TableCell>
-                                <TableCell>Outrod</TableCell>
+                                <TableCell>Outros</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

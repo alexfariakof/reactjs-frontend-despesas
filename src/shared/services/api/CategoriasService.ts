@@ -12,7 +12,7 @@ export interface ICategoriaVM {
 
 const generateFakeCategoria = (): ICategoriaVM => {
   return {
-    id: faker.datatype.number({'min': 2, 'max': 15 }),
+    id: faker.datatype.number({'min': 2, 'max': 14 }),
     descricao: faker.helpers.arrayElement(["Alimentação","Benefício","Casa","Imposto","Investimento","Lazer","Outros","Prêmio","Salário","Saúde","Serviços","Transporte"]),
     idUsuario: 1,
     idTipoCategoria: faker.datatype.number({'min': 1, 'max': 2 }),
@@ -63,8 +63,31 @@ const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): P
     // Simulating API call delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const fakeCategorias: ICategoriaVM[] = Array.from({ length: 3 }, () => generateFakeCategoria());
-    return fakeCategorias;
+    if (idTipoCategoria === 1) {
+        const categorias: ICategoriaVM[] = [
+            { id: 2, descricao: "Alimentação", idUsuario: 1, idTipoCategoria: 1 },
+            { id: 3, descricao: "Benefício", idUsuario: 1, idTipoCategoria: 1 },
+            { id: 4, descricao: "Casa", idUsuario: 1, idTipoCategoria: 1 },
+            { id: 5, descricao: "Imposto", idUsuario: 1, idTipoCategoria: 1 },
+            { id: 6, descricao: "Investimento", idUsuario: 1, idTipoCategoria: 1 },
+            { id: 7, descricao: "Lazer", idUsuario: 1, idTipoCategoria: 1 },
+            { id: 8, descricao: "Outros", idUsuario: 1, idTipoCategoria: 1 },
+        ];
+
+        return categorias;
+    }
+    else{
+      const categorias: ICategoriaVM[] = [
+
+          { id: 9, descricao: "Prêmio", idUsuario: 1, idTipoCategoria: 2 },
+          { id: 10, descricao: "Salário", idUsuario: 1, idTipoCategoria: 2 },
+          { id: 11, descricao: "Saúde", idUsuario: 1, idTipoCategoria: 2 },
+          { id: 12, descricao: "Serviços", idUsuario: 1, idTipoCategoria: 2 },
+          { id: 13, descricao: "Transporte", idUsuario: 1, idTipoCategoria: 2 },
+          { id: 14, descricao: "Outros", idUsuario: 1, idTipoCategoria: 2 }
+        ];
+      return categorias;
+    }
   } catch (error) {
     console.log(error);
     return Error('Erro getByTipoCategoria ao pesquisar Categorias.');

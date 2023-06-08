@@ -15,9 +15,9 @@ export interface IDespesaVM {
 
 const generateFakeDespesa = (): IDespesaVM => {
     return {
-      id: faker.datatype.number({'min': 1, 'max': 3 }),
+      id: faker.datatype.number({'min': 1, 'max': 2 }),
       idUsuario: 1,
-      idCategoria: faker.datatype.number({'min': 2, 'max': 15 }),
+      idCategoria: faker.datatype.number({'min': 2, 'max': 8 }),
       data: faker.date.past() as unknown as Dayjs,
       descricao: faker.helpers.arrayElement(["Alimentação","Benefício","Casa", "Imposto","Investimento", "Lazer", "Outros"]), 
       valor: faker.datatype.number(),
