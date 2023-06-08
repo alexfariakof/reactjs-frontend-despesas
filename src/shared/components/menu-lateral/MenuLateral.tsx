@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import HomeIcon from '@mui/icons-material/Home';
@@ -12,6 +12,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAuthContext, useDrawerContext } from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import Saldo from './Saldo';
+import { useDebounce } from '../../hooks/UseDebounce';
+import { ImagemPerfilUsuarioService } from '../../services/api/ImagemPerfilUsuarioService';
+import { string } from 'yargs';
 
 interface IListItemLinkProps {
     to: string,
@@ -22,7 +25,6 @@ interface IListItemLinkProps {
 
 const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick }) => {
     const navigate = useNavigate();
-
     const resolvedPath = useResolvedPath(to);
     const match = useMatch({ path: resolvedPath.pathname, end: false })
 
@@ -56,9 +58,18 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick }
 
 export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => {
     const theme = useTheme();
+    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<string | null>(null);
+    const { debounce } = useDebounce();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
     const { isDrawerOpen, toggleDrawerOpen, drawerOptions  } = useDrawerContext()
     const { logout } = useAuthContext();
+
+    useEffect(() => {
+        debounce(async () => {
+            setImagemPerfilUsuario(await ImagemPerfilUsuarioService.getImagemPerfilUsuarioByIdUsuario());
+        });
+    });
+
     return (
         <>
             <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'permanent'} onClose={toggleDrawerOpen} >
@@ -67,7 +78,7 @@ export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => 
                         <Avatar
                             alt="Alex Ribeiro"
                             sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                            src="/assets/Foto_20180912-162041SATURADA.png" />
+                            src={imagemPerfilUsuario !== null ? imagemPerfilUsuario : "/assets/Foto_20180912-162041SATURADA.png"} />
                     </Box>
                     <Divider />
                     <Saldo />

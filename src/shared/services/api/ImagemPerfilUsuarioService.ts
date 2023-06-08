@@ -1,10 +1,6 @@
 import createApiInstance from "../axios-config";
 const Api = createApiInstance();
 
-export interface IImagemPerfilUsaurio {
-  file: ArrayBuffer;
-}
-
 const createImagemPerfilUsuario = async (file: File): Promise<any> => {
     try {
       const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
@@ -32,7 +28,33 @@ const createImagemPerfilUsuario = async (file: File): Promise<any> => {
     }
   }; 
 
+  const getImagemPerfilUsuarioByIdUsuario = async (): Promise<any> => {
+    try {
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const idUsuario = Number(localStorage.getItem('idUsuario'));
+    
+        const url = `/ImagemPerfilUsuario/GetByIdUsuario/${idUsuario}`;
+    
+        const headers = {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        };
+    
+        const { data } = await Api.get(url, { headers });
+    
+        if (data) {
+          return data;
+        } else {
+          throw new Error('Erro ao incluir imagem de perfil do usuário!');
+        }
+      } catch (error) {
+        console.log(error);
+        throw new Error((error as { message: string }).message || 'Erro ao incluir imagem de perfil do usuário!');
+      }        
+
+  };
 
 export const ImagemPerfilUsuarioService = {
-  createImagemPerfilUsuario
+  createImagemPerfilUsuario,
+  getImagemPerfilUsuarioByIdUsuario
 };
