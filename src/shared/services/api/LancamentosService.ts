@@ -21,28 +21,21 @@ const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise
         if (data) {
             return data;
         }
-
-        return Error('Erro ao pesquisar lançãmentos por ano mes.');
-    } catch (error) {
-
+    } 
+    catch (error) {
          console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao pesquisar lançamentos por ano mes.');
     }
 };
 
-const getSaldoByIdUsuario = async (): Promise<any> => {
+const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const idUsuario = Number(localStorage.getItem('idUsuario'));
         const { data } = await Api.get('/lancamento/Saldo/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
-        if (data) {
-            return data;
-        }
-
-        return Error('Erro ao pesquisar lançamentos por usuário.');
-    } catch (error) {
+        return data;
+    } 
+    catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao pesquisar lançamentos por usuário.');
     }
 };
 

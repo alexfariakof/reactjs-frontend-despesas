@@ -227,6 +227,7 @@ export const Despesas: React.FC = () => {
                         startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                         label="Valor"
                         type="number"
+                        
                     />
                 </FormControl>
             </Box>
