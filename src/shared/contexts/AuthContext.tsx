@@ -20,11 +20,15 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
     useEffect(() => {
         const accessToken = localStorage.getItem('@dpApiAccess');
-
-        if(accessToken){
-            setAccessToken(JSON.parse(accessToken));
+        try {
+            if (accessToken) {
+                setAccessToken(JSON.parse(accessToken));
+            }
+            else {
+                localStorage.clear();
+            }
         }
-        else{
+        catch {
             localStorage.clear();
         }
     }, []);
@@ -67,7 +71,14 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     }, []);
 
 
-    const handleIsAuthenticated = useMemo(() => !!accessToken, [accessToken]);
+    const handleIsAuthenticated = useMemo(() => {
+        try {
+          return !!accessToken;
+        } catch  {
+            localStorage.clear();
+            return false;
+        }
+      }, [accessToken]);
 
     return (
         <AuthContext.Provider value={{
