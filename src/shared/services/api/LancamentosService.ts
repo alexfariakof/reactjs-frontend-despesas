@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import  createApiInstance   from "../axios-config";
 const Api = createApiInstance();
 
@@ -14,10 +15,10 @@ export interface ILancamentoVM {
     tipoCategoria: string;
 } 
 
-const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise<any> => {
+const getByMesAnoByIdUsuario = async (mesano: Dayjs | null | undefined, idUsuario:number): Promise<any> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const  { data } = await Api.get('/lancamento/' + mesano + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        const  { data } = await Api.get('/lancamento/' + mesano?.toISOString() + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }

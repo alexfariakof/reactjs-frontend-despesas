@@ -7,28 +7,41 @@ import { useDebounce } from '../shared/hooks';
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { useNavigate } from 'react-router-dom';
+import dayjs, { Dayjs } from 'dayjs';
 
 
 export const Lancamentos = () => {
     const navigate = useNavigate();
-    const { debounce } = useDebounce(true);
+    const { debounce } = useDebounce(false,undefined, true);
     const theme = useTheme();
+    const [mesAno, setMesAno] = useState<Dayjs | null | undefined>(dayjs());
     const [rows, setRows] = useState<(Omit<ILancamentoVM, 'id'>[])>([]);
-
-    useEffect(() => {
-        debounce(() => {
-            LancamentosService.getByMesAnoByIdUsuario('2023-05', Number(localStorage.getItem('idUsuario')))
-                .then((result) => {
-                    if (result instanceof Error) {
-                        alert(result.message);
-                    }
-                    else {
-                        setRows(result);
-                    }
-                });
+    
+    const  handleAtualizarLancamento = (valorMesAno: Dayjs | null | undefined) => {
+        setMesAno(valorMesAno);
+        LancamentosService.getByMesAnoByIdUsuario(valorMesAno , Number(localStorage.getItem('idUsuario')))
+        .then((result) => {
+            if (result instanceof Error) {
+                alert(result.message);
+            }
+            else {
+                setRows(result);
+            }
         });
+    }
+   
+    useEffect(() => {        
+        debounce(() => LancamentosService.getByMesAnoByIdUsuario(mesAno , Number(localStorage.getItem('idUsuario')))
+            .then((result) => {
+                if (result instanceof Error) {
+                    alert(result.message);
+                }
+                else {
+                    setRows(result);
+                }
+            }));
 
-    }, [debounce, rows]);
+    }, [debounce, mesAno, rows]);
     
     const handleDelete = (tipoCategoria: string, id: number) => {
         if(tipoCategoria === 'Despesa') {
@@ -64,7 +77,13 @@ export const Lancamentos = () => {
     return (
         <LayoutMasterPage titulo='Lançamentos'
             barraDeFerramentas={(
-                <BarraFerramentas isOpenDataMesAno={true}  btnNovo={false} btnSalvar={false} />
+                <BarraFerramentas 
+                isOpenDataMesAno={true}                 
+                btnAtualizar={true} 
+                btnVoltar ={true}
+                handleAtualizarLancamento={handleAtualizarLancamento}
+                btnNovo={false} 
+                btnSalvar={false} />
             )}
         >
 
