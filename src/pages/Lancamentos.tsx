@@ -14,12 +14,12 @@ export const Lancamentos = () => {
     const navigate = useNavigate();
     const { debounce } = useDebounce(false,undefined, true);
     const theme = useTheme();
-    const [mesAno, setMesAno] = useState<Dayjs | null | undefined>(dayjs());
+    const [lancamentoMesAno, setLancamentoMesAno] = useState<Dayjs>(dayjs());
     const [rows, setRows] = useState<(Omit<ILancamentoVM, 'id'>[])>([]);
     
-    const  handleAtualizarLancamento = (valorMesAno: Dayjs | null | undefined) => {
-        setMesAno(valorMesAno);
-        LancamentosService.getByMesAnoByIdUsuario(valorMesAno , Number(localStorage.getItem('idUsuario')))
+    const handleAtualizarLancamento = (valorMesAno: Dayjs) => {
+        setLancamentoMesAno(valorMesAno);
+        LancamentosService.getByMesAnoByIdUsuario(valorMesAno, Number(localStorage.getItem('idUsuario')))
         .then((result) => {
             if (result instanceof Error) {
                 alert(result.message);
@@ -31,7 +31,7 @@ export const Lancamentos = () => {
     }
    
     useEffect(() => {        
-        debounce(() => LancamentosService.getByMesAnoByIdUsuario(mesAno , Number(localStorage.getItem('idUsuario')))
+        debounce(() => LancamentosService.getByMesAnoByIdUsuario(lancamentoMesAno , Number(localStorage.getItem('idUsuario')))
             .then((result) => {
                 if (result instanceof Error) {
                     alert(result.message);
@@ -41,7 +41,7 @@ export const Lancamentos = () => {
                 }
             }));
 
-    }, [debounce, mesAno, rows]);
+    }, [debounce, lancamentoMesAno, rows]);
     
     const handleDelete = (tipoCategoria: string, id: number) => {
         if(tipoCategoria === 'Despesa') {

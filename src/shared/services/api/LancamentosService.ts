@@ -15,10 +15,11 @@ export interface ILancamentoVM {
     tipoCategoria: string;
 } 
 
-const getByMesAnoByIdUsuario = async (mesano: Dayjs | null | undefined, idUsuario:number): Promise<any> => {
+const getByMesAnoByIdUsuario = async (mesano: Dayjs, idUsuario:number): Promise<any> => {
     try {
+        var mesAno = mesano.toISOString().substring(0, 7);
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const  { data } = await Api.get('/lancamento/' + mesano?.toISOString() + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        const  { data } = await Api.get('/lancamento/' + mesAno + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
