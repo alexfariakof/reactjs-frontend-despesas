@@ -14,7 +14,7 @@ interface IBarraFerramentasProps {
     textBusca?: string;
     isOpenTxtBusca?: boolean;
     isOpenDataMesAno?: boolean;
-    handleChangeMesAno?: (value: Dayjs | null | undefined) => void;
+    handleChangeMesAno?: (value: Dayjs) => void;
     btnSalvar?: boolean;
     btnNovo?: boolean;
     btnVoltar?: boolean;
@@ -22,7 +22,7 @@ interface IBarraFerramentasProps {
     onClickSalvar?: () => void;
     onClickNovo?: () => void;
     onClickVoltar?: () => void;
-    handleAtualizarLancamento?: (valorMesAno: Dayjs | null | undefined) => void;
+    handleAtualizarLancamento?: (valorMesAno: Dayjs) => void;
     geTextBuscaValue?: () => any;
     seTextBuscaValue?: (MesAno: any) => void
 
@@ -46,8 +46,8 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
 }) => {
 
     const theme = useTheme();
-    const [mesAno, setMesAno] = useState<Dayjs | null | undefined>(dayjs());
-    const handleChangeMesAno = (value: Dayjs | null | undefined) => {
+    const [mesAno, setMesAno] = useState<any>(dayjs());
+    const handleChangeMesAno = (value: any) => {
         setMesAno(value);
     };    
 
