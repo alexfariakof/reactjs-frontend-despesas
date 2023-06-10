@@ -12,7 +12,7 @@ import { useAuthContext, useDrawerContext } from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import { useDebounce } from '../../hooks/UseDebounce';
 import { ImagemPerfilUsuarioService, ImagemPerfilUsuarioVM } from '../../services/api/ImagemPerfilUsuarioService';
-
+import Saldo from './Saldo';
 
 interface IListItemLinkProps {
     to: string,
@@ -79,7 +79,7 @@ export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => 
                             src={imagemPerfilUsuario !== undefined ? imagemPerfilUsuario.url : "/assets/imagem_Perfil.png"} />
                     </Box>
                     <Divider />
-
+                    <Saldo />
                     <Divider />
                     <Box flex={1}>
                         <List component="nav" >
