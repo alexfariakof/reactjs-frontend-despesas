@@ -32,8 +32,8 @@ export const Despesas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs('2014-08-18T21:11:54'),
-        dtVencimento: dayjs('2014-08-18T21:11:54')
+        data: dayjs(),
+        dtVencimento: null
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,7 +152,7 @@ export const Despesas: React.FC = () => {
             titulo='Despesas'
             barraDeFerramentas={(
                 <BarraFerramentas
-                    isOpenTxtBusca={true}
+                    isOpenTxtBusca={false}
                     btnVoltar onClickVoltar={() => navigate('/lancamentos')}
                     btnNovo onClickNovo={() => handleClear()} 
                     btnSalvar onClickSalvar={() => handleSave() }

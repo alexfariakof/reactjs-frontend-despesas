@@ -31,7 +31,7 @@ export const Receitas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs('2014-08-18T21:11:54'),
+        data: dayjs(),
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +143,7 @@ export const Receitas: React.FC = () => {
             titulo='Receitas'
             barraDeFerramentas={(
                 <BarraFerramentas
-                    isOpenTxtBusca={true}
+                    isOpenTxtBusca={false}
                     btnVoltar onClickVoltar={() => navigate('/lancamentos')}
                     btnNovo onClickNovo={() => handleClear()} 
                     btnSalvar onClickSalvar={() => handleSave()} />

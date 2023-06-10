@@ -37,10 +37,10 @@ const daysOfWeek: DaysOfWeek  = {
 
 const Relogio: React.FC  = () => {
     const [time, setTime] = useState<string | null>(null);
-    const [semana, setSemana] = useState<string>(dayjs().format('dddd'));
-    const [dia, setDia] = useState<string>(dayjs().format('DD'));
-    const [mes, setMes] = useState<string>(dayjs().format('MMMM'));
-    const [ano, setAno] = useState<string>(dayjs().format('YYYY'));
+    const [semana] = useState<string>(dayjs().format('dddd'));
+    const [dia] = useState<string>(dayjs().format('DD'));
+    const [mes] = useState<string>(dayjs().format('MMMM'));
+    const [ano] = useState<string>(dayjs().format('YYYY'));
 
     useEffect(() => {
         const interval = setInterval(() => {
