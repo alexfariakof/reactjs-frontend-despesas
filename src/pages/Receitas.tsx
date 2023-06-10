@@ -91,8 +91,11 @@ export const Receitas: React.FC = () => {
         }
     }
 
-    const handleEdit = (recetita: IReceitaVM)  => {
-        
+    const handleEdit = async (recetita: IReceitaVM)  => {
+        await CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
+        .then((result: any) => {
+            setCategorias(result);
+        });
         setValues({
             idUsuario: recetita.idUsuario,
             idCategoria: recetita.idCategoria.toString(),

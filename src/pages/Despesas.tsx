@@ -98,8 +98,11 @@ export const Despesas: React.FC = () => {
         }
     }
 
-    const handleEdit = (desp: IDespesaVM)  => {
-        
+    const handleEdit = async (desp: IDespesaVM)  => {
+        await CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 1)
+        .then((result: any) => {
+            setCategorias(result);
+        });
         setValues({
             idUsuario: desp.idUsuario,
             idCategoria: desp.idCategoria.toString(),
