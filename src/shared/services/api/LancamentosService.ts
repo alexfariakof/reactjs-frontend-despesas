@@ -41,7 +41,23 @@ const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     }
 };
 
+const getDadosGraficoByAnoByIdUsuario = async (mesano: Dayjs | null, idUsuario:number): Promise<any | []> => {
+    try {
+        var mesAno = mesano?.toISOString().substring(0, 7);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const  { data } = await Api.get('/lancamento/GetDadosGraficoByAnoByIdUsuario/' + mesAno + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        if (data) {
+            return data;
+        }
+    } 
+    catch (error) {
+         console.log(error);
+    }
+
+};
+
 export const LancamentosService = {
     getByMesAnoByIdUsuario,
     getSaldoByIdUsuario,
+    getDadosGraficoByAnoByIdUsuario
 };

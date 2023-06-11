@@ -23,10 +23,9 @@ interface IBarraFerramentasProps {
     onClickNovo?: () => void;
     onClickVoltar?: () => void;
     handleAtualizarLancamento?: (valorMesAno: Dayjs) => void;
-    geTextBuscaValue?: () => any;
-    seTextBuscaValue?: (MesAno: any) => void
-
-
+    isOpenDataAno?: boolean;
+    btnAtualizarGrafico?: boolean;
+    handleAtualizarGrafico?: (valorAno: Dayjs) => void;
 };
 
 export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
@@ -38,6 +37,9 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
     btnNovo = true,
     btnVoltar = true,
     btnAtualizar = false,    
+    isOpenDataAno = false,
+    btnAtualizarGrafico = false,
+    handleAtualizarGrafico,
     handleAtualizarLancamento,
     onClickSalvar,
     onClickNovo,
@@ -47,9 +49,13 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
 
     const theme = useTheme();
     const [mesAno, setMesAno] = useState<any>(dayjs());
+    const [ano, setAno] = useState<any>(dayjs());
     const handleChangeMesAno = (value: any) => {
         setMesAno(value);
     };    
+    const handleChangeAno = (value: any) => {
+        setAno(value);
+    }
 
     return (
         <Box height={theme.spacing(5)} marginX={1} padding={1} paddingX={2} display="flex" alignItems="center" gap={1} component={Paper} >
@@ -78,6 +84,33 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                     startIcon={<AutorenewIcon />}
                     onClick={() => handleAtualizarLancamento && handleAtualizarLancamento(mesAno)}
                     style={{ width: "auto" }}
+                ></Button>
+            )}
+             {isOpenDataAno && (
+                <FormControl   >
+                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                        <Stack spacing={3} >
+                            <DesktopDatePicker
+                                label="Ano"
+                                value={ano}
+                                openTo="year"
+                                inputFormat="YYYY"
+                                onChange={handleChangeAno}
+                                renderInput={(params) => <TextField size="small" {...params} />}
+                            />
+                        </Stack>
+                    </LocalizationProvider>
+                </FormControl>
+            )}
+            {btnAtualizarGrafico && (
+                <Button
+                    size="small"
+                    variant="contained"
+                    color="success"
+                    disableElevation
+                    startIcon={<AutorenewIcon />}
+                    onClick={() => handleAtualizarGrafico && handleAtualizarGrafico(ano)}
+                    style={{ width: "auto", padding:0 }}
                 ></Button>
             )}
             {isOpenTxtBusca && (
