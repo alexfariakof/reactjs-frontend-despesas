@@ -79,28 +79,17 @@ export const data = {
 
 
 export const BarCharts: React.FC = () => {
-   const [chartHeight, setChartHeight] = useState(0);
    const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
    
     useEffect(() => {
-        const handleResize = () => {
-          setChartHeight(window.innerHeight * 0.8); // Define a altura do gráfico como 80% da altura da janela
-        };
-    
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Define a altura do gráfico ao montar o componente
-    
-        return () => {
-          window.removeEventListener('resize', handleResize);
-        };
       }, []);
 
 
     return (
         smDown ?
-            <Bar height={chartHeight} options={optionsRight} data={data}  />
+            <Bar height={"120vw"} options={optionsRight} data={data}  />
             :
-            <Bar height={chartHeight} options={optionsTop} data={data} />
+            <Bar height={"120vw"} options={optionsTop} data={data} />
     );
 
 };

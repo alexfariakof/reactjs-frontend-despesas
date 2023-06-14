@@ -9,9 +9,10 @@ interface ILayoutMasterPageProps {
     children: React.ReactNode;
     titulo: string;
     barraDeFerramentas?: React.ReactNode;
+    height?: null | any;
 }
 
-export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, titulo, barraDeFerramentas }) => {
+export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, titulo, barraDeFerramentas, height }) => {
     const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
     const theme = useTheme();
     const { toggleDrawerOpen } = useDrawerContext();
@@ -44,7 +45,7 @@ export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, t
                 )
             }
 
-            <Box height="100%" width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' >
+            <Box height={height !== null ? height : "100%"} width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' >
                 {children}
             </Box>
         </Box >

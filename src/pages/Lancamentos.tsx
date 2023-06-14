@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export const Lancamentos = () => {
     const navigate = useNavigate();
     const { debounce } = useDebounce();
+    const [height, setHeight] = useState(0);    
     const theme = useTheme();
     const [rows, setRows] = useState<(Omit<ILancamentoVM, 'id'>[])>([]);
 
@@ -27,6 +28,17 @@ export const Lancamentos = () => {
                     }
                 });
         });
+
+        const handleResize = () => {
+            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Define a altura ao montar o componente
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
 
     }, [rows]);
 
@@ -62,7 +74,7 @@ export const Lancamentos = () => {
 };
 
     return (
-        <LayoutMasterPage titulo='Lançamentos'
+        <LayoutMasterPage titulo='Lançamentos' height={height}
             barraDeFerramentas={(
                 <BarraFerramentas isOpenDataMesAno={true}  btnNovo={false} btnSalvar={false} />
             )}
