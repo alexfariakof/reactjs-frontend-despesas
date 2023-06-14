@@ -2,11 +2,17 @@ import { LayoutMasterPage } from '../shared/layouts';
 import { Box, Paper } from '@mui/material';
 
 import { BarCharts, BarraFerramentas } from '../shared/components';
+import dayjs, { Dayjs } from 'dayjs';
+import { useEffect, useState } from 'react';
 
 export const Dashboard = () => {
+    const [valorAno, setValorAno] = useState<Dayjs | null>(dayjs());
     const [height, setHeight] = useState(0);    
-    
-    useEffect(() => {
+    const handleAtualizarGraficoDados = (valorAno:Dayjs) => {
+        setValorAno(valorAno);
+     };
+
+     useEffect(() => {
         const handleResize = () => {
             setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
         };
@@ -24,7 +30,14 @@ export const Dashboard = () => {
         <LayoutMasterPage 
         titulo='Dashboard'  height={height}
         barraDeFerramentas={(
-            <BarraFerramentas isOpenDataMesAno={true} btnSalvar={false} btnNovo={false} btnVoltar={false}  />
+            <BarraFerramentas  
+            isOpenDataAno={true}
+            btnNovo={false}
+            btnSalvar={false}
+            btnVoltar={false}
+            btnAtualizarGrafico={true}
+            handleAtualizarGrafico={handleAtualizarGraficoDados}
+            />
           )}
         > 
             <Box gap={1}
@@ -38,16 +51,8 @@ export const Dashboard = () => {
                 component={Paper} 
                 flexGrow={1}
                 >
-                    <BarCharts  />
+                    <BarCharts   />
             </Box>
         </LayoutMasterPage>
     );
 }
-function useEffect(arg0: () => () => void, arg1: never[]) {
-    throw new Error('Function not implemented.');
-}
-
-function useState(arg0: number): [any, any] {
-    throw new Error('Function not implemented.');
-}
-

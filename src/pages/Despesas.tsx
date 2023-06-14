@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Box, Button, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
-import { Save } from '@mui/icons-material';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -33,8 +32,8 @@ export const Despesas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs('2014-08-18T21:11:54'),
-        dtVencimento: dayjs('2014-08-18T21:11:54')
+        data: dayjs(dayjs()),
+        dtVencimento: dayjs(dayjs())
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +48,7 @@ export const Despesas: React.FC = () => {
         setValues({...values, data: newValue })
     };
 
-    const handleChangeDataVencimento = (newValue: Dayjs | null) => {
+    const handleChangeDataVencimento = (newValue: Dayjs| null) => {
         setValues({...values, dtVencimento: newValue })
     };
 
@@ -106,9 +105,9 @@ export const Despesas: React.FC = () => {
             setValues({
                 idUsuario: desp.idUsuario,
                 idCategoria: desp.idCategoria.toString(),
-                data: desp.data,
+                data: desp?.data,
                 descricao: desp.descricao,
-                dtVencimento: desp.dataVencimento,
+                dtVencimento: desp?.dataVencimento,
                 valor: desp.valor       
             });
     
@@ -119,9 +118,9 @@ export const Despesas: React.FC = () => {
         setValues({
             ...values,
             idCategoria: '0',
-            data: dayjs('2014-08-18T21:11:54'),
+            data: dayjs(dayjs()),
             descricao: '',
-            dtVencimento: dayjs('2014-08-18T21:11:54'), 
+            dtVencimento: dayjs(dayjs()), 
             valor: 0                
         });
     }
@@ -151,7 +150,7 @@ export const Despesas: React.FC = () => {
             titulo='Despesas' height={height}
             barraDeFerramentas={(
                 <BarraFerramentas
-                    isOpenTxtBusca={true}
+                    isOpenTxtBusca={false}
                     btnVoltar onClickVoltar={() => navigate('/lancamentos')}
                     btnNovo onClickNovo={() => handleClear()} 
                     btnSalvar onClickSalvar={() => handleSave() }
@@ -193,7 +192,7 @@ export const Despesas: React.FC = () => {
                             <DesktopDatePicker
                                 label="Data"
                                 inputFormat="DD/MM/YYYY"
-                                value={values.data}
+                                value={values?.data?.toISOString()}
                                 onChange={handleChangeData}
                                 renderInput={(params) => <TextField {...params} />}
                             />
@@ -210,7 +209,7 @@ export const Despesas: React.FC = () => {
                             <DesktopDatePicker
                                 label="Data de Vencimento"
                                 inputFormat="DD/MM/YYYY"
-                                value={values.dtVencimento}
+                                value={values?.dtVencimento?.toISOString()}
                                 onChange={handleChangeDataVencimento}
                                 renderInput={(params) => <TextField {...params} />}
                             />

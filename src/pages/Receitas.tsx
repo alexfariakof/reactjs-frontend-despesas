@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Box, Button, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
+import { useNavigate, useParams  } from 'react-router-dom';
+import { Box,  FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
-import { Save } from '@mui/icons-material';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -32,7 +31,7 @@ export const Receitas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs('2014-08-18T21:11:54'),
+        data: dayjs(),
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,7 +112,7 @@ export const Receitas: React.FC = () => {
         setValues({
             ...values,
             idCategoria: '0',
-            data: dayjs('2014-08-18T21:11:54'),
+            data: dayjs(),
             descricao: '',
             valor: 0                
         });
@@ -161,7 +160,7 @@ export const Receitas: React.FC = () => {
             titulo='Receitas' height={height}
             barraDeFerramentas={(
                 <BarraFerramentas
-                    isOpenTxtBusca={true}
+                    isOpenTxtBusca={false}
                     btnVoltar onClickVoltar={() => navigate('/lancamentos')}
                     btnNovo onClickNovo={() => handleClear()} 
                     btnSalvar onClickSalvar={() => handleSave()} />

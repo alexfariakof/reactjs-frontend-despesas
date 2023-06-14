@@ -76,7 +76,11 @@ export const Lancamentos = () => {
     return (
         <LayoutMasterPage titulo='Lançamentos' height={height}
             barraDeFerramentas={(
-                <BarraFerramentas isOpenDataMesAno={true}  btnNovo={false} btnSalvar={false} />
+                <BarraFerramentas 
+                isOpenDataMesAno={true}  
+                btnAtualizar={true}
+                btnNovo={false} 
+                btnSalvar={false} />
             )}
         >
 
@@ -85,7 +89,7 @@ export const Lancamentos = () => {
                 margin={1}
                 padding={1}
                 paddingX={2}
-                height={theme.spacing}
+                height="100%"                
                 display="flex"
                 flexDirection="row"
                 alignItems="start"
