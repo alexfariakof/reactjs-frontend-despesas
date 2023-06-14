@@ -1,14 +1,16 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, ChangeEvent } from 'react';
 import { useAppThemeContext } from "../shared/contexts";
 import { Box, Typography, Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { LayoutMasterPage } from '../shared/layouts';
-import ChangeAvatar from '../shared/components/Configuracoes/ChangeAvatar';
 import ChangePassword from '../shared/components/Configuracoes/ChangePassword';
+import ChangeAvatar from '../shared/components/Configuracoes/ChangeAvatar';
+
 
 
 
 export const Configuracoes = () => {
-    
+    const [file, setFile] = useState<File | any>(null);
+    const [fileLoaded, setFileLoaded] = useState<boolean>(false);    
     const { toggleTheme } = useAppThemeContext();
     const [alignment, setAlignment] = useState('web');
 
@@ -17,6 +19,13 @@ export const Configuracoes = () => {
         toggleTheme();
     }
 
+    const handleAvatarUploaded = (event: ChangeEvent<HTMLInputElement>) => {
+        const uploadedFile = event.target.files?.[0];
+        if (uploadedFile) {
+          setFile(uploadedFile);
+          setFileLoaded(true);
+        }
+      };
 
     return (
         <LayoutMasterPage
@@ -48,7 +57,7 @@ export const Configuracoes = () => {
                     </ToggleButtonGroup>
                 </Box>
                 <ChangePassword />
-                <ChangeAvatar />
+                <ChangeAvatar handleAvatarUploaded={handleAvatarUploaded} />
             </Box>
         </LayoutMasterPage>
     );

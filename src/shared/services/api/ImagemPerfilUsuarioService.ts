@@ -11,7 +11,7 @@ export interface ImagemPerfilUsuarioVM {
 }
 
 
-const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | undefined> => {
+const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | any> => {
   try {
     const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
     const idUsuario = Number(localStorage.getItem('idUsuario'));
@@ -28,7 +28,7 @@ const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioV
     if (data.message === true) {
       return data.imagemPerfilUsuario;
     } else {
-      return undefined;
+      return null;
     }
   }
   catch (error) {
@@ -88,9 +88,35 @@ const updateImagemPerfilUsuario = async (file: File): Promise<any> => {
   }
 };
 
+const deleteImagemPerfilUsuario = async (): Promise<any> => {
+  try {
+    const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+    const idUsuario = Number(localStorage.getItem('idUsuario'));
+    const url = `/ImagemPerfilUsuario/${idUsuario}`;
+
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
+    };
+
+    const { data } = await Api.delete(url, { headers });
+
+    if (data) {
+      return data;
+    } else {
+      throw new Error('Erro ao alterar imagem de perfil do usuário!');
+    }
+  } 
+  catch (error) {
+    console.log(error);
+  }
+};
+
+
 
 export const ImagemPerfilUsuarioService = {
   getImagemPerfilUsuarioByIdUsuario,
   createImagemPerfilUsuario,
-  updateImagemPerfilUsuario
+  updateImagemPerfilUsuario,
+  deleteImagemPerfilUsuario
 };

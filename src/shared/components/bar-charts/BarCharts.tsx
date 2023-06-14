@@ -95,9 +95,9 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ handleAtualizarGrafico, v
         window.addEventListener('resize', handleResize);
         handleResize(); // Define a altura do gráfico ao montar o componente
 
-        debounce(() => {
+        debounce(async () => {
             setGraficoAno(valorAno);
-            LancamentosService.getDadosGraficoByAnoByIdUsuario(graficoAno, Number(localStorage.getItem('idUsuario')))
+            await LancamentosService.getDadosGraficoByAnoByIdUsuario(graficoAno, Number(localStorage.getItem('idUsuario')))
                 .then((result) => {
                     if (result) {
                         // Atualiza os dados do gráfico com os dados obtidos

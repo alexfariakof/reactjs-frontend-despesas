@@ -1,17 +1,23 @@
-/* eslint-disable react/style-prop-object */
 import { ChangeEvent, useEffect, useState } from "react";
 import { Avatar, Box, Button, InputLabel, Paper, Typography, useTheme } from "@mui/material";
 import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { ImagemPerfilUsuarioService, ImagemPerfilUsuarioVM } from "../../services/api";
 import { useDebounce } from "../../hooks/UseDebounce";
 
-const ChangeAvatar: React.FC = () => {
+interface ChangeAvatarProps {
+    handleAvatarUploaded?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+
+const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => {
     const theme = useTheme();
     const [file, setFile] = useState<File | any>(null);
     const [fileLoaded, setFileLoaded] = useState<boolean>(false);
-    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | undefined>(undefined);
+    const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | any>(null);
     const { debounce } = useDebounce();
-    
+    const [refreshAvatar, setRefreshAvatar] = useState<boolean>(false); 
+
     const handleAvatarUpload = (event: ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = event.target.files?.[0];
         if (uploadedFile) {
@@ -24,32 +30,57 @@ const ChangeAvatar: React.FC = () => {
         debounce(async () => {
             setImagemPerfilUsuario(await ImagemPerfilUsuarioService.getImagemPerfilUsuarioByIdUsuario());
         });
-    });
-    
+    }, [refreshAvatar]); 
 
     const handleImagePerfil = () => {
         if (file !== null) {
-            if (imagemPerfilUsuario == null) {
+            if (imagemPerfilUsuario === null) {
                 ImagemPerfilUsuarioService.createImagemPerfilUsuario(file)
                     .then((result) => {
-                        if (result === true) {
+                        if (result.message === true) {
                             alert("Imagem de perfil usuário incluída com sucesso");
+                            setRefreshAvatar(!refreshAvatar); 
+                            setFile(null); 
+                            setFileLoaded(false); 
+                            setImagemPerfilUsuario(result.imagemPerfilUsuario);
+                        }
+                    });
+            } else {
+                ImagemPerfilUsuarioService.updateImagemPerfilUsuario(file)
+                    .then((result) => {
+                        if (result.message === true) {
+                            alert("Imagem de perfil usuário alterada com sucesso");
+                            setRefreshAvatar(!refreshAvatar); 
+                            setFile(null); 
+                            setFileLoaded(false);                             
+                            setImagemPerfilUsuario(result.imagemPerfilUsuario);
                         }
                     });
             }
-            else{
-                ImagemPerfilUsuarioService.updateImagemPerfilUsuario(file)
-                .then((result) => {
-                    if (result === true) {
-                        alert("Imagem de perfil usuário alterada com sucesso");
-                    }
-                });
-            }
-        } else {
-            alert('Nenhuma imagem foi carregada!');
         }
     };
-    
+
+
+    const handleDeleteImagePerfil = async () => {
+        await ImagemPerfilUsuarioService.deleteImagemPerfilUsuario()
+            .then((result) => {
+                if (result.message === true) {
+                    alert("Imagem de perfil usuário excluída com sucesso");
+                    setRefreshAvatar(!refreshAvatar);
+                    setFile(null);
+                    setFileLoaded(false);
+                    setImagemPerfilUsuario(null);
+                }
+            });
+
+    };
+
+    const getRandomQueryParameter = (): string => {
+        return `?${Math.random().toString(36).substring(7)}`;
+    };
+
+    const avatarSrc = imagemPerfilUsuario !== null ? `${imagemPerfilUsuario.url}${getRandomQueryParameter()}` : "/assets/imagem_Perfil.png";
+
     return (
         <Box
             gap={1}
@@ -70,9 +101,11 @@ const ChangeAvatar: React.FC = () => {
                     <Avatar
                         alt="Alex Ribeiro"
                         sx={{ height: theme.spacing(12), width: theme.spacing(12) }}
-                        src={imagemPerfilUsuario !== undefined ? imagemPerfilUsuario.url : "/assets/imagem_Perfil.png"} />
+                        src={avatarSrc}
+                        key={refreshAvatar ? "avatar-refresh" : "avatar"} 
+                    />
                 </InputLabel>
-                {fileLoaded && <span style={{ color: 'green', marginBottom:'1em' }}>Arquivo carregado com sucesso!</span>}
+                {fileLoaded && <span style={{ color: 'green', marginBottom: '1em' }}>Arquivo carregado com sucesso!</span>}
                 <input
                     style={{ display: 'none' }}
                     id='upload-photo'
@@ -81,7 +114,7 @@ const ChangeAvatar: React.FC = () => {
                     accept="image/jpeg, image/png"
                     onChange={handleAvatarUpload}
                 />
-                
+
                 <br />
                 <Button
                     color='primary'
@@ -91,6 +124,16 @@ const ChangeAvatar: React.FC = () => {
                     onClick={handleImagePerfil}
                 >
                     Salvar
+                </Button>
+                <Button
+                    style={{ marginLeft: '2em' }}
+                    color='primary'
+                    disableElevation
+                    variant='contained'
+                    startIcon={<DeleteIcon />}
+                    onClick={handleDeleteImagePerfil}
+                >
+                    Excluir
                 </Button>
             </Box>
         </Box>
