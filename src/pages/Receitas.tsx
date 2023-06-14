@@ -24,6 +24,7 @@ interface State {
 export const Receitas: React.FC = () => {
     const navigate = useNavigate();
     const { debounce } = useDebounce(true);
+    const [height, setHeight] = useState(0);    
     const { id = 0 } = useParams<'id'>();
     const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);
     const [values, setValues] = useState<State>({
@@ -138,12 +139,24 @@ export const Receitas: React.FC = () => {
                     });
             }
         });
+
+        const handleResize = () => {
+            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+        };
+    
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Define a altura ao montar o componente
+    
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    
     }, [debounce, id])
 
     return (
 
         <LayoutMasterPage
-            titulo='Receitas'
+            titulo='Receitas' height={height}
             barraDeFerramentas={(
                 <BarraFerramentas
                     isOpenTxtBusca={false}
