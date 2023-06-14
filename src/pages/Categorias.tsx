@@ -152,7 +152,7 @@ export const Categorias: React.FC = () => {
       titulo='Categorias'
       barraDeFerramentas={(
         <BarraFerramentas
-          isOpenTxtBusca={true}
+          isOpenTxtBusca={false}
           btnVoltar onClickVoltar={() => navigate('/Categorias')}
           btnNovo onClickNovo={() => handleClear()}
           btnSalvar onClickSalvar={() => handleSave()} />

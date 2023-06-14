@@ -58,7 +58,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
     }
 
     return (
-        <Box height={theme.spacing(5)} marginX={1} padding={1} paddingX={2} display="flex" alignItems="center" gap={1} component={Paper} >
+        <Box height={theme.spacing(5)} padding={1} paddingX={2} display="flex" alignItems="center" gap={1} component={Paper} >
             {isOpenDataMesAno && (
                 <FormControl   >
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
