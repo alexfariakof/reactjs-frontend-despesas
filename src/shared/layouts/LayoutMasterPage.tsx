@@ -18,7 +18,7 @@ export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, t
     const { toggleDrawerOpen } = useDrawerContext();
 
     return (
-        <Box display="flex" flexDirection="column" height="100vh">
+        <Box display="flex" flexDirection="column" height="100vh" >
             <Box padding={1} display="flex" alignItems="center" height={theme.spacing(8)} >
                 {smDown && (
 
@@ -45,7 +45,7 @@ export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, t
                 )
             }
 
-            <Box height={height !== null ? height : "100%"} width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' >
+            <Box height={height !== null ? height : "100%"} width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' style={{overflow: 'auto'}} >
                 {children}
             </Box>
         </Box >
