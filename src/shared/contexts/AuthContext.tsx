@@ -39,9 +39,9 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
             localStorage.setItem('@dpApiAccess', JSON.stringify(result.accessToken));   
             setAccessToken(result);           
         }
+        */
         localStorage.setItem('idUsuario', '1');
         localStorage.setItem('@dpApiAccess', JSON.stringify(true));
-        */
         setAccessToken('true');           
         
 
