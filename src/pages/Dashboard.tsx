@@ -31,11 +31,11 @@ export const Dashboard = () => {
         titulo='Dashboard'  height={height}
         barraDeFerramentas={(
             <BarraFerramentas  
+            btnAtualizarGrafico={true}
             isOpenDataAno={true}
             btnNovo={false}
             btnSalvar={false}
-            btnVoltar={false}
-            btnAtualizarGrafico={true}
+            btnVoltar={false}            
             handleAtualizarGrafico={handleAtualizarGraficoDados}
             />
           )}

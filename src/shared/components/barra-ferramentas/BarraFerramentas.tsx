@@ -83,7 +83,13 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                     disableElevation
                     startIcon={<AutorenewIcon />}
                     onClick={() => handleAtualizarLancamento && handleAtualizarLancamento(mesAno)}
-                    style={{ width: "auto" }}
+                    style={{ width: "auto", height: "2rem" }}
+                    sx={{
+                        "@media (max-width: 600px)": {
+                            width: "100%",
+                            height: "3rem",
+                        },
+                    }}
                 ></Button>
             )}
              {isOpenDataAno && (
@@ -104,15 +110,21 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
             )}
             {btnAtualizarGrafico && (
                 <Button
-                    size="small"
-                    variant="contained"
-                    color="success"
-                    disableElevation
-                    startIcon={<AutorenewIcon />}
-                    onClick={() => handleAtualizarGrafico && handleAtualizarGrafico(ano)}
-                    style={{ width: "auto", padding:0 }}
-                ></Button>
-            )}
+                size="medium"
+                variant="contained"
+                color="success"
+                disableElevation
+                startIcon={<AutorenewIcon />}
+                onClick={() => handleAtualizarLancamento && handleAtualizarLancamento(mesAno)}
+                    style={{ width: "auto", height: "2rem" }}
+                    sx={{
+                        "@media (max-width: 600px)": {
+                            width: "100%",
+                            height: "3rem",
+                        },
+                    }}
+            ></Button>
+        )}
             {isOpenTxtBusca && (
                 <TextField size="small" placeholder="Pesquisar" />
             )}

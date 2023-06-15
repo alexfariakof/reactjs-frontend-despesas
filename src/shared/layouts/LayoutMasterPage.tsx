@@ -45,7 +45,7 @@ export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, t
                 )
             }
 
-            <Box height={height !== null ? height : "100%"}  width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' >
+            <Box height={height !== null ? height : "100%"}  width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F'  style={{overflow: 'auto'}} >
                 {children}
             </Box>
         </Box >
