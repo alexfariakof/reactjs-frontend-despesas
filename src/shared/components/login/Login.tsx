@@ -99,20 +99,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
   
 
     const handleSubmit = () => {
-        if (!values.email) {
-            alert("O campo de email está vazio ou nulo.");
-            setEmailError(true);
-            emailRef.current?.focus();
-            return false;
-        } else if (!isValidEmail(values.email)) {
-            alert("O email inserido não é um email válido.");
-            setEmailError(true);
-            emailRef.current?.focus();
-            return false;
-
-        } else {
-            login(values.email, values.password);
-        }        
+        login(values.email, values.password); 
     }
 
     const emailRef = useRef<HTMLInputElement | null>(null);
