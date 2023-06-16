@@ -55,32 +55,22 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ to, icon, label, onClick }
 
 export const MenuLateral: React.FC<React.PropsWithChildren> = ({ children }) => {
   const theme = useTheme();
-  const [file, setFile] = useState<File | any>(null);
-  const [fileLoaded, setFileLoaded] = useState<boolean>(false);    
   const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | null>(null);
-  const { debounce } = useDebounce();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext()
   const { logout } = useAuthContext();
 
   useEffect(() => {
-    debounce(async () => {
+    const fetchData = async () => {
       setImagemPerfilUsuario(await ImagemPerfilUsuarioService.getImagemPerfilUsuarioByIdUsuario());
-    });
+    }
+    fetchData();  
   }, []);
 
   const getRandomQueryParameter = (): string => {
     return `?${Math.random().toString(36).substring(7)}`;
-  };
-
-  const handleAvatarUploaded = () => {
-    debounce(async () => {
-      setImagemPerfilUsuario(await ImagemPerfilUsuarioService.getImagemPerfilUsuarioByIdUsuario());
-    });
-  };
-
+  };  
   const avatarSrc = imagemPerfilUsuario !== null ? `${imagemPerfilUsuario.url}${getRandomQueryParameter()}` : "/assets/imagem_Perfil.png";
-
 
   return (
     <>

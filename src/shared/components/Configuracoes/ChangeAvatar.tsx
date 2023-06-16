@@ -27,9 +27,10 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => 
     };
 
     useEffect(() => {
-        debounce(async () => {
+        const fetchData = async () => {
             setImagemPerfilUsuario(await ImagemPerfilUsuarioService.getImagemPerfilUsuarioByIdUsuario());
-        });
+        }
+        fetchData();
     }, [refreshAvatar]); 
 
     const handleImagePerfil = () => {

@@ -10,9 +10,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useMediaQuery, Theme, Box } from '@mui/material';
+import { useMediaQuery, Theme } from '@mui/material';
 import { LancamentosService } from '../../services/api/LancamentosService';
-import { useDebounce } from '../../hooks/UseDebounce';
 import { Dayjs } from 'dayjs';
 
 ChartJS.register(
