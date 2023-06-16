@@ -208,7 +208,6 @@ export const Categorias: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='center'>Ações</TableCell>
-                <TableCell>ID</TableCell>
                 <TableCell>Tipo</TableCell>
                 <TableCell>Descrição</TableCell>
               </TableRow>
@@ -216,183 +215,169 @@ export const Categorias: React.FC = () => {
             <TableBody>
                   <TableRow key="2">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(2, 1)}>
                         <Delete />
                       </IconButton>
                       <IconButton onClick={() => handleEdit(2)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{2}</TableCell>
                     <TableCell>Despesas</TableCell>
                     <TableCell>Alimentação</TableCell>
                   </TableRow>
                   <TableRow key="3">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(3, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(3)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{3}</TableCell>
                     <TableCell>Despesas</TableCell>
                     <TableCell>Casa</TableCell>
                   </TableRow>
                   <TableRow key="4">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(4, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(4)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{4}</TableCell>
-                    <TableCell>Desesas</TableCell>
+                    <TableCell>Despesas</TableCell>
                     <TableCell>Serviços</TableCell>
                   </TableRow>
                   <TableRow key="5">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(5, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(5)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{5}</TableCell>
-                    <TableCell>Desesas</TableCell>
+                    <TableCell>Despesas</TableCell>
                     <TableCell>Saúde</TableCell>
                   </TableRow>
                   <TableRow key="6">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(6, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(6)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{6}</TableCell>
-                    <TableCell>Desesas</TableCell>
+                    <TableCell>Despesas</TableCell>
                     <TableCell>Imposto</TableCell>
                   </TableRow>
                   <TableRow key="7">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(7, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(7)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{7}</TableCell>
-                    <TableCell>Desesas</TableCell>
+                    <TableCell>Despesas</TableCell>
                     <TableCell>Transporte</TableCell>
                   </TableRow>
                   <TableRow key="8">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(8, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(8)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{8}</TableCell>
-                    <TableCell>Desesas</TableCell>
+                    <TableCell>Despesas</TableCell>
                     <TableCell>Lazer</TableCell>
                   </TableRow>
                   <TableRow key="9">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(9, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(9)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{9}</TableCell>
-                    <TableCell>Desesas</TableCell>
+                    <TableCell>Despesas</TableCell>
                     <TableCell>Serviços</TableCell>
                   </TableRow>
                   <TableRow key="10">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(10, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(10)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{10}</TableCell>
-                    <TableCell>Desesas</TableCell>
+                    <TableCell>Despesas</TableCell>
                     <TableCell>Outros</TableCell>
                   </TableRow>
                   <TableRow key="11">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(11, 1)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(11)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{11}</TableCell>
                     <TableCell>Receitas</TableCell>
                     <TableCell>Salário</TableCell>
                   </TableRow>
                   <TableRow key="12">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(12, 2)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(12)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{12}</TableCell>
                     <TableCell>Receitas</TableCell>
                     <TableCell>Prêmio</TableCell>
                   </TableRow>
                   <TableRow key="13">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(13, 2)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(13)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{13}</TableCell>
                     <TableCell>Receitas</TableCell>
                     <TableCell>Investimento</TableCell>
                   </TableRow>
                   <TableRow key="14">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(14, 2)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(2)}>
+                      <IconButton onClick={() => handleEdit(14)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{14}</TableCell>
                     <TableCell>Receitas</TableCell>
                     <TableCell>Benefício</TableCell>
                   </TableRow>
                   <TableRow key="15">
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(1, 2)}>
+                      <IconButton onClick={() => handleDelete(15, 2)}>
                         <Delete />
                       </IconButton>
                       <IconButton onClick={() => handleEdit(2)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{15}</TableCell>
                     <TableCell>Receitas</TableCell>
                     <TableCell>Outros</TableCell>
                   </TableRow>
