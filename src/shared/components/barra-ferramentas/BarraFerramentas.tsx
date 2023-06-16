@@ -25,6 +25,7 @@ interface IBarraFerramentasProps {
     handleAtualizarLancamento?: (valorMesAno: Dayjs) => void;
     isOpenDataAno?: boolean;
     btnAtualizarGrafico?: boolean;
+    valorAno?: Dayjs;
     handleAtualizarGrafico?: (valorAno: Dayjs) => void;
 };
 
@@ -39,6 +40,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
     btnAtualizar = false,    
     isOpenDataAno = false,
     btnAtualizarGrafico = false,
+    valorAno = '',
     handleAtualizarGrafico,
     handleAtualizarLancamento,
     onClickSalvar,
@@ -120,7 +122,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                 color="success"
                 disableElevation
                 startIcon={<AutorenewIcon />}
-                onClick={() => handleAtualizarLancamento && handleAtualizarLancamento(mesAno)}
+                onClick={() => handleAtualizarGrafico && handleAtualizarGrafico(ano)}
                     style={{ width: "auto", height: "2rem" }}
                     sx={{
                         "@media (max-width: 600px)": {

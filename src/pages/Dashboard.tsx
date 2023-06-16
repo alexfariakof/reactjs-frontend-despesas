@@ -6,7 +6,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 
 export const Dashboard = () => {
-    const [valorAno, setValorAno] = useState<Dayjs | null>(dayjs());
+    const [valorAno, setValorAno] = useState<Dayjs>(dayjs());
     const [height, setHeight] = useState(0);    
     const handleAtualizarGraficoDados = (valorAno:Dayjs) => {
         setValorAno(valorAno);
@@ -35,7 +35,8 @@ export const Dashboard = () => {
             isOpenDataAno={true}
             btnNovo={false}
             btnSalvar={false}
-            btnVoltar={false}            
+            btnVoltar={false}      
+            valorAno={valorAno}      
             handleAtualizarGrafico={handleAtualizarGraficoDados}
             />
           )}
@@ -51,7 +52,7 @@ export const Dashboard = () => {
                 component={Paper} 
                 flexGrow={1}
                 >
-                    <BarCharts handleAtualizarGrafico={handleAtualizarGraficoDados} valorAno={valorAno} />
+                    <BarCharts valorAno={valorAno} />
             </Box>
         </LayoutMasterPage>
     );
