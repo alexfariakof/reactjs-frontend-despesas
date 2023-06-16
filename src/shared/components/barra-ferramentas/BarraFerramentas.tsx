@@ -49,6 +49,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
 
     const theme = useTheme();
     const [mesAno, setMesAno] = useState<any>(dayjs());
+    const minDate = dayjs('2000-01-01');
     const [ano, setAno] = useState<any>(dayjs());
     const handleChangeMesAno = (value: any) => {
         setMesAno(value);
@@ -66,6 +67,8 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                             <DesktopDatePicker
                                 label="Data"
                                 value={mesAno}
+                                views={['year', 'month']}
+                                minDate={minDate}                    
                                 openTo="year"
                                 inputFormat="MM/YYYY"
                                 onChange={handleChangeMesAno}
@@ -100,6 +103,9 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                             <DesktopDatePicker
                                 label="Ano"
                                 value={ano}
+                                views={['year']}
+                                minDate={minDate}
+                    
                                 openTo="year"
                                 inputFormat="YYYY"
                                 onChange={handleChangeAno}
