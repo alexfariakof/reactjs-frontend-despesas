@@ -10,10 +10,8 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAuthContext, useDrawerContext } from '../../contexts';
 import { useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
-import { useDebounce } from '../../hooks/UseDebounce';
 import { ImagemPerfilUsuarioService, ImagemPerfilUsuarioVM } from '../../services/api/ImagemPerfilUsuarioService';
 import Saldo from './Saldo';
-import ChangeAvatar from '../Configuracoes/ChangeAvatar'; // Import the ChangeAvatar component
 
 interface IListItemLinkProps {
   to: string,

@@ -3,7 +3,6 @@ import { Avatar, Box, Button, InputLabel, Paper, Typography, useTheme } from "@m
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ImagemPerfilUsuarioService, ImagemPerfilUsuarioVM } from "../../services/api";
-import { useDebounce } from "../../hooks/UseDebounce";
 
 interface ChangeAvatarProps {
     handleAvatarUploaded?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -15,8 +14,7 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => 
     const [file, setFile] = useState<File | any>(null);
     const [fileLoaded, setFileLoaded] = useState<boolean>(false);
     const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuarioVM | any>(null);
-    const { debounce } = useDebounce();
-    const [refreshAvatar, setRefreshAvatar] = useState<boolean>(false); 
+     const [refreshAvatar, setRefreshAvatar] = useState<boolean>(false); 
 
     const handleAvatarUpload = (event: ChangeEvent<HTMLInputElement>) => {
         const uploadedFile = event.target.files?.[0];

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
 import { LancamentosService } from '../../services/api';
-import { useDebounce } from '../../hooks/UseDebounce';
 
 const Saldo: React.FC = () => {
   const [saldo, setSaldo] = useState<number>(0);
