@@ -24,7 +24,7 @@ interface State {
 
 export const Despesas: React.FC = () => {
     const navigate = useNavigate();
-    const { debounce } = useDebounce(true);
+    const { debounce } = useDebounce(true, true);
     const [height, setHeight] = useState(0);    
     const { id = 0 } = useParams<'id'>();
     const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);

@@ -12,7 +12,7 @@ import dayjs, { Dayjs } from 'dayjs';
 
 export const Lancamentos = () => {
     const navigate = useNavigate();
-    const { debounce } = useDebounce(false,undefined, true);
+    const { debounce } = useDebounce(true, false);
     const [height, setHeight] = useState(0);    
     const [lancamentoMesAno, setLancamentoMesAno] = useState<Dayjs>(dayjs());
     const [rows, setRows] = useState<(Omit<ILancamentoVM, 'id'>[])>([]);
