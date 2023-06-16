@@ -144,7 +144,3 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno }) => {
   );
 
 };
-
-
-
-
