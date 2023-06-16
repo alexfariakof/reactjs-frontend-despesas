@@ -207,7 +207,6 @@ export const Categorias: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='center'>Ações</TableCell>
-                <TableCell>ID</TableCell>
                 <TableCell>Tipo</TableCell>
                 <TableCell>Descrição</TableCell>
               </TableRow>
@@ -224,7 +223,6 @@ export const Categorias: React.FC = () => {
                         <Edit />
                       </IconButton>
                     </TableCell>
-                    <TableCell>{row.id}</TableCell>
                     <TableCell>{row.idTipoCategoria === 1 ? 'Despesas' : 'Receitas'}</TableCell>
                     <TableCell>{row.descricao}</TableCell>
                   </TableRow>
