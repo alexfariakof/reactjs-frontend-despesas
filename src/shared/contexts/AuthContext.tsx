@@ -1,5 +1,6 @@
 import { createContext, useCallback, useState, useContext, useMemo, useEffect } from 'react';
 import { AuthService, ControleAcessoVM } from '../services/api';
+import dayjs from 'dayjs';
 
 interface IAuthContextData {
     isAuthenticated: boolean;
@@ -21,14 +22,17 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     useEffect(() => {
         const accessToken = localStorage.getItem('@dpApiAccess');
         try {
+            
             if (accessToken) {
                 setAccessToken(JSON.parse(accessToken));
             }
             else {
+                setAccessToken(undefined);
                 localStorage.clear();
             }
         }
         catch {
+            setAccessToken(undefined);
             localStorage.clear();
         }
     }, []);
@@ -37,7 +41,8 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
         const result = await AuthService.auth(email, password);
         if (result.authenticated === true) {
             localStorage.setItem('idUsuario', result.usuario.id);
-            localStorage.setItem('@dpApiAccess', JSON.stringify(result.accessToken));   
+            localStorage.setItem('@dpApiAccess', JSON.stringify(result.accessToken)); 
+            localStorage.setItem('@expiration', result.expiration); 
             setAccessToken(result);           
         }
         else{
@@ -72,13 +77,20 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
 
 
     const handleIsAuthenticated = useMemo(() => {
+        const expiration = dayjs(localStorage.getItem('@expiration'));
+        const dataAtual = dayjs();
         try {
-          return !!accessToken;
-        } catch  {
+            if (expiration <= dataAtual) {
+                localStorage.clear();
+                return false;
+
+            }
+            return !!accessToken;
+        } catch {
             localStorage.clear();
             return false;
         }
-      }, [accessToken]);
+    }, [accessToken]);
 
     return (
         <AuthContext.Provider value={{
