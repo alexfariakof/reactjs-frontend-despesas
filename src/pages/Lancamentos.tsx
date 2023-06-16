@@ -148,7 +148,3 @@ export const Lancamentos = () => {
         </LayoutMasterPage>
     );
 }
-function setRemainingHeight(arg0: number) {
-    throw new Error('Function not implemented.');
-}
-
