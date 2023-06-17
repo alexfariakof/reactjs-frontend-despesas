@@ -15,11 +15,23 @@
 
     gtag('config', 'AW-11223622430');
   </script>
-    <!-- Event snippet for Visualização de página conversion page -->
+  <!-- Event snippet for Visualização de página conversion page
+  In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
   <script>
-    gtag('event', 'conversion', {'send_to': 'AW-11223622430/AM8tCJbuxawYEJ7G6-cp'});
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-11223622430/AM8tCJbuxawYEJ7G6-cp',
+          'event_callback': callback
+      });
+      return false;
+    }
   </script>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
