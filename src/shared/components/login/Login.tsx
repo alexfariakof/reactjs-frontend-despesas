@@ -180,7 +180,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                 <Typography variant="body2">
                     &copy; 2023 Honey TI. Todos os direitos reservados - Desenvolvido por
                     Alex Ribeiro de Faria{" "}
-                    <Link sx={{color: "red"}} href="http://despesas-pessoais-azure.cdeefmd5a6fjfece.eastus.azurecontainer.io/">
+                    <Link sx={{color: "red"}} href="http://despesas-pessoais-azure.cdeefmd5a6fjfece.eastus.azurecontainer.io/" target="_blank" >
                         Acessar aplicação atualizada em produção
                     </Link>
                 </Typography>
