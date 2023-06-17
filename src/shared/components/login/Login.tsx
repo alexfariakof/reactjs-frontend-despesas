@@ -38,23 +38,23 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         email: string;
         password: string
         showPassword: boolean;
-        cPassword: string;        
+        cPassword: string;
         showCPassword: boolean;
 
-    }     
+    }
 
     const [valuesPA, setValuesPA] = useState<IPrimeiroAcesso>({
         nome: '',
         sobreNome: '',
         telefone: '',
         email: '',
-        password:'',        
+        password: '',
         showPassword: false,
-        cPassword:'',        
+        cPassword: '',
         showCPassword: false,
     });
 
-    
+
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -96,20 +96,20 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         });
     };
 
-  
+
 
     const handleSubmit = () => {
-        login(values.email, values.password); 
+        login(values.email, values.password);
     }
 
     const emailRef = useRef<HTMLInputElement | null>(null);
     const [emailError, setEmailError] = useState(false);
-  
+
     const setEmail = () => {
-      setEmailError(true);
-      if (emailRef.current) {
-        emailRef.current.focus();
-      }
+        setEmailError(true);
+        if (emailRef.current) {
+            emailRef.current.focus();
+        }
     };
 
     const handleSubmitRecoveryPassword = () => {
@@ -123,11 +123,11 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
             setEmailError(true);
             emailRef.current?.focus();
             return false;
-        } 
+        }
 
-        recoveryPassword(values.email);    
-        setEsqueciSenhaOpen(true);    
-    } 
+        recoveryPassword(values.email);
+        setEsqueciSenhaOpen(true);
+    }
 
     const handleSubimitCreateUsuario = () => {
         if (!valuesPA.email) {
@@ -136,11 +136,11 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         } else if (!isValidEmail(valuesPA.email)) {
             alert("O email inserido não é email válido.");
             return false;
-        }  else if (valuesPA.password !== valuesPA.cPassword){
+        } else if (valuesPA.password !== valuesPA.cPassword) {
             alert("Campo Senha e Confirma Senha são diferentes!!");
             return false;
         }
-         createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password, valuesPA.cPassword).then((data: any) => {
+        createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password, valuesPA.cPassword).then((data: any) => {
             if (data === true) {
                 alert('Usuário cadastrado com sucesso!');
                 valuesPA.nome = '';
@@ -150,16 +150,47 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                 valuesPA.password = '';
                 valuesPA.showPassword = false;
                 valuesPA.cPassword = '';
-                valuesPA.showCPassword = false;                
+                valuesPA.showCPassword = false;
                 handlePrimeiroAcessoClose();
             }
-        });        
+        });
     }
 
+    const Footer = () => {
+        return (
+            <Box
+                component="footer"
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    py: 2,
+                    mt: "auto",
+                    backgroundColor: "#f5f5f5",
+                    borderTop: "1px solid #ddd",
+                    textAlign: "center",
+                    padding: "20px",
+                    width: "100%",
+                    position: "fixed",
+                    bottom: "0",
+                    color: "green",
+                    fontSize: "2rem"
+                }}
+            >
+                <Typography variant="body2">
+                    &copy; 2023 Honey TI. Todos os direitos reservados - Desenvolvido por
+                    Alex Ribeiro de Faria{" "}
+                    <Link sx={{color: "red"}} href="http://despesas-pessoais-azure.cdeefmd5a6fjfece.eastus.azurecontainer.io/">
+                        Acessar aplicação atualizada em produção
+                    </Link>
+                </Typography>
+            </Box>
+        );
+    };
     const isValidEmail = (email: string): boolean => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
-      };
+    };
 
     const [openPrimeiroAcesso, setPrimeiroAcessoOpen] = useState(false);
     const [openEsqueciSenha, setEsqueciSenhaOpen] = useState(false);
@@ -173,7 +204,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     }
     else {
         return (
-            <Box width='100vw' height='100vh' display='flex' alignItems='center' justifyContent='center' >
+            <Box  sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",  minHeight: "100vh", }} >
+               <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", flexGrow: 1}}>
                 <Card>
                     <CardContent>
                         <Box display='flex' flexDirection='column' gap={2} width={250}   >
@@ -185,8 +217,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                             <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
                                 value={values.email}
                                 onChange={handleChange('email')}
-                                inputRef={emailRef} 
-                                error={emailError}                          
+                                inputRef={emailRef}
+                                error={emailError}
                             />
                             <FormControl size="small" fullWidth variant="outlined" >
                                 <InputLabel htmlFor="txtPassword">Senha</InputLabel>
@@ -271,7 +303,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                     open={openPrimeiroAcesso}
                     onClose={handlePrimeiroAcessoClose}
                     aria-labelledby="modal-primeiro-acesso"
-                    aria-describedby="modal-modal-description"                    
+                    aria-describedby="modal-modal-description"
                 >
                     <Box
                         gap={1}
@@ -295,16 +327,16 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                             onKeyUp={handleKeyPress}
                         />
 
-                        <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth 
+                        <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth
                             value={valuesPA.telefone}
                             onChange={handleChangePA('telefone')}
-                            onKeyUp={handleKeyPress}                       
+                            onKeyUp={handleKeyPress}
                         />
                         <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
                             value={valuesPA.email}
                             onChange={handleChangePA('email')}
-                            onKeyUp={handleKeyPress}                       
-                         />
+                            onKeyUp={handleKeyPress}
+                        />
                         <FormControl size="small" fullWidth variant="outlined" >
                             <InputLabel htmlFor="txtPAPassword">Senha</InputLabel>
                             <OutlinedInput
@@ -353,9 +385,12 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         </FormControl>
                         <Button color='primary' disableElevation variant='contained' startIcon={<SaveIcon />} onClick={handleSubimitCreateUsuario} >Salvar</Button>
                     </Box>
-                </Modal>                  
-            </Box>         
-            
+                </Modal>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "20px" }} >
+                    <Footer />
+                </Box>
+            </Box>
         );
     }
 }
