@@ -21,7 +21,7 @@ Acesso a aplicação atualizada em produção  <a href="http://despesas-pessoais
 </h2>
 
 <h2 align="left"> 
-Acesso documentação da API no Swagger <a href="http://api-despesas-pessoais-aspnetcore.bwg2czahbvgefufr.eastus.azurecontainer.io/swagger/index.html" target="_blank" >backend do projeto</a>
+Acesso documentação da API no Swagger <a target="_blank" href="http://api-despesas-pessoais-aspnetcore.bwg2czahbvgefufr.eastus.azurecontainer.io/swagger/index.html" target="_blank" >backend do projeto</a>
       <h6 align="justify">
         Obs.: Não é possivél executar através do swagger a maioria dos end-points pois todos estam com autenticação via Bearer Token. Utilizar Workspace Postaman é uma opção depois de realizar cadastro, fazer o singIn que retorna o token para ser utilizado nos headers dos end points.
     </h6>
