@@ -1,8 +1,14 @@
 import {AxiosError}  from 'axios';
 
-export const errorInterceptor = (error: AxiosError) => {
+export const errorInterceptor = (error: AxiosError) => {    
+
     var data:any;
     
+    if (data === undefined)
+    {
+        localStorage.clear();
+    }
+
     if (error.message === 'Network Error'){
         return Promise.reject(new Error('Erro de conecção'));
     }

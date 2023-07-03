@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs'
+import { Box } from '@mui/material';
 
 type MonthOfYear = {
     [key: string]: string;
@@ -37,10 +38,10 @@ const daysOfWeek: DaysOfWeek  = {
 
 const Relogio: React.FC  = () => {
     const [time, setTime] = useState<string | null>(null);
-    const [semana, setSemana] = useState<string>(dayjs().format('dddd'));
-    const [dia, setDia] = useState<string>(dayjs().format('DD'));
-    const [mes, setMes] = useState<string>(dayjs().format('MMMM'));
-    const [ano, setAno] = useState<string>(dayjs().format('YYYY'));
+    const [semana] = useState<string>(dayjs().format('dddd'));
+    const [dia] = useState<string>(dayjs().format('DD'));
+    const [mes] = useState<string>(dayjs().format('MMMM'));
+    const [ano] = useState<string>(dayjs().format('YYYY'));
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -56,8 +57,8 @@ const Relogio: React.FC  = () => {
     }, []);
 
     return (
-        <div className="relogio" style={{ color: '#333333' }}>
-            <div className="data">
+        <Box fontSize="1.5vw"  style={{ color: '#333333'}} >
+            <Box >
                 <span className="formatData1">{daysOfWeek[semana]}, </span>
                 <span className="formatData2">{dia}</span>
                 <span className="formatData1"> de </span>
@@ -65,8 +66,8 @@ const Relogio: React.FC  = () => {
                 <span className="formatData1"> de </span>
                 <span className="formatData2">{ano}</span>
                 <span className="hora"> // {time}</span>
-            </div>
-        </div>
+            </Box>
+        </Box>
     )
 }
 

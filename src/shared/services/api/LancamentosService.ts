@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import  createApiInstance   from "../axios-config";
 const Api = createApiInstance();
 
@@ -14,38 +15,49 @@ export interface ILancamentoVM {
     tipoCategoria: string;
 } 
 
-const getByMesAnoByIdUsuario = async (mesano: string, idUsuario:number): Promise<any> => {
+const getByMesAnoByIdUsuario = async (mesano: Dayjs, idUsuario:number): Promise<any> => {
     try {
+        var mesAno = mesano.toISOString().substring(0, 7);
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const  { data } = await Api.get('/lancamento/' + mesano + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        const  { data } = await Api.get('/lancamento/' + mesAno + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
-
-        return Error('Erro ao pesquisar lançãmentos por ano mes.');
-    } catch (error) {
-
+    } 
+    catch (error) {
          console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao pesquisar lançamentos por ano mes.');
     }
 };
 
-const getSaldoByIdUsuario = async (idUsuario: number): Promise<any | ILancamentoVM[] |  Error> => {
+const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get('/lancamento/saldo/$(idUsuario)', {headers: { Authorization: `Bearer ${accessToken}` }});
+        const idUsuario = Number(localStorage.getItem('idUsuario'));
+        const { data } = await Api.get('/lancamento/Saldo/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        return data;
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
+const getDadosGraficoByAnoByIdUsuario = async (mesano: Dayjs | null, idUsuario:number): Promise<any | []> => {
+    try {
+        var mesAno = mesano?.toISOString().substring(0, 7);
+        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+        const  { data } = await Api.get('/lancamento/GetDadosGraficoByAnoByIdUsuario/' + mesAno + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
-
-        return Error('Erro ao pesquisar lançamentos por usuário.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao pesquisar lançamentos por usuário.');
+    } 
+    catch (error) {
+         console.log(error);
     }
+
 };
 
 export const LancamentosService = {
     getByMesAnoByIdUsuario,
     getSaldoByIdUsuario,
+    getDadosGraficoByAnoByIdUsuario
 };

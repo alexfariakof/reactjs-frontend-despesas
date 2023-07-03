@@ -11,7 +11,7 @@ export interface IReceitaVM {
     valor: number;
 }
 
-const getAll = async (): Promise<IReceitaVM[] | Error> => {
+const getAll = async (): Promise<IReceitaVM[] | any | Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const { data } = await Api.get('/Receita', {headers: { Authorization: `Bearer ${accessToken}` }});
@@ -19,29 +19,26 @@ const getAll = async (): Promise<IReceitaVM[] | Error> => {
             return data;
         }
 
-        return Error('Erro getAll ao listar receitas.');
-    } catch (error) {
+    } 
+    catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro getAll ao listar receitas.');
     }
 };
 
-const getById = async (id: Number): Promise<IReceitaVM | Error> => {
+const getById = async (id: Number): Promise<IReceitaVM | any | Error> => {
     try {        
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const { data } = await Api.get('/Receita/GetById/' + id, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data.receita as IReceitaVM;
-        }
-
-        return Error('Erro getById ao pesquisar receitas.');
-    } catch (error) {
+        }        
+    } 
+    catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro getById ao pesquisar receitas.');
     }
 };
 
-const getByIdUsuario = async (idUsuario: number): Promise<IReceitaVM[] | Error> => {
+const getByIdUsuario = async (idUsuario: number): Promise<IReceitaVM[] | any| Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const { data } = await Api.get('/despesa/GetByIdUsuario/' + idUsuario, {
@@ -52,11 +49,9 @@ const getByIdUsuario = async (idUsuario: number): Promise<IReceitaVM[] | Error> 
         if (data) {
             return data;
         }
-
-        return Error('Erro getByIdUsuario ao listar Categorias.');
-    } catch (error) {
+    } 
+    catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro getByIdusuario ao listar Categorias.');
     }
 };
 
@@ -69,15 +64,14 @@ const create = async (dados: Omit<IReceitaVM, 'id'>): Promise<any | Error> => {
             return data.id
         }
 
-        return Error('Erro ao criar novo registro de receita.');
-    } catch (error) {
+    } 
+    catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao criar novo registro de receita.');
     }
 };
 
 
-const updateById = async (id: number, dados: IReceitaVM): Promise<IReceitaVM | Error> => {
+const updateById = async (id: number, dados: IReceitaVM): Promise<IReceitaVM | any| Error> => {
     try {        
         dados.id = id;        
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
@@ -85,11 +79,8 @@ const updateById = async (id: number, dados: IReceitaVM): Promise<IReceitaVM | E
         if (data) {
             return data
         }
-
-        return Error('Erro ao atualizar registro de receita.');
     } catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao atualizar registro de receita.');
     }
 
  };
@@ -101,13 +92,10 @@ const deleteById = async (id: number): Promise<any | Error> => {
         if (data.message) {
             return Boolean(data)
         }
-
-        return Error('Erro ao deletar registro de receita.');
-    } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao deletar registro de receita.');
     }
-
+     catch (error) {
+        console.log(error);
+    }
 };
 
 export const ReceitasService = {
