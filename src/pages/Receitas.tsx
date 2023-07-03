@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Box, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Box, Button, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
+import { Save } from '@mui/icons-material';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -11,7 +12,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { ReceitasService, IReceitaVM, CategoriasService, ICategoriaVM } from '../shared/services/api';
-import { useDebounce } from '../shared/hooks';
 
 interface State {
     idUsuario: number;
@@ -23,8 +23,6 @@ interface State {
 
 export const Receitas: React.FC = () => {
     const navigate = useNavigate();
-    const { debounce } = useDebounce(true, true);
-    const [height, setHeight] = useState(0);    
     const { id = 0 } = useParams<'id'>();
     const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);
     const [values, setValues] = useState<State>({
@@ -32,7 +30,7 @@ export const Receitas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs(),
+        data: dayjs('2014-08-18T21:11:54'),
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +90,8 @@ export const Receitas: React.FC = () => {
         }
     }
 
-    const handleEdit = async (recetita: IReceitaVM)  => {
-        await CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
-        .then((result: any) => {
-            setCategorias(result);
-        });
+    const handleEdit = (recetita: IReceitaVM)  => {
+        
         setValues({
             idUsuario: recetita.idUsuario,
             idCategoria: recetita.idCategoria.toString(),
@@ -116,50 +111,36 @@ export const Receitas: React.FC = () => {
             valor: 0                
         });
     }
+    useEffect(() => {
+        CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
+          .then((result: any) => {
+                setCategorias(result);
+          });        
+   }, []);
 
     useEffect(() => {
-        debounce(() => {
-            if (id !== 0) {
-                ReceitasService.getById(Number(id))
-                    .then((result) => {
-                        if (result instanceof Error) {
-                            alert(result.message);
-                            return false;
-                        }
-                        else {
-                            handleEdit(result);
-                            console.log(result.id);
-                        }
-                    });
-            }
-            else {
-                CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 2)
-                    .then((result: any) => {
-                        setCategorias(result);
-                    });
-            }
-        });
-
-        const handleResize = () => {
-            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
-        };
-    
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Define a altura ao montar o componente
-    
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    
-    }, [debounce, id])
+        if (id !== 0) {
+            ReceitasService.getById(Number(id))
+                .then((result) => {
+                    if (result instanceof Error) {
+                        alert(result.message);
+                        return false;
+                    }
+                    else {
+                        handleEdit(result);
+                        console.log(result.id);
+                    }
+                });
+        }
+    }, [id])
 
     return (
 
         <LayoutMasterPage
-            titulo='Receitas' height={height}
+            titulo='Receitas'
             barraDeFerramentas={(
                 <BarraFerramentas
-                    isOpenTxtBusca={false}
+                    isOpenTxtBusca={true}
                     btnVoltar onClickVoltar={() => navigate('/lancamentos')}
                     btnNovo onClickNovo={() => handleClear()} 
                     btnSalvar onClickSalvar={() => handleSave()} />

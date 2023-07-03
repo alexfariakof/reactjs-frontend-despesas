@@ -2,23 +2,29 @@
     :construction:  Projeto em construção  :construction:
 </h2>
 
-<h6 align="justify">
-    Obs.: Não há necessidade de se cadastrar para acessar ao protótipo frontend pois é apenas uma demo com as principais funcionalidades da aplicação funcionando de maneira fake sem conexão a API responsável por fazer persistência dos dados e controle de acesso.
-</h6>
 <h2 align="center"> 
-   DESPESAS PESSOAIS  ReactJs
+   DESPESAS PESSOAIS REACTJS
 </h2>
 
 <h2 align="left"> 
-Acesso ao protótipo <a href="https://despesas-pessoasis-aws.d26q19cgt5w2n4.amplifyapp.com/" target="_blank" >frontend</a> do projeto
+Acesso ao protótipo Frontend em React <a href="https://despesas-pessoasis-prototipo-aws.dv40iwxf06g7a.amplifyapp.com/" target="_parent" >frontend</a> do projeto
+    <h6 align="justify">
+        Obs.: Não há necessidade de se cadastrar para acessar ao protótipo frontend pois é apenas uma demo com as principais             funcionalidades da aplicação funcionando com dados fake sem conexão a API responsável por fazer persistência dos dados e controle de acesso.
+    </h6>
 </h2>
 
 <h2 align="left"> 
-Acesso a aplicação atualizada em produção  <a href="http://despesas-pessoais-azure.cdeefmd5a6fjfece.eastus.azurecontainer.io" target="_blank" >Despesas Pessoais</a> do projeto
+Acesso a aplicação atualizada em produção  <a href="http://ec2-34-239-129-207.compute-1.amazonaws.com:3000" target="_parent" >Despesas Pessoais</a> 
+    <h6 align="justify">
+    Obs.: Existe um usuário teste já criado para acessar aplicação "login=teste@teste.com/senha=teste"
+    </h6>        
 </h2>
 
 <h2 align="left"> 
-Acesso documentação da API no Swagger <a href="http://api-despesas-pessoais-aspnetcore.bwg2czahbvgefufr.eastus.azurecontainer.io/swagger/index.html" target="_blank" >backend do projeto</a>
+Acesso documentação da API no Swagger <a target="_blank" href="http://ec2-34-239-129-207.compute-1.amazonaws.com:42535/swagger/index.html" target="_parent" >backend do projeto</a>
+      <h6 align="justify">
+        Obs.: Não é possivél executar através do swagger a maioria dos end-points pois todos estam com autenticação via Bearer Token. Utilizar Workspace Postaman é uma opção depois de realizar cadastro, fazer o singIn que retorna o token para ser utilizado nos headers dos end points.
+    </h6>
 </h2>
 
 <h2 align="left"> 

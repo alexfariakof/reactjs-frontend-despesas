@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, IconButton } from "@mui/material";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService, ICategoriaVM } from '../shared/services/api';
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete, Edit, Height } from '@mui/icons-material';
+import { useDebounce } from '../shared/hooks';
 
 interface State {
   id: number;
@@ -16,15 +17,40 @@ interface State {
 
 export const Categorias: React.FC = () => {
   const navigate = useNavigate();
-  const [height, setHeight] = useState(0);    
+  const { debounce } = useDebounce();
   const [rows, setRows] = useState<ICategoriaVM[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
     descricao: '',
     idUsuario: 0,
     idTipoCategoria: 0
-  }); 
+  });
+  const tableRef = useRef<HTMLDivElement>(null);
+  const [remainingHeight, setRemainingHeight] = useState(0);
 
+  useEffect(() => {
+    const calculateRemainingHeight = () => {
+      const parentElement = tableRef.current?.parentNode as HTMLDivElement | null;
+      if (parentElement) {
+        const parentHeight = parentElement.clientHeight;
+        const tableHeight = tableRef.current?.clientHeight || 0;
+        const heightDifference = parentHeight - tableHeight;
+        setRemainingHeight(heightDifference);
+      }
+    };
+
+    calculateRemainingHeight(); // Calculate the remaining height when the component mounts
+
+    const handleResize = () => {
+      calculateRemainingHeight(); // Recalculate the remaining height when the window is resized
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []); 
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -111,59 +137,48 @@ export const Categorias: React.FC = () => {
   }
 
   useEffect(() => {
-      if (values.idTipoCategoria === 0) {
-        CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
-          .then((result) => {
-            if (result instanceof Error) {
-              alert(result.message);
-            }
-            else {
-              setRows(result);
-            }
-          });
-      }
-      else {
-        CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), values.idTipoCategoria)
-          .then((result) => {
-            if (result instanceof Error) {
-              alert(result.message);
-            }
-            else {
-              setRows(result);
-            }
-          });
-      }
+    if (values.idTipoCategoria === 0) {
+      CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+          }
+          else {
+            setRows(result);
+          }
+        });
+    }
+    else {
+      CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), values.idTipoCategoria)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+          }
+          else {
+            setRows(result);
+          }
+        });
+    }
+  }, [values.idTipoCategoria]);
 
-
-      const handleResize = () => {
-        setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Define a altura ao montar o componente
-
-    return () => {
-        window.removeEventListener('resize', handleResize);
-    };
-}, [values.idTipoCategoria]);
-
-    return (
+  return (
     <LayoutMasterPage
       titulo='Categorias'
       barraDeFerramentas={(
         <BarraFerramentas
-          isOpenTxtBusca={false}
+          isOpenTxtBusca={true}
           btnVoltar onClickVoltar={() => navigate('/Categorias')}
           btnNovo onClickNovo={() => handleClear()}
           btnSalvar onClickSalvar={() => handleSave()} />
       )}
-      height={height}
     >
       <Box
+        ref={tableRef}
         gap={1}
         margin={1}
         padding={1}
         paddingX={2}
+        height="auto"
         display="flex"
         flexDirection="column"
         alignItems="start"
@@ -191,11 +206,12 @@ export const Categorias: React.FC = () => {
       <Box
         gap={1}
         margin={1}
-        marginTop={0}
+        marginY={0}
         padding={1}
         paddingX={2}
         paddingBottom={0}        
-        width='auto'
+        width='96%'
+        height={remainingHeight}
         display="flex"
         flexDirection="row"
         alignItems="start"
@@ -207,6 +223,7 @@ export const Categorias: React.FC = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='center'>Ações</TableCell>
+                <TableCell>ID</TableCell>
                 <TableCell>Tipo</TableCell>
                 <TableCell>Descrição</TableCell>
               </TableRow>
@@ -223,6 +240,7 @@ export const Categorias: React.FC = () => {
                         <Edit />
                       </IconButton>
                     </TableCell>
+                    <TableCell>{row.id}</TableCell>
                     <TableCell>{row.idTipoCategoria === 1 ? 'Despesas' : 'Receitas'}</TableCell>
                     <TableCell>{row.descricao}</TableCell>
                   </TableRow>
