@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Box, Button, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box,  FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
-import { Save } from '@mui/icons-material';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -12,6 +11,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService, DespesasService, ICategoriaVM, IDespesaVM } from '../shared/services/api';
+import { useDebounce } from '../shared/hooks';
 
 interface State {
     idUsuario: number;
@@ -24,6 +24,8 @@ interface State {
 
 export const Despesas: React.FC = () => {
     const navigate = useNavigate();
+    const { debounce } = useDebounce(true, true);
+    const [height, setHeight] = useState(0);    
     const { id = 0 } = useParams<'id'>();
     const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);
     const [values, setValues] = useState<State>({
@@ -31,8 +33,8 @@ export const Despesas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs('2014-08-18T21:11:54'),
-        dtVencimento: dayjs('2014-08-18T21:11:54')
+        data: dayjs(),
+        dtVencimento: null
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,8 +99,11 @@ export const Despesas: React.FC = () => {
         }
     }
 
-    const handleEdit = (desp: IDespesaVM)  => {
-        
+    const handleEdit = async (desp: IDespesaVM)  => {
+        await CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 1)
+        .then((result: any) => {
+            setCategorias(result);
+        });
         setValues({
             idUsuario: desp.idUsuario,
             idCategoria: desp.idCategoria.toString(),
@@ -121,35 +126,49 @@ export const Despesas: React.FC = () => {
         });
     }
 
-    useEffect(() => {
-         CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')),1)
-           .then((result: any) => {
-                 setCategorias(result);
-           });        
-    }, []);
-
 
     useEffect(() => {
-        if (id !== 0) {
-            DespesasService.getById(Number(id))
-                .then((result) => {
-                    if (result instanceof Error) {
-                       alert(result.message);
-                    }
-                    else {
-                        handleEdit(result);
-                        console.log(result.id);
-                    }
-                });
-        }
-    }, [id])
+        debounce(() => {
+            if (id !== 0) {
+                DespesasService.getById(Number(id))
+                    .then((result) => {
+                        if (result instanceof Error) {
+                            alert(result.message);
+                        }
+                        else {
+                            handleEdit(result);
+                            console.log(result.id);
+                        }
+                    });
+            }
+            else {
+                CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), 1)
+                    .then((result: any) => {
+                        setCategorias(result);
+                    });
+
+            }
+        });
+
+        const handleResize = () => {
+            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Define a altura ao montar o componente
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+
+    }, [debounce, id])
 
     return (
         <LayoutMasterPage
-            titulo='Despesas'
+            titulo='Despesas' height={height}
             barraDeFerramentas={(
                 <BarraFerramentas
-                    isOpenTxtBusca={true}
+                    isOpenTxtBusca={false}
                     btnVoltar onClickVoltar={() => navigate('/lancamentos')}
                     btnNovo onClickNovo={() => handleClear()} 
                     btnSalvar onClickSalvar={() => handleSave() }
@@ -224,6 +243,7 @@ export const Despesas: React.FC = () => {
                         startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                         label="Valor"
                         type="number"
+                        
                     />
                 </FormControl>
             </Box>

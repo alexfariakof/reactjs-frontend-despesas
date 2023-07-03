@@ -2,14 +2,43 @@ import { LayoutMasterPage } from '../shared/layouts';
 import { Box, Paper } from '@mui/material';
 
 import { BarCharts, BarraFerramentas } from '../shared/components';
+import dayjs, { Dayjs } from 'dayjs';
+import { useEffect, useState } from 'react';
 
 export const Dashboard = () => {
-    
+    const [valorAno, setValorAno] = useState<Dayjs>(dayjs());
+    const [height, setHeight] = useState(0);    
+    const handleAtualizarGraficoDados = (valorAno:Dayjs) => {
+        setValorAno(valorAno);
+     };
+
+     useEffect(() => {
+        const handleResize = () => {
+            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+        };
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Define a altura ao montar o componente
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+
+    }, [])
+
     return (
         <LayoutMasterPage 
-        titulo='Dashboard' 
+        titulo='Dashboard'  height={height}
         barraDeFerramentas={(
-            <BarraFerramentas isOpenDataMesAno={true} btnSalvar={false} btnNovo={false} btnVoltar={false}  />
+            <BarraFerramentas  
+            btnAtualizarGrafico={true}
+            isOpenDataAno={true}
+            btnNovo={false}
+            btnSalvar={false}
+            btnVoltar={false}      
+            valorAno={valorAno}      
+            handleAtualizarGrafico={handleAtualizarGraficoDados}
+            />
           )}
         > 
             <Box gap={1}
@@ -23,7 +52,7 @@ export const Dashboard = () => {
                 component={Paper} 
                 flexGrow={1}
                 >
-                    <BarCharts  />
+                    <BarCharts valorAno={valorAno} />
             </Box>
         </LayoutMasterPage>
     );

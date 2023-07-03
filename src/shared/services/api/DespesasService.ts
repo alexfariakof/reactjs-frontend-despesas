@@ -12,37 +12,31 @@ export interface IDespesaVM {
     dataVencimento: Dayjs | null;
 }
 
-const getAll = async (): Promise<IDespesaVM[] | Error> => {
+const getAll = async (): Promise<IDespesaVM[] | any | Error> => {
     try {        
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const { data } = await Api.get('/despesa', {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data;
         }
-
-        return Error('Erro ao listar despesas.');
     } catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao listar despesas.');
     }
 };
 
-const getById = async (id: number): Promise<IDespesaVM | Error> => {
+const getById = async (id: number): Promise<IDespesaVM | any | Error> => {
     try {        
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const { data } = await Api.get('/despesa/GetById/' + id, {headers: { Authorization: `Bearer ${accessToken}` }});
         if (data) {
             return data.despesa as IDespesaVM;
-        }
-
-        return Error('Erro ao pesquisar despesas.');
+        }        
     } catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao pesquisar despesas.');
     }
 };
 
-const getByIdUsuario = async (idUsuario: number): Promise<IDespesaVM[] | Error> => {
+const getByIdUsuario = async (idUsuario: number): Promise<IDespesaVM[] | any | Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         const { data } = await Api.get('/despesa/GetByIdUsuario/' + idUsuario, {
@@ -57,7 +51,6 @@ const getByIdUsuario = async (idUsuario: number): Promise<IDespesaVM[] | Error> 
         return Error('Erro getByIdUsuario ao listar Categorias.');
     } catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro getByIdusuario ao listar Categorias.');
     }
 };
 
@@ -68,15 +61,12 @@ const create = async (dados: Omit<IDespesaVM, 'id'>): Promise<any | Error> => {
         if (data) {
             return data;
         }
-
-        return Error('Erro ao criar novo registro de despesas.');
     } catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao criar novo registro de despesas.');
     }
 };
 
-const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | Error> => {
+const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | any| Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
         dados.id = id;        
@@ -84,11 +74,8 @@ const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | E
         if (data) {
             return data
         }
-
-        return Error('Erro ao atualizar registro de despesas.');
     } catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao atualizar registro de despesas.');
     }
 
  };
@@ -100,11 +87,8 @@ const deleteById = async (id: number): Promise<any | Error> => {
         if (data.message === true) {
             return Boolean(data.message);
         }
-
-        return Error('Erro ao deletar registro de despesas.');
     } catch (error) {
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao deletar registro de despesas.');
     }
 
 };
