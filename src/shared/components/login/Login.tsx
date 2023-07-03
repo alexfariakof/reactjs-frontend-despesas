@@ -9,6 +9,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import Modal from '@mui/material/Modal';
 import SaveIcon from '@mui/icons-material/Save';
+import { Facebook, GitHub, LinkedIn } from '@mui/icons-material';
 interface ILoginProps {
     children: React.ReactNode;
 }
@@ -169,6 +170,66 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
         });        
     }
 
+    const Footer = () => {
+        return (
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    mt: "auto",
+                    backgroundColor: "#f5f5f5",
+                    borderTop: "1px solid #ddd",
+                    textAlign: "center",
+                    width: "100%",
+                    position: "fixed",
+                    bottom: "0",
+                    color: "green",
+                    fontSize: "2rem"
+                }}
+
+            >
+                <Box  >
+                    <section className="mb-2">
+                        {/* Facebook */}
+                        <Link
+                            className=" btn-floating m-2 border-0 bg-transparent"
+                            target="_blank"
+                            href="https://www.facebook.com/alex.ribeiro.noeh/"
+                        >
+                            <Facebook  />
+                        </Link>
+                        {/* Linkedin */}
+                        <Link
+                            className=" btn-floating m-2 border-0 bg-transparent"
+                            target="_blank"
+                            href="https://www.linkedin.com/in/alex-ribeiro-de-faria-b3376b26/"
+                        >
+                            <LinkedIn  />
+                        </Link>
+                        {/* Github */}
+                        <Link
+                            className=" btn-floating m-2 border-0 bg-transparent"
+                            target="_blank"
+                            href="https://github.com/stars/alexfariakof/lists/portif%C3%B3lio"
+                        >
+                            <GitHub  />
+                        </Link>
+                    </section>
+                </Box>
+                <Box
+                >
+                    <Typography variant="body2">
+                        &copy; 2023 Honey TI. Todos os direitos reservados - Desenvolvido por
+                        Alex Ribeiro de Faria
+                    </Typography>
+                </Box>
+            </Box>
+        );
+    };
+
+
     const isValidEmail = (email: string): boolean => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -250,6 +311,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         </Box>
                     </CardActions>
                 </Card>
+                <Footer />
                 <Modal
                     open={openEsqueciSenha}
                     onClose={handleEsqueciSenhaClose}
