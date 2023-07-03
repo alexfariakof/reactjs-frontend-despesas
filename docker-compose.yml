@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   despesas-pessoais-frontend-react:
-    image: alexfariakof/alexfariakof/despesas-pessoais-react-aws
+    image: alexfariakof/despesas-pessoais-react-aws
     build:
       context: .
       dockerfile: ./DockerFile-Production
