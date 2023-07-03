@@ -52,7 +52,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
     const theme = useTheme();
     const [mesAno, setMesAno] = useState<any>(dayjs());
     const [ano, setAno] = useState<any>(dayjs());
-    const minDate = dayjs('2000-01-01');
+    const minDate = dayjs('2022-01-01');
     const handleChangeMesAno = (value: any) => {
         setMesAno(value);
     };    
