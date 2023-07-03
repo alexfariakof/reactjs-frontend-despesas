@@ -9,6 +9,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import Modal from '@mui/material/Modal';
 import SaveIcon from '@mui/icons-material/Save';
+import { Facebook, LinkedIn, GitHub } from '@mui/icons-material';
+
 interface ILoginProps {
     children: React.ReactNode;
 }
@@ -159,31 +161,61 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     const Footer = () => {
         return (
             <Box
-                component="footer"
                 sx={{
                     display: "flex",
+                    flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    py: 2,
                     mt: "auto",
                     backgroundColor: "#f5f5f5",
                     borderTop: "1px solid #ddd",
                     textAlign: "center",
-                    padding: "20px",
                     width: "100%",
                     position: "fixed",
                     bottom: "0",
                     color: "green",
                     fontSize: "2rem"
                 }}
+
             >
-                <Typography variant="body2">
-                    &copy; 2023 Honey TI. Todos os direitos reservados - Desenvolvido por
-                    Alex Ribeiro de Faria{" "}
-                    <Link sx={{color: "red"}} href="http://despesas-pessoais-azure.cdeefmd5a6fjfece.eastus.azurecontainer.io/" target="_blank" >
-                        Acessar aplicação atualizada em produção
-                    </Link>
-                </Typography>
+                <Box  >
+                    <section className="mb-2">
+                        {/* Facebook */}
+                        <Link
+                            className=" btn-floating m-2 border-0 bg-transparent"
+                            target="_blank"
+                            href="https://www.facebook.com/alex.ribeiro.noeh/"
+                        >
+                            <Facebook  />
+                        </Link>
+                        {/* Linkedin */}
+                        <Link
+                            className=" btn-floating m-2 border-0 bg-transparent"
+                            target="_blank"
+                            href="https://www.linkedin.com/in/alex-ribeiro-de-faria-b3376b26/"
+                        >
+                            <LinkedIn  />
+                        </Link>
+                        {/* Github */}
+                        <Link
+                            className=" btn-floating m-2 border-0 bg-transparent"
+                            target="_blank"
+                            href="https://github.com/stars/alexfariakof/lists/portif%C3%B3lio"
+                        >
+                            <GitHub  />
+                        </Link>
+                    </section>
+                </Box>
+                <Box
+                >
+                    <Typography variant="body2">
+                        &copy; 2023 Honey TI. Todos os direitos reservados - Desenvolvido por
+                        Alex Ribeiro de Faria{" "}
+                        <Link sx={{ color: "red" }} href="http://ec2-34-239-129-207.compute-1.amazonaws.com:3000" target="_blank" >
+                            Acessar aplicação atualizada em produção
+                        </Link>
+                    </Typography>
+                </Box>
             </Box>
         );
     };
@@ -204,39 +236,155 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     }
     else {
         return (
-            <Box  sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",  minHeight: "100vh", }} >
-               <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", flexGrow: 1}}>
-                <Card>
-                    <CardContent>
-                        <Box display='flex' flexDirection='column' gap={2} width={250}   >
-                            <Box display='flex' alignItems='center' justifyContent='center' flexDirection='column'>
-                                <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
-                                <Typography variant="h4" align="center">Identifique-se</Typography>
-                            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100vh", }} >
+                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", flexGrow: 1 }}>
+                    <Card>
+                        <CardContent>
+                            <Box display='flex' flexDirection='column' gap={2} width={250}   >
+                                <Box display='flex' alignItems='center' justifyContent='center' flexDirection='column'>
+                                    <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
+                                    <Typography variant="h4" align="center">Identifique-se</Typography>
+                                </Box>
 
+                                <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
+                                    value={values.email}
+                                    onChange={handleChange('email')}
+                                    inputRef={emailRef}
+                                    error={emailError}
+                                />
+                                <FormControl size="small" fullWidth variant="outlined" >
+                                    <InputLabel htmlFor="txtPassword">Senha</InputLabel>
+                                    <OutlinedInput
+                                        id="txtPassword"
+                                        type={values.showPassword ? 'text' : 'password'}
+                                        value={values.password}
+                                        onChange={handleChange('password')}
+                                        onKeyUp={handleKeyPress}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                >
+                                                    {values.showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        }
+                                        label="Senha"
+                                        inputProps={{ maxLength: 50 }}
+                                    />
+                                </FormControl>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            name="checkedB"
+                                            color="primary"
+                                        />
+                                    }
+                                    label="Lembre-me"
+                                />
+                            </Box>
+                        </CardContent>
+                        <CardActions>
+                            <Box width='100%' display='flex' flexDirection='column' gap={2} justifyContent='center' >
+                                <Button variant="contained" onClick={() => handleSubmit()}>
+                                    Entrar
+                                </Button>
+                                <Typography >
+                                    <Link href='#' onClick={() => handleEsqueciSenhaOpen()} >Esqueci minha senha</Link>
+                                </Typography >
+                                <Typography>
+                                    <Link href='#' onClick={() => handlePrimeiroAcessoOpen()}  >Primeiro Acesso </Link>
+                                </Typography>
+                            </Box>
+                        </CardActions>
+                    </Card>
+                    <Modal
+                        open={openEsqueciSenha}
+                        onClose={handleEsqueciSenhaClose}
+                        aria-labelledby="modal-esqueci-minha-senha"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box
+                            gap={1}
+                            margin={2}
+                            padding={1}
+                            paddingX={2}
+                            width="50vw"
+                            display="flex"
+                            flexDirection="column"
+                            alignItems="start"
+                            component={Paper} >
+                            <Typography id="mmodal-esqueci-minha-senha" variant="h6" component="h2">
+                                Esqueci minha senha
+                            </Typography>
+                            <Typography id="modal-modal-description" gap={2}>
+                                Prezado(a) ,
+                                Enviamos um e-mail com instruções de redefinição da sua senha para o email {values.email}.
+                                Se não encontrá-lo na caixa de entrada, verifique a lixeira ou a caixa de spam.
+                                Se não possui mais acesso a esse endereço de e-mail , entre em contato conosco.
+                            </Typography>
+                            <Box width='100%' display='flex' flexDirection='column' gap={2} justifyContent='center' marginTop={2} >
+                                <Button variant="contained" onClick={() => handleEsqueciSenhaClose()}>OK</Button>
+                            </Box>
+                        </Box>
+                    </Modal>
+                    <Modal
+                        open={openPrimeiroAcesso}
+                        onClose={handlePrimeiroAcessoClose}
+                        aria-labelledby="modal-primeiro-acesso"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box
+                            gap={1}
+                            margin={2}
+                            padding={1}
+                            paddingX={2}
+                            width="80vw"
+                            display="flex"
+                            flexDirection="column"
+                            alignItems="start"
+                            component={Paper} >
+
+                            <TextField size="small" label="Nome" inputProps={{ maxLength: 50 }} fullWidth
+                                value={valuesPA.nome}
+                                onChange={handleChangePA('nome')}
+                                onKeyUp={handleKeyPress}
+                            />
+                            <TextField size="small" label="Sobre Nome" inputProps={{ maxLength: 50 }} fullWidth
+                                value={valuesPA.sobreNome}
+                                onChange={handleChangePA('sobreNome')}
+                                onKeyUp={handleKeyPress}
+                            />
+
+                            <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth
+                                value={valuesPA.telefone}
+                                onChange={handleChangePA('telefone')}
+                                onKeyUp={handleKeyPress}
+                            />
                             <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
-                                value={values.email}
-                                onChange={handleChange('email')}
-                                inputRef={emailRef}
-                                error={emailError}
+                                value={valuesPA.email}
+                                onChange={handleChangePA('email')}
+                                onKeyUp={handleKeyPress}
                             />
                             <FormControl size="small" fullWidth variant="outlined" >
-                                <InputLabel htmlFor="txtPassword">Senha</InputLabel>
+                                <InputLabel htmlFor="txtPAPassword">Senha</InputLabel>
                                 <OutlinedInput
-                                    id="txtPassword"
-                                    type={values.showPassword ? 'text' : 'password'}
-                                    value={values.password}
-                                    onChange={handleChange('password')}
-                                    onKeyUp={handleKeyPress}
+                                    id="txtPAPassword"
+                                    type={valuesPA.showPassword ? 'text' : 'password'}
+                                    value={valuesPA.password}
+                                    onChange={handleChangePA('password')}
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
                                                 aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
+                                                onClick={handleClickShowPAPassword}
                                                 onMouseDown={handleMouseDownPassword}
                                                 edge="end"
                                             >
-                                                {values.showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                                {valuesPA.showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                                             </IconButton>
                                         </InputAdornment>
                                     }
@@ -244,148 +392,32 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                                     inputProps={{ maxLength: 50 }}
                                 />
                             </FormControl>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        name="checkedB"
-                                        color="primary"
-                                    />
-                                }
-                                label="Lembre-me"
-                            />
+                            <FormControl size="small" fullWidth variant="outlined" >
+                                <InputLabel htmlFor="txtConfirmPassword">Confirma Senha</InputLabel>
+                                <OutlinedInput
+                                    id="txtConfirmPassword"
+                                    type={valuesPA.showCPassword ? 'text' : 'password'}
+                                    value={valuesPA.cPassword}
+                                    onChange={handleChangePA('cPassword')}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPACPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                            >
+                                                {valuesPA.showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    label="Confirma Senha"
+                                    inputProps={{ maxLength: 50 }}
+                                />
+                            </FormControl>
+                            <Button color='primary' disableElevation variant='contained' startIcon={<SaveIcon />} onClick={handleSubimitCreateUsuario} >Salvar</Button>
                         </Box>
-                    </CardContent>
-                    <CardActions>
-                        <Box width='100%' display='flex' flexDirection='column' gap={2} justifyContent='center' >
-                            <Button variant="contained" onClick={() => handleSubmit()}>
-                                Entrar
-                            </Button>
-                            <Typography >
-                                <Link href='#' onClick={() => handleEsqueciSenhaOpen()} >Esqueci minha senha</Link>
-                            </Typography >
-                            <Typography>
-                                <Link href='#' onClick={() => handlePrimeiroAcessoOpen()}  >Primeiro Acesso </Link>
-                            </Typography>
-                        </Box>
-                    </CardActions>
-                </Card>
-                <Modal
-                    open={openEsqueciSenha}
-                    onClose={handleEsqueciSenhaClose}
-                    aria-labelledby="modal-esqueci-minha-senha"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box
-                        gap={1}
-                        margin={2}
-                        padding={1}
-                        paddingX={2}
-                        width="50vw"
-                        display="flex"
-                        flexDirection="column"
-                        alignItems="start"
-                        component={Paper} >
-                        <Typography id="mmodal-esqueci-minha-senha" variant="h6" component="h2">
-                            Esqueci minha senha
-                        </Typography>
-                        <Typography id="modal-modal-description" gap={2}>
-                            Prezado(a) ,
-                            Enviamos um e-mail com instruções de redefinição da sua senha para o email {values.email}.
-                            Se não encontrá-lo na caixa de entrada, verifique a lixeira ou a caixa de spam.
-                            Se não possui mais acesso a esse endereço de e-mail , entre em contato conosco.
-                        </Typography>
-                        <Box width='100%' display='flex' flexDirection='column' gap={2} justifyContent='center' marginTop={2} >
-                            <Button variant="contained" onClick={() => handleEsqueciSenhaClose()}>OK</Button>
-                        </Box>
-                    </Box>
-                </Modal>
-                <Modal
-                    open={openPrimeiroAcesso}
-                    onClose={handlePrimeiroAcessoClose}
-                    aria-labelledby="modal-primeiro-acesso"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box
-                        gap={1}
-                        margin={2}
-                        padding={1}
-                        paddingX={2}
-                        width="80vw"
-                        display="flex"
-                        flexDirection="column"
-                        alignItems="start"
-                        component={Paper} >
-
-                        <TextField size="small" label="Nome" inputProps={{ maxLength: 50 }} fullWidth
-                            value={valuesPA.nome}
-                            onChange={handleChangePA('nome')}
-                            onKeyUp={handleKeyPress}
-                        />
-                        <TextField size="small" label="Sobre Nome" inputProps={{ maxLength: 50 }} fullWidth
-                            value={valuesPA.sobreNome}
-                            onChange={handleChangePA('sobreNome')}
-                            onKeyUp={handleKeyPress}
-                        />
-
-                        <TextField size="small" label='Telefone' inputProps={{ maxLength: 15, type: 'tel' }} fullWidth
-                            value={valuesPA.telefone}
-                            onChange={handleChangePA('telefone')}
-                            onKeyUp={handleKeyPress}
-                        />
-                        <TextField size="small" label='Email' inputProps={{ maxLength: 50, type: 'email' }} fullWidth
-                            value={valuesPA.email}
-                            onChange={handleChangePA('email')}
-                            onKeyUp={handleKeyPress}
-                        />
-                        <FormControl size="small" fullWidth variant="outlined" >
-                            <InputLabel htmlFor="txtPAPassword">Senha</InputLabel>
-                            <OutlinedInput
-                                id="txtPAPassword"
-                                type={valuesPA.showPassword ? 'text' : 'password'}
-                                value={valuesPA.password}
-                                onChange={handleChangePA('password')}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPAPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {valuesPA.showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Senha"
-                                inputProps={{ maxLength: 50 }}
-                            />
-                        </FormControl>
-                        <FormControl size="small" fullWidth variant="outlined" >
-                            <InputLabel htmlFor="txtConfirmPassword">Confirma Senha</InputLabel>
-                            <OutlinedInput
-                                id="txtConfirmPassword"
-                                type={valuesPA.showCPassword ? 'text' : 'password'}
-                                value={valuesPA.cPassword}
-                                onChange={handleChangePA('cPassword')}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPACPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                        >
-                                            {valuesPA.showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Confirma Senha"
-                                inputProps={{ maxLength: 50 }}
-                            />
-                        </FormControl>
-                        <Button color='primary' disableElevation variant='contained' startIcon={<SaveIcon />} onClick={handleSubimitCreateUsuario} >Salvar</Button>
-                    </Box>
-                </Modal>
+                    </Modal>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "20px" }} >
                     <Footer />
