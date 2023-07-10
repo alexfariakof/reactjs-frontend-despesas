@@ -18,6 +18,7 @@ interface State {
 export const Categorias: React.FC = () => {
   const navigate = useNavigate();
   const { debounce } = useDebounce();
+  const [height, setHeight] = useState(0);
   const [rows, setRows] = useState<ICategoriaVM[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
@@ -26,31 +27,6 @@ export const Categorias: React.FC = () => {
     idTipoCategoria: 0
   });
   const tableRef = useRef<HTMLDivElement>(null);
-  const [remainingHeight, setRemainingHeight] = useState(0);
-
-  useEffect(() => {
-    const calculateRemainingHeight = () => {
-      const parentElement = tableRef.current?.parentNode as HTMLDivElement | null;
-      if (parentElement) {
-        const parentHeight = parentElement.clientHeight;
-        const tableHeight = tableRef.current?.clientHeight || 0;
-        const heightDifference = parentHeight - tableHeight;
-        setRemainingHeight(heightDifference);
-      }
-    };
-
-    calculateRemainingHeight(); // Calculate the remaining height when the component mounts
-
-    const handleResize = () => {
-      calculateRemainingHeight(); // Recalculate the remaining height when the window is resized
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []); 
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -137,6 +113,20 @@ export const Categorias: React.FC = () => {
   }
 
   useEffect(() => {
+    const handleResize = () => {
+      setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Define a altura ao montar o componente
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+
+  }, []);
+
+  useEffect(() => {
     if (values.idTipoCategoria === 0) {
       CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
         .then((result) => {
@@ -159,30 +149,29 @@ export const Categorias: React.FC = () => {
           }
         });
     }
+
   }, [values.idTipoCategoria]);
 
   return (
     <LayoutMasterPage
-      titulo='Categorias'
+      titulo="Categorias" height={height}
       barraDeFerramentas={(
         <BarraFerramentas
-          isOpenTxtBusca={true}
+          isOpenTxtBusca={false}
           btnVoltar onClickVoltar={() => navigate('/Categorias')}
           btnNovo onClickNovo={() => handleClear()}
           btnSalvar onClickSalvar={() => handleSave()} />
       )}
     >
       <Box
-        ref={tableRef}
         gap={1}
         margin={1}
         padding={1}
         paddingX={2}
-        height="auto"
         display="flex"
-        flexDirection="column"
+        flexDirection="column"        
         alignItems="start"
-        component={Paper}>
+        component={Paper} >
         <FormControl size="small" fullWidth>
           <InputLabel id="txtTipoCategoria">Tipo de Categoria</InputLabel>
           <Select
@@ -206,17 +195,14 @@ export const Categorias: React.FC = () => {
       <Box
         gap={1}
         margin={1}
-        marginY={0}
+        marginTop={0}
         padding={1}
         paddingX={2}
-        paddingBottom={0}        
-        width='96%'
-        height={remainingHeight}
         display="flex"
-        flexDirection="row"
-        alignItems="start"
+        flexDirection="column"
+        alignItems="stretch"
         component={Paper}
-        style={{ overflow: 'auto' }}
+        overflow="hidden"
       >
         <TableContainer component={Paper} variant="outlined" sx={{ m: 1 }}>
           <Table>

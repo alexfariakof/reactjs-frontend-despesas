@@ -45,10 +45,9 @@ export const Dashboard = () => {
                 margin={1}
                 padding={1}
                 paddingX={2}
-                height="100%"
                 display="flex"
                 flexDirection="column"
-                alignItems="start"
+                alignItems="stretch"
                 component={Paper} 
                 flexGrow={1}
                 >

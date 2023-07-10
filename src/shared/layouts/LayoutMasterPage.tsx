@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import "@fontsource/audiowide"
 
 interface ILayoutMasterPageProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     titulo: string;
     barraDeFerramentas?: React.ReactNode;
     height?: null | any;
