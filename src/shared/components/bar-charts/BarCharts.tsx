@@ -9,10 +9,11 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, ChartProps } from 'react-chartjs-2';
 import { useMediaQuery, Theme } from '@mui/material';
 import { LancamentosService } from '../../services/api/LancamentosService';
 import { Dayjs } from 'dayjs';
+
 
 ChartJS.register(
   CategoryScale,
@@ -72,9 +73,10 @@ export const dataNull = {
 };
 interface IBarChartsProps {
   valorAno: Dayjs | null;
+  height: any;
 }
 
-export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno }) => {
+export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
   const [chartHeight, setChartHeight] = useState(0);
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const orientation =  window.matchMedia("(orientation: portrait)").matches;
@@ -107,11 +109,7 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno }) => {
     };    
     
     const handleResize = () => {
-      if (smDown) {
         setChartHeight(window.innerHeight);
-      } else {
-        setChartHeight(window.innerHeight * 0.7);
-      }
     };
 
     handleResize(); // Set the chart's height when the component mounts
@@ -128,16 +126,16 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno }) => {
     <>
       {(() => {
         if (orientation && smDown) {
-          return <Bar height={chartHeight} options={optionsRight} data={dadosGrafico} />;
+          return <Bar height={height} options={optionsRight} data={dadosGrafico} />;
         }
         else if (!orientation && smDown) {
-          return <Bar height={chartHeight} options={optionsTop} data={dadosGrafico} />;
+          return <Bar height={height} options={optionsTop} data={dadosGrafico} />;
         }
         else if (!orientation && !smDown) {
-          return <Bar height={chartHeight} options={optionsTop} data={dadosGrafico} />;
+          return <Bar height={height} options={optionsTop} data={dadosGrafico} />;
         }
         else {
-          return <Bar height={chartHeight} options={optionsTop} data={dadosGrafico} />;
+          return <Bar height={height} options={optionsTop} data={dadosGrafico} />;
         }
       })()}
     </>

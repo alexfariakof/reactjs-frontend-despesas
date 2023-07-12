@@ -28,7 +28,7 @@ export const Dashboard = () => {
 
     return (
         <LayoutMasterPage 
-        titulo='Dashboard'  height={height}
+        titulo='Dashboard'  
         barraDeFerramentas={(
             <BarraFerramentas  
             btnAtualizarGrafico={true}
@@ -41,17 +41,18 @@ export const Dashboard = () => {
             />
           )}
         > 
-            <Box gap={1}
+            <Box
                 margin={1}
-                padding={1}
                 paddingX={2}
+                height={height}
                 display="flex"
                 flexDirection="column"
                 alignItems="stretch"
+                alignContent='space-around'
                 component={Paper} 
-                flexGrow={1}
+                overflow="hidden"
                 >
-                    <BarCharts valorAno={valorAno} />
+                    <BarCharts height={height} valorAno={valorAno} />
             </Box>
         </LayoutMasterPage>
     );
