@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import "@fontsource/audiowide"
 
 interface ILayoutMasterPageProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     titulo: string;
     barraDeFerramentas?: React.ReactNode;
     height?: null | any;
@@ -19,7 +19,7 @@ export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, t
 
     return (
         <Box display="flex" flexDirection="column" height="100vh">
-            <Box padding={1} display="flex" alignItems="center" height={theme.spacing(8)} >
+            <Box padding={1} display="flex" alignItems="center" height={theme.spacing()} >
                 {smDown && (
 
                     <IconButton onClick={toggleDrawerOpen}>

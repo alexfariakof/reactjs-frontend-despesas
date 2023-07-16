@@ -68,6 +68,7 @@ const ChangePassword: React.FC = () => {
         <Box
             gap={1}
             margin={1}
+            marginTop={0}
             padding={1}
             paddingX={2}
             height="auto"

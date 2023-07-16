@@ -23,6 +23,7 @@ interface State {
 
 export const Receitas: React.FC = () => {
     const navigate = useNavigate();
+    const [height, setHeight] = useState(0);    
     const { id = 0 } = useParams<'id'>();
     const [categorias, setCategorias] = useState<(Omit<ICategoriaVM,''>[])>([]);
     const [values, setValues] = useState<State>({
@@ -116,6 +117,18 @@ export const Receitas: React.FC = () => {
           .then((result: any) => {
                 setCategorias(result);
           });        
+
+          const handleResize = () => {
+            setHeight(window.innerHeight); // Define a altura 0.8 da altura da janela
+          };
+      
+          window.addEventListener('resize', handleResize);
+          handleResize(); // Define a altura ao montar o componente
+      
+          return () => {
+            window.removeEventListener('resize', handleResize);
+          };
+      
    }, []);
 
     useEffect(() => {
@@ -137,10 +150,10 @@ export const Receitas: React.FC = () => {
     return (
 
         <LayoutMasterPage
-            titulo='Receitas'
+            titulo='Receitas' height={height}
             barraDeFerramentas={(
                 <BarraFerramentas
-                    isOpenTxtBusca={true}
+                    isOpenTxtBusca={false}
                     btnVoltar onClickVoltar={() => navigate('/lancamentos')}
                     btnNovo onClickNovo={() => handleClear()} 
                     btnSalvar onClickSalvar={() => handleSave()} />
@@ -154,7 +167,7 @@ export const Receitas: React.FC = () => {
                 height="100%"
                 display="flex"
                 flexDirection="column"
-                alignItems="start"
+                alignItems="stretch"
                 component={Paper} >
                 <FormControl size="small" fullWidth  >
                     <InputLabel id="txtCategoria">Categoria</InputLabel>
