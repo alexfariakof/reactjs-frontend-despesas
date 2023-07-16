@@ -1,4 +1,4 @@
-import { useState, MouseEvent, ChangeEvent } from 'react';
+import { useState, MouseEvent, ChangeEvent, useEffect } from 'react';
 import { useAppThemeContext } from "../shared/contexts";
 import { Box, Typography, Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { LayoutMasterPage } from '../shared/layouts';
@@ -9,6 +9,7 @@ import ChangeAvatar from '../shared/components/Configuracoes/ChangeAvatar';
 
 
 export const Configuracoes = () => {
+    const [height, setHeight] = useState(0);
     const [file, setFile] = useState<File | any>(null);
     const [fileLoaded, setFileLoaded] = useState<boolean>(false);    
     const { toggleTheme } = useAppThemeContext();
@@ -27,9 +28,24 @@ export const Configuracoes = () => {
         }
       };
 
+      useEffect(() => {
+        const handleResize = () => {
+          setHeight(window.innerHeight); // Define a altura 0.8 da altura da janela
+        };
+    
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Define a altura ao montar o componente
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+    
+      }, []);
+    
+
     return (
         <LayoutMasterPage
-            titulo='Configurações'            
+            titulo='Configurações'  height={height}           
         >
             <Box height="100%" width='100%' display="flex" margin={0} flexDirection="column" bgcolor='#00F12F' >
                 <Box
