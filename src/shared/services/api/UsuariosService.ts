@@ -1,6 +1,5 @@
 import  createApiInstance   from "../axios-config";
 const Api = createApiInstance();
-
 export interface IUsuarioVM {
     Id:number;
     Nome: string;
@@ -47,7 +46,6 @@ const create = async (dados: Omit<IUsuarioVM, 'id'>): Promise<number | any | Err
         console.log(error);
     }
 };
-
 
 const updateById = async (id: number, dados: IUsuarioVM): Promise<IUsuarioVM | any | Error> => {
     try {

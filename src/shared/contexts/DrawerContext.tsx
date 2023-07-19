@@ -1,5 +1,4 @@
 import { createContext, useCallback, useState, useContext } from 'react';
-
 interface IDrawerContextData {
     isDrawerOpen: boolean;
     toggleDrawerOpen: () => void;

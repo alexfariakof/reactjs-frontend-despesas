@@ -1,6 +1,5 @@
 import { useCallback, useRef } from 'react';
 
-
 export const useDebounce = (notDelayInFirstTime = false, noDelayUsed = false,  delay = 60000) => {
   const onlyOnetime = useRef(noDelayUsed)
   const isFirstTime = useRef(notDelayInFirstTime);

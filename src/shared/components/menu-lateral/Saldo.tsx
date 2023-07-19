@@ -29,5 +29,4 @@ const Saldo: React.FC = () => {
     </Table>
   );
 }
-
 export default Saldo;

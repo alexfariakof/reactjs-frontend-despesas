@@ -1,6 +1,5 @@
 import createApiInstance from "../axios-config";
 const Api = createApiInstance();
-
 export interface ImagemPerfilUsuarioVM {
   id: number;
   url: string;
@@ -9,7 +8,6 @@ export interface ImagemPerfilUsuarioVM {
   contentType: string;
   idUsuario: number;
 }
-
 
 const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | any> => {
   try {
@@ -111,8 +109,6 @@ const deleteImagemPerfilUsuario = async (): Promise<any> => {
     console.log(error);
   }
 };
-
-
 
 export const ImagemPerfilUsuarioService = {
   getImagemPerfilUsuarioByIdUsuario,

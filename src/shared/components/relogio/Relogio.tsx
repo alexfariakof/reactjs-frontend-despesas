@@ -65,10 +65,9 @@ const Relogio: React.FC  = () => {
                 <span className="formatData2">{monthOfYear[mes]}</span>
                 <span className="formatData1"> de </span>
                 <span className="formatData2">{ano}</span>
-                <span className="hora"> // {time}</span>
+                <span className="hora"> {'//'} {time}</span>
             </Box>
         </Box>
     )
 }
-
 export default Relogio;

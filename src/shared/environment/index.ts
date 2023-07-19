@@ -1,4 +1,3 @@
-
 export const environment = {
     LIMITE_DE_LINHAS: 10,
     INPUT_DE_BUSCA : '',    

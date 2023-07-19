@@ -5,9 +5,6 @@ import { LayoutMasterPage } from '../shared/layouts';
 import ChangePassword from '../shared/components/Configuracoes/ChangePassword';
 import ChangeAvatar from '../shared/components/Configuracoes/ChangeAvatar';
 
-
-
-
 export const Configuracoes = () => {
     const [height, setHeight] = useState(0);
     const [file, setFile] = useState<File | any>(null);
@@ -30,7 +27,7 @@ export const Configuracoes = () => {
 
       useEffect(() => {
         const handleResize = () => {
-          setHeight(window.innerHeight); // Define a altura 0.8 da altura da janela
+          setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
         };
     
         window.addEventListener('resize', handleResize);

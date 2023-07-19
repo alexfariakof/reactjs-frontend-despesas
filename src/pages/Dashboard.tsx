@@ -1,6 +1,5 @@
 import { LayoutMasterPage } from '../shared/layouts';
 import { Box, Paper } from '@mui/material';
-
 import { BarCharts, BarraFerramentas } from '../shared/components';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -14,7 +13,7 @@ export const Dashboard = () => {
 
      useEffect(() => {
         const handleResize = () => {
-            setHeight(window.innerHeight); // Define a altura 0.8 da altura da janela
+            setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
         };
 
         window.addEventListener('resize', handleResize);
