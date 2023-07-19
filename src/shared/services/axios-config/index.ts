@@ -2,7 +2,6 @@ import axios, { AxiosInstance } from 'axios';
 import { environment } from '../../environment';
 import { resposeInterceptor, errorInterceptor } from './interceptors';
 
-
 const createApiInstance = (): AxiosInstance => {
   const api = axios.create({
     baseURL: environment.URL_BASE,

@@ -48,7 +48,6 @@ const getByIdUsuario = async (idUsuario: number): Promise<ICategoriaVM[] | any |
     }
 };
 
-
 const getByTipoCategoria = async (idUsuario: number, idTipoCategoria: number): Promise<ICategoriaVM[] | any | Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
@@ -76,7 +75,6 @@ const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => 
         console.log(error);
     }
 };
-
 
 const updateById = async (id: number, dados: ICategoriaVM): Promise<any | any | Error> => {
     try {

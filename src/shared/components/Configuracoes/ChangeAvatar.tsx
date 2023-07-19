@@ -3,11 +3,9 @@ import { Avatar, Box, Button, InputLabel, Paper, Typography, useTheme } from "@m
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ImagemPerfilUsuarioService, ImagemPerfilUsuarioVM } from "../../services/api";
-
 interface ChangeAvatarProps {
     handleAvatarUploaded?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
-
 
 const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => {
     const theme = useTheme();
@@ -139,5 +137,4 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => 
         </Box>
     );
 }
-
 export default ChangeAvatar;

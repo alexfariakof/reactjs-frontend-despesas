@@ -3,8 +3,7 @@ import { Box } from '@mui/system';
 import { useDrawerContext } from '../contexts';
 import Relogio from '../components/relogio/Relogio';
 import MenuIcon from '@mui/icons-material/Menu';
-import "@fontsource/audiowide"
-
+import "@fontsource/audiowide";
 interface ILayoutMasterPageProps {
     children?: React.ReactNode;
     titulo: string;

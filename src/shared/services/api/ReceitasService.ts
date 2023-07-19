@@ -55,7 +55,6 @@ const getByIdUsuario = async (idUsuario: number): Promise<IReceitaVM[] | any| Er
     }
 };
 
-
 const create = async (dados: Omit<IReceitaVM, 'id'>): Promise<any | Error> => {
     try {        
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
@@ -69,7 +68,6 @@ const create = async (dados: Omit<IReceitaVM, 'id'>): Promise<any | Error> => {
         console.log(error);
     }
 };
-
 
 const updateById = async (id: number, dados: IReceitaVM): Promise<IReceitaVM | any| Error> => {
     try {        

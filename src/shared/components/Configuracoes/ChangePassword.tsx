@@ -5,7 +5,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import SaveIcon from '@mui/icons-material/Save';
 import { AuthService } from "../../services/api";
 import { useAuthContext } from "../../contexts";
-
 interface ITrocaSenha {
     password: string
     showPassword: boolean;

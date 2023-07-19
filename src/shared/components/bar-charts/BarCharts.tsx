@@ -92,7 +92,6 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const [barKey, setBarKey] = useState(0);
   const [orientation, setOrientation] = useState<any>(window.matchMedia("(orientation: portrait)").matches);
-  const [options, setOptions] = useState<{}>();
   const [graficoAno, setGraficoAno] = useState(valorAno);
   const [dadosGrafico, setDadosGrafico] = useState<any>(dataNull); // Inicializa com os dados nulos
 

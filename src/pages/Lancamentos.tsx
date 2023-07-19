@@ -9,7 +9,6 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useNavigate } from 'react-router-dom';
 import dayjs, { Dayjs } from 'dayjs';
 
-
 export const Lancamentos = () => {
     const navigate = useNavigate();
     const { debounce } = useDebounce(true, false);

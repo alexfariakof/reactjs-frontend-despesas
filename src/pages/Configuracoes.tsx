@@ -5,9 +5,6 @@ import { LayoutMasterPage } from '../shared/layouts';
 import ChangePassword from '../shared/components/Configuracoes/ChangePassword';
 import ChangeAvatar from '../shared/components/Configuracoes/ChangeAvatar';
 
-
-
-
 export const Configuracoes = () => {
     const [height, setHeight] = useState(0);
     const [file, setFile] = useState<File | any>(null);

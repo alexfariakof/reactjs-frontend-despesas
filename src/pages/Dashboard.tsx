@@ -1,6 +1,5 @@
 import { LayoutMasterPage } from '../shared/layouts';
 import { Box, Paper } from '@mui/material';
-
 import { BarCharts, BarraFerramentas } from '../shared/components';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
