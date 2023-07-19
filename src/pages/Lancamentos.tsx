@@ -101,7 +101,6 @@ export const Lancamentos = () => {
                 margin={1}
                 height="100%"
                 padding={1}
-                paddingX={2}
                 display="flex"
                 flexDirection="row"
                 alignItems="start"
