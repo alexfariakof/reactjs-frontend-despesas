@@ -30,7 +30,7 @@ export const Configuracoes = () => {
 
       useEffect(() => {
         const handleResize = () => {
-          setHeight(window.innerHeight); // Define a altura 0.8 da altura da janela
+          setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
         };
     
         window.addEventListener('resize', handleResize);
