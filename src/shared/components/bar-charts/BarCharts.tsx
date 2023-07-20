@@ -92,18 +92,16 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const [barKey, setBarKey] = useState(0);
   const [orientation, setOrientation] = useState<any>(window.matchMedia("(orientation: portrait)").matches);
-  const [graficoAno, setGraficoAno] = useState(valorAno);
   const [dadosGrafico, setDadosGrafico] = useState<any>(dataNull); // Inicializa com os dados nulos
 
   useEffect(() => {
-    setGraficoAno(valorAno);
     updateDadosGrafico();
   }, [valorAno, smDown]);
 
   const updateDadosGrafico = () => {
     const fetchData = async () => {
       const result = await LancamentosService.getDadosGraficoByAnoByIdUsuario(
-        graficoAno,
+        valorAno,
         Number(localStorage.getItem("idUsuario"))
       );
       if (result) {

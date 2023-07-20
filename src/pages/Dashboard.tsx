@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 export const Dashboard = () => {
     const [valorAno, setValorAno] = useState<Dayjs>(dayjs());
     const [height, setHeight] = useState(0);    
+   
     const handleAtualizarGraficoDados = (valorAno:Dayjs) => {
         setValorAno(valorAno);
      };
