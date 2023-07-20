@@ -4,6 +4,7 @@ import { useDrawerContext } from '../contexts';
 import Relogio from '../components/relogio/Relogio';
 import MenuIcon from '@mui/icons-material/Menu';
 import "@fontsource/audiowide";
+import { FormatBold } from '@mui/icons-material';
 interface ILayoutMasterPageProps {
     children?: React.ReactNode;
     titulo: string;
@@ -18,16 +19,15 @@ export const LayoutMasterPage: React.FC<ILayoutMasterPageProps> = ({ children, t
 
     return (
         <Box display="flex" flexDirection="column" height="100vh">
-            <Box padding={1} display="flex" alignItems="center" height={theme.spacing()} >
+            <Box margin={2} padding={1} display="flex" alignItems="center" height={theme.spacing()} >
                 {smDown && (
-
                     <IconButton onClick={toggleDrawerOpen}>
                         <MenuIcon />
                     </IconButton>
                 )}
                 <Box display="flex" flexDirection="row" width="100%"  >
                     <Box textAlign={'left'} padding={1}>
-                        <Typography variant='h5' >
+                        <Typography variant='h5' fontWeight={500} >
                             {titulo}
                         </Typography>
                     </Box>

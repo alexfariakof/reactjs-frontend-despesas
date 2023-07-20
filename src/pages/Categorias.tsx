@@ -193,7 +193,6 @@ export const Categorias: React.FC = () => {
         margin={1}
         marginTop={0}
         padding={1}
-        paddingX={2}
         display="flex"
         flexDirection="column"
         alignItems="stretch"
