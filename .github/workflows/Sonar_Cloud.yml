@@ -1,4 +1,4 @@
-name: Build
+name: Test and Analysis Code in Sonar Cloud
 on:
   push:
     branches:
