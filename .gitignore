@@ -363,3 +363,6 @@ documents*
 documents/*
 AWS-doker.txt
 build/*
+*.yarn
+coverage/
+coverage/*
