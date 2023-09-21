@@ -4,5 +4,5 @@ module.exports = {
   testEnvironment: 'node',
   collectCoverage: true, 
   coverageDirectory: 'coverage',
-  bail: false // Impede que o Jest interrompa a execução dos testes após o primeiro erro
+  bail: false, // Impede que o Jest interrompa a execução dos testes após o primeiro erro
 };
