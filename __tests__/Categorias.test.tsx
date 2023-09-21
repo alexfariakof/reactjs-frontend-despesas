@@ -21,11 +21,11 @@ describe('Categorias Component', () => {
 
   it('handles input change correctly', () => {
     render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
-    const descricaoInput = screen.getByLabelText('Descrição');
+    const descricaoInput = screen.getByTestId('descricao');
 
     fireEvent.change(descricaoInput, { target: { value: 'New Description' } });
 
-    expect(descricaoInput).toHaveValue('New Description');
+    expect(descricaoInput).toHaveTextContent('New Description');
   });
 
   it('handles TipoCategoria change correctly', () => {
@@ -55,7 +55,7 @@ describe('Categorias Component', () => {
     const mockHandleEdit = jest.fn();
 
     render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
-    const editButton = screen.getByText('Editar');
+    const editButton = screen.getByTestId('Edit');
 
     fireEvent.click(editButton);
 
@@ -68,7 +68,7 @@ describe('Categorias Component', () => {
     const mockHandleDelete = jest.fn();
 
     render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
-    const deleteButton = screen.getByText('Excluir');
+    const deleteButton = screen.getByTestId('delete');
 
     fireEvent.click(deleteButton);
 
