@@ -1,18 +1,26 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { Categorias } from '../src/pages/Categorias';
+import { AppThemeProvider } from '../src/shared/contexts';
 
-// Mock any external dependencies or services as needed
+
+const mockedUsedNavigate = jest.fn();
+
+jest.mock("react-router-dom", () => ({
+  ...(jest.requireActual("react-router-dom") as any),
+  useNavigate: () => mockedUsedNavigate
+}));
+
 
 describe('Categorias Component', () => {
   it('renders without errors', () => {
-    render(<Categorias />);
+    render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
     // Verifica se o componente renderiza sem erros
     // Adicione mais verificações conforme necessário
   });
 
   it('handles input change correctly', () => {
-    render(<Categorias />);
+    render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
     const descricaoInput = screen.getByLabelText('Descrição');
 
     fireEvent.change(descricaoInput, { target: { value: 'New Description' } });
@@ -21,7 +29,7 @@ describe('Categorias Component', () => {
   });
 
   it('handles TipoCategoria change correctly', () => {
-    render(<Categorias />);
+    render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
     const tipoCategoriaSelect = screen.getByLabelText('Tipo de Categoria');
 
     fireEvent.change(tipoCategoriaSelect, { target: { value: '1' } });
@@ -33,7 +41,7 @@ describe('Categorias Component', () => {
     // Mock a function to replace the actual handleSave function
     const mockHandleSave = jest.fn();
     
-    render(<Categorias />);
+    render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
     const saveButton = screen.getByText('Salvar');
 
     fireEvent.click(saveButton);
@@ -46,7 +54,7 @@ describe('Categorias Component', () => {
     // Mock a function to replace the actual handleEdit function
     const mockHandleEdit = jest.fn();
 
-    render(<Categorias />);
+    render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
     const editButton = screen.getByText('Editar');
 
     fireEvent.click(editButton);
@@ -59,7 +67,7 @@ describe('Categorias Component', () => {
     // Mock a function to replace the actual handleDelete function
     const mockHandleDelete = jest.fn();
 
-    render(<Categorias />);
+    render(<AppThemeProvider ><Categorias /></AppThemeProvider >);
     const deleteButton = screen.getByText('Excluir');
 
     fireEvent.click(deleteButton);
