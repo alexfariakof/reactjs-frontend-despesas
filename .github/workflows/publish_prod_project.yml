@@ -1,0 +1,74 @@
+name: Build Test Deploy and Publish Production Project In AWS
+on:
+  push:
+    branches:
+      - main      
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install dependencies
+        run: npm install --force
+        continue-on-error: false
+
+      - name: Test and coverage
+        run: npm run test:coverage
+        continue-on-error: false
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  deploy_prod:
+    needs: sonarcloud
+    name: Production Build Deploy and Publish Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        env:
+           DOCKER_CLI_AGGREGATE: 1  
+        run: |          
+          docker-compose build          
+        continue-on-error: false
+
+      - name: Push Docker image to Docker Hub
+        env:
+           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+           DOCKER_CLI_AGGREGATE: 1  
+        run: |
+            docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}    
+            docker push ${{ secrets.DOCKER_IMAGE_PROD }}
+        continue-on-error: false
+
+      - name: Execute SSH Commands into EC2 
+        env:
+           EC2_HOST: ${{ secrets.EC2_HOST }}
+           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+           AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          port: 22
+          script: |            
+            IMAGEM="${{ secrets.DOCKER_IMAGE_PROD }}"
+            container_id=$(docker ps -a -q --filter "ancestor=$IMAGEM")
+            image_id=$(docker images --format "{{.ID}}" "$IMAGEM")
+            docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}    
+            docker rm --force $container_id
+            docker rmi --force $image_id
+            docker pull $IMAGEM            
+            docker run -d -p 80:80 $IMAGEM

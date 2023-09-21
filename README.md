@@ -17,7 +17,7 @@ Acesso documentação da API no Swagger <a target="_blank" href="http://alexfari
 </h2>
 
 <h2 align="left"> 
-Workspace para teste da API Público  <a href="https://www.postman.com/bold-eclipse-872793/workspace/api-despesas-pessoais-azure" target="_blank" >Postman</a>
+Workspace para teste da API Público  <a href="https://www.postman.com/bold-eclipse-872793/workspace/api-despesas-pessoais" target="_blank" >Postman</a>
 </h2>
 
 <h2 align="left"> 
