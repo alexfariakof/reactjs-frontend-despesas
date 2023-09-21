@@ -3,5 +3,6 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   collectCoverage: true, 
-  coverageDirectory: 'coverage'
+  coverageDirectory: 'coverage',
+  bail: false // Impede que o Jest interrompa a execução dos testes após o primeiro erro
 };
