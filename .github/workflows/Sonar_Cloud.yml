@@ -2,12 +2,13 @@ name: Test and Analysis Code in Sonar Cloud
 on:
   push:
     branches:
+      - main
       - hotfix/*
       - release/*
       - pre-release
-      - develop
+      - develop      
       - feature/*      
-      - bgfix/*      
+      - bgfix/*
       
   pull_request:
     types: [opened, synchronize, reopened]
