@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install -P --force react react-dom @types/react-dom
-RUN npm install react-scripts
-RUN npm install && mv node_modules ../
+RUN npm install react-scripts --force 
+RUN npm install --force && mv node_modules ../
 COPY . ./
 RUN npm run build
 
