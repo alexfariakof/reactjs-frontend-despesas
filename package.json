@@ -6,7 +6,8 @@
     "start": "set PORT=80 && react-scripts start",
     "docker": "./node_modules/.bin/react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --no-cache",
+    "test:coverage": "jest --coverage",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -20,15 +21,15 @@
     "@types/node": "^16.11.60",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.2.1",
+    "axios": "^0.27.2",
+    "chart.js": "^3.9.1",
     "dayjs": "^1.11.8",
     "react": "^18.2.0",
+    "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
     "react-number-format": "^5.0.1",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1",
-    "chart.js": "^3.9.1",
-    "react-chartjs-2": "^4.3.1",
-    "axios": "^0.27.2"
+    "react-scripts": "5.0.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -40,7 +41,10 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.2.1",
     "eslint-config-react-app": "^7.0.1",
+    "jest": "^27.5.1",
     "jest-editor-support": "^30.2.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2",
     "web-vitals": "^2.1.4"
   },
   "repository": {
