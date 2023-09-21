@@ -3,10 +3,11 @@ on:
   push:
     branches:
       - main
-      - develop
-      - pre-release
-      - release/*
       - hotfix/*
+      - release/*
+      - pre-release
+      - develop
+      - feature/*      
       - bgfix/*      
       
   pull_request:
