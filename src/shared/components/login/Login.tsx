@@ -211,7 +211,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                     <Typography variant="body2">
                         &copy; 2023 Honey TI. Todos os direitos reservados - Desenvolvido por
                         Alex Ribeiro de Faria{" "}
-                        <Link sx={{ color: "red" }} href="http://alexfariakof.com:3000" target="_blank" >
+                        <Link sx={{ color: "red" }} href="http://alexfariakof.com" target="_blank" >
                             Acessar aplicação atualizada em produção
                         </Link>
                     </Typography>

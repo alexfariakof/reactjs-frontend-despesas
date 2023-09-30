@@ -6,8 +6,6 @@ import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService, ICategoriaVM } from '../shared/services/api';
 import { Delete, Edit } from '@mui/icons-material';
-import { useDebounce } from '../shared/hooks';
-
 interface State {
   id: number;
   descricao: string;
@@ -17,7 +15,6 @@ interface State {
 
 export const Categorias: React.FC = () => {
   const navigate = useNavigate();
-  const { debounce } = useDebounce();
   const [height, setHeight] = useState(0);    
   const [rows, setRows] = useState<ICategoriaVM[]>([]);
   const [values, setValues] = useState<State>({
@@ -111,6 +108,7 @@ export const Categorias: React.FC = () => {
     });
   }
 
+
   useEffect(() => {
     if (values.idTipoCategoria === 0) {
       CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
@@ -136,21 +134,23 @@ export const Categorias: React.FC = () => {
     }
 
     const handleResize = () => {
-      setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
-  };
+      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
+    };
 
-  window.addEventListener('resize', handleResize);
-  handleResize(); // Define a altura ao montar o componente
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Define a altura ao montar o componente
 
-  return () => {
+    return () => {
       window.removeEventListener('resize', handleResize);
-  };
+    };
+
+
 
   }, [values.idTipoCategoria]);
 
   return (
     <LayoutMasterPage
-      titulo='Categorias'
+      titulo="Categorias" height={height}
       barraDeFerramentas={(
         <BarraFerramentas
           isOpenTxtBusca={false}
@@ -158,7 +158,6 @@ export const Categorias: React.FC = () => {
           btnNovo onClickNovo={() => handleClear()}
           btnSalvar onClickSalvar={() => handleSave()} />
       )}
-      height={height}
     >
       <Box
         gap={1}
@@ -166,9 +165,9 @@ export const Categorias: React.FC = () => {
         padding={1}
         paddingX={2}
         display="flex"
-        flexDirection="column"
+        flexDirection="column"        
         alignItems="start"
-        component={Paper}>
+        component={Paper} >
         <FormControl size="small" fullWidth>
           <InputLabel id="txtTipoCategoria">Tipo de Categoria</InputLabel>
           <Select
@@ -194,15 +193,15 @@ export const Categorias: React.FC = () => {
         margin={1}
         marginTop={0}
         padding={1}
-        paddingX={2}
-        paddingBottom={0}        
-        width='auto'
+        width="auto"
+        height="100%"
         display="flex"
-        flexDirection="row"
-        alignItems="start"
+        flexDirection="column"
+        alignItems="center"
         component={Paper}
-        style={{ overflow: 'auto' }}
-              >        
+        style={{overflow: 'hidden'}}
+        overflow="hidden"
+      >
       <TableContainer component={Paper} variant="outlined" sx={{ m: 1 }}>
           <Table>
             <TableHead>

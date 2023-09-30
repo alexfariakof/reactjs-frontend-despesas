@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import { faker } from '@faker-js/faker';
 import { useMediaQuery, Theme } from '@mui/material';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Box } from '@mui/system';
+import { Dayjs } from 'dayjs';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -84,53 +84,48 @@ const charData: ChartData = {
   ],
 };
 
-export const BarCharts: React.FC = () => {
-  const [chartHeight, setChartHeight] = useState(0);
-  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
-  const [options, setOptions] = useState(smDown ? optionsRight : optionsTop);
-  const [data, setData] = useState<any>(charData);
+interface IBarChartsProps {
+  valorAno: Dayjs | null;
+  height: any;
+}
+
+export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
+  const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  const [barKey, setBarKey] = useState(0);
+  const [orientation, setOrientation] = useState<any>(window.matchMedia("(orientation: portrait)").matches);
+  const [dadosGrafico, setDadosGrafico] = useState<any>(charData); // Inicializa com os dados nulos
 
   useEffect(() => {
-      const handleResize = () => {
-          if (smDown) {
-              setChartHeight(window.innerHeight);
-          }
-          else {
-              setChartHeight(window.innerHeight * 0.7);
-          }
+    updateDadosGrafico();
+  }, [valorAno, smDown]);
 
-      };
+  const updateDadosGrafico = () => {
+    setBarKey((prevKey) => prevKey + 1);
+    setDadosGrafico(charData);
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); 
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [smDown]);
-
-  useEffect(() => {
-    const handleOrientationChange = () => {
-        if (smDown) {
-            setOptions(optionsTop);
-            setChartHeight(window.innerHeight);
-          } else {
-            setOptions(optionsRight);
-            setChartHeight(window.innerHeight * 0.7);
-          }
-
-    };
-    window.addEventListener('orientationchange', handleOrientationChange);
-
-
-    return () => {
-        window.removeEventListener('orientationchange', handleOrientationChange);
-      };  
-  }, [smDown, options]);
+  };
 
   return (
-    <Box sx={{ height: smDown ? chartHeight : '70vh', width: '100%' }}>
-      <Bar data={data} options={options} />
-    </Box>
+    <>
+      {(() => {
+        if (orientation && smDown) {
+          return (
+            <Bar key={barKey} height={height} options={optionsRight} data={dadosGrafico} />
+          );
+        } else if (!orientation && smDown) {
+          return (
+            <Bar key={barKey} height={height} options={optionsRight} data={dadosGrafico} />
+          );
+        } else if (!orientation && !smDown) {
+          return (
+            <Bar key={barKey} height={height} options={optionsTop} data={dadosGrafico} />
+          );
+        } else {
+          return (
+            <Bar key={barKey} height={height} options={optionsTop} data={dadosGrafico} />
+          );
+        }
+      })()}
+    </>
   );
 };

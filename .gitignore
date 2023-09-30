@@ -363,3 +363,4 @@ documents*
 documents/*
 AWS-doker.txt
 build/*
+coverage/*

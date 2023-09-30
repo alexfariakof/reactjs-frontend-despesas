@@ -30,7 +30,7 @@ export const Lancamentos = () => {
         });
 
         const handleResize = () => {
-            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+            setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
         };
 
         window.addEventListener('resize', handleResize);
@@ -77,8 +77,10 @@ export const Lancamentos = () => {
         <LayoutMasterPage titulo='Lançamentos' height={height}
             barraDeFerramentas={(
                 <BarraFerramentas 
-                isOpenDataMesAno={true}  
-                btnAtualizar={true}
+                isOpenDataMesAno={true}                 
+                btnAtualizar={true} 
+                btnVoltar ={true}
+                handleAtualizarLancamento= {() =>{}}
                 btnNovo={false} 
                 btnSalvar={false} />
             )}
@@ -87,17 +89,18 @@ export const Lancamentos = () => {
             <Box
                 gap={1}
                 margin={1}
+                width="auto"
+                height="100%"
                 padding={1}
-                paddingX={2}
-                height="100%"                
                 display="flex"
-                flexDirection="row"
-                alignItems="start"
+                flexDirection="column"
+                alignItems="center"
                 component={Paper} 
-                style={{overflow: 'auto'}}
+                style={{overflow: 'hidden'}}
+                overflow="hidden"
                 >
-                <TableContainer component={Paper}  variant="outlined" sx={{ m: 1 }} >
-                    <Table>
+                <TableContainer  component={Paper}  variant="outlined" sx={{ m: 1 }} >
+                    <Table  >
                         <TableHead>
                             <TableRow>
                                 <TableCell align='center' width="100vw" >Ações</TableCell>
@@ -110,7 +113,7 @@ export const Lancamentos = () => {
                         </TableHead>
                         <TableBody>
                         <TableRow >
-                                <TableCell>                         
+                                <TableCell align='center'>                         
                                     <IconButton size="small" onClick={() => handleDelete('Receita', 2)  } >
                                         <DeleteIcon />
                                     </IconButton >
@@ -125,7 +128,7 @@ export const Lancamentos = () => {
                                 <TableCell>Salário</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>                         
+                                <TableCell align='center'>                         
                                     <IconButton size="small" onClick={() => handleDelete('Despesa', 1)  } >
                                         <DeleteIcon />
                                     </IconButton >
@@ -140,7 +143,7 @@ export const Lancamentos = () => {
                                 <TableCell>Alimentação</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>                         
+                                <TableCell align='center'>                         
                                     <IconButton size="small" onClick={() => handleDelete('Despesa', 2)  } >
                                         <DeleteIcon />
                                     </IconButton >

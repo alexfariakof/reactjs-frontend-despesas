@@ -1,20 +1,20 @@
 import { LayoutMasterPage } from '../shared/layouts';
 import { Box, Paper } from '@mui/material';
-
 import { BarCharts, BarraFerramentas } from '../shared/components';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 
 export const Dashboard = () => {
-    const [valorAno, setValorAno] = useState<Dayjs | null>(dayjs());
+    const [valorAno, setValorAno] = useState<Dayjs>(dayjs());
     const [height, setHeight] = useState(0);    
+   
     const handleAtualizarGraficoDados = (valorAno:Dayjs) => {
         setValorAno(valorAno);
      };
 
      useEffect(() => {
         const handleResize = () => {
-            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+            setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
         };
 
         window.addEventListener('resize', handleResize);
@@ -28,30 +28,31 @@ export const Dashboard = () => {
 
     return (
         <LayoutMasterPage 
-        titulo='Dashboard'  height={height}
+        titulo='Dashboard'  
         barraDeFerramentas={(
             <BarraFerramentas  
+            btnAtualizarGrafico={true}
             isOpenDataAno={true}
             btnNovo={false}
             btnSalvar={false}
-            btnVoltar={false}
-            btnAtualizarGrafico={true}
+            btnVoltar={false}      
+            valorAno={valorAno}      
             handleAtualizarGrafico={handleAtualizarGraficoDados}
             />
           )}
         > 
-            <Box gap={1}
+            <Box
                 margin={1}
-                padding={1}
                 paddingX={2}
-                height="100%"
+                height={height}
                 display="flex"
                 flexDirection="column"
-                alignItems="start"
+                alignItems="stretch"
+                alignContent='space-around'
                 component={Paper} 
-                flexGrow={1}
+                overflow="hidden"
                 >
-                    <BarCharts   />
+                    <BarCharts height={height} valorAno={valorAno} />
             </Box>
         </LayoutMasterPage>
     );

@@ -31,7 +31,7 @@ export const Receitas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs(),
+        data: dayjs('2014-08-18T21:11:54'),
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +143,7 @@ export const Receitas: React.FC = () => {
         });
 
         const handleResize = () => {
-            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+            setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
         };
 
         window.addEventListener('resize', handleResize);
@@ -152,6 +152,7 @@ export const Receitas: React.FC = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
+
     }, [id])
 
     return (

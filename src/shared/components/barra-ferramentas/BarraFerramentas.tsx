@@ -25,6 +25,7 @@ interface IBarraFerramentasProps {
     handleAtualizarLancamento?: (valorMesAno: Dayjs) => void;
     isOpenDataAno?: boolean;
     btnAtualizarGrafico?: boolean;
+    valorAno?: Dayjs;
     handleAtualizarGrafico?: (valorAno: Dayjs) => void;
 };
 
@@ -39,6 +40,7 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
     btnAtualizar = false,    
     isOpenDataAno = false,
     btnAtualizarGrafico = false,
+    valorAno = '',
     handleAtualizarGrafico,
     handleAtualizarLancamento,
     onClickSalvar,
@@ -49,8 +51,8 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
 
     const theme = useTheme();
     const [mesAno, setMesAno] = useState<any>(dayjs());
-    const minDate = dayjs('2000-01-01');
     const [ano, setAno] = useState<any>(dayjs());
+    const minDate = dayjs('2022-01-01');
     const handleChangeMesAno = (value: any) => {
         setMesAno(value);
     };    
@@ -66,9 +68,9 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                         <Stack spacing={3} >
                             <DesktopDatePicker
                                 label="Data"
-                                value={mesAno}
                                 views={['year', 'month']}
-                                minDate={minDate}                    
+                                minDate={minDate}
+                                value={mesAno}
                                 openTo="year"
                                 inputFormat="MM/YYYY"
                                 onChange={handleChangeMesAno}
@@ -93,19 +95,17 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                             height: "3rem",
                         },
                     }}
-                    
                 ></Button>
             )}
-              {isOpenDataAno && (
+             {isOpenDataAno && (
                 <FormControl   >
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                         <Stack spacing={3} >
                             <DesktopDatePicker
                                 label="Ano"
                                 value={ano}
-                                views={['year']}
                                 minDate={minDate}
-                    
+                                views={['year']}
                                 openTo="year"
                                 inputFormat="YYYY"
                                 onChange={handleChangeAno}
@@ -117,12 +117,12 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
             )}
             {btnAtualizarGrafico && (
                 <Button
-                    size="small"
-                    variant="contained"
-                    color="success"
-                    disableElevation
-                    startIcon={<AutorenewIcon />}
-                    onClick={() => handleAtualizarGrafico && handleAtualizarGrafico(ano)}
+                size="medium"
+                variant="contained"
+                color="success"
+                disableElevation
+                startIcon={<AutorenewIcon />}
+                onClick={() => handleAtualizarGrafico && handleAtualizarGrafico(ano)}
                     style={{ width: "auto", height: "2rem" }}
                     sx={{
                         "@media (max-width: 600px)": {
@@ -130,8 +130,8 @@ export const BarraFerramentas: React.FC<IBarraFerramentasProps> = ({
                             height: "3rem",
                         },
                     }}
-                ></Button>
-            )}
+            ></Button>
+        )}
             {isOpenTxtBusca && (
                 <TextField size="small" placeholder="Pesquisar" />
             )}

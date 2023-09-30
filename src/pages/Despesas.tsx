@@ -12,6 +12,7 @@ import { BarraFerramentas } from '../shared/components';
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService, DespesasService, ICategoriaVM, IDespesaVM } from '../shared/services/api';
 import { useDebounce } from '../shared/hooks';
+import { nullLiteral } from '@babel/types';
 interface State {
     idUsuario: number;
     idCategoria: string;
@@ -32,8 +33,8 @@ export const Despesas: React.FC = () => {
         valor: 0,
         descricao: '',
         idCategoria: '0',
-        data: dayjs(dayjs()),
-        dtVencimento: dayjs(dayjs())
+        data: dayjs(),
+        dtVencimento: null
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,9 +119,9 @@ export const Despesas: React.FC = () => {
         setValues({
             ...values,
             idCategoria: '0',
-            data: dayjs(dayjs()),
+            data: dayjs(),
             descricao: '',
-            dtVencimento: dayjs(dayjs()), 
+            dtVencimento: null, 
             valor: 0                
         });
     }
@@ -134,7 +135,7 @@ export const Despesas: React.FC = () => {
         });
 
         const handleResize = () => {
-            setHeight(window.innerHeight * 0.8); // Define a altura 0.8 da altura da janela
+            setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
         };
 
         window.addEventListener('resize', handleResize);
@@ -143,6 +144,7 @@ export const Despesas: React.FC = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
+
     }, [id])
 
     return (
@@ -192,7 +194,7 @@ export const Despesas: React.FC = () => {
                             <DesktopDatePicker
                                 label="Data"
                                 inputFormat="DD/MM/YYYY"
-                                value={values?.data?.toISOString()}
+                                value={values.data}
                                 onChange={handleChangeData}
                                 renderInput={(params) => <TextField {...params} />}
                             />
@@ -209,7 +211,7 @@ export const Despesas: React.FC = () => {
                             <DesktopDatePicker
                                 label="Data de Vencimento"
                                 inputFormat="DD/MM/YYYY"
-                                value={values?.dtVencimento?.toISOString()}
+                                value={values.dtVencimento}
                                 onChange={handleChangeDataVencimento}
                                 renderInput={(params) => <TextField {...params} />}
                             />
@@ -225,9 +227,10 @@ export const Despesas: React.FC = () => {
                         startAdornment={<InputAdornment position="start">R$</InputAdornment>}
                         label="Valor"
                         type="number"
+                        
                     />
                 </FormControl>
             </Box>
         </LayoutMasterPage>
-    );
+    );   
 }
