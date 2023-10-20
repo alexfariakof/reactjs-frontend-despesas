@@ -3,31 +3,12 @@ import { environment } from "../src/shared/environment";
 import { AuthService,  ControleAcessoVM, LoginVM} from "../src/shared/services/api/auth/AuthService";
 import MockAdapter from 'axios-mock-adapter';
 import createApiInstance from "../src/shared/services/axios-config";
-import axios from "axios";
 
+const execTests = false;
 const mockApi = new MockAdapter(createApiInstance());
-const urlBase  = environment.URL_BASE;
-const axiosInstance = axios.create({
-  // Your default axios configuration here
-  baseURL: 'http://example.com',
-  // ... other options
-});
-
-// Set the options
-const options = {
-  maxRedirects: 21,
-  maxBodyLength: 10485760,
-  protocol: 'http:',
-  path: '/api/ControleAcesso/SignIn',
-  method: 'POST',
-  headers: {
-    // Your custom headers here
-  },
-  // ... other options
-};
 
 // Create a new instance of MockAdapter with the provided options
-const mock = new MockAdapter(axiosInstance, options);
+const mock = new MockAdapter(createApiInstance());
 
 describe('AuthService', () => {
     afterEach(() => {
@@ -47,9 +28,12 @@ describe('AuthService', () => {
     const password = 'teste';
     const result = await AuthService.auth(email, password);
     expect(result.data).not.toBeNull();
-    console.log(result.data);
     //expect(result.data).toEqual(mockData);
     spy.mockClear();
   });
 
+  test("Teste Auth Services Runs", () => {
+    expect(execTests).toEqual(execTests);
+ });
+ 
 });

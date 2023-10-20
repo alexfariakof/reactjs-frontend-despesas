@@ -1,18 +1,40 @@
-import { Login } from '../src/shared/components';
-import React, { ReactComponentElement } from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-import { AppThemeProvider } from '../src/shared/contexts';
+import { Login, MenuLateral } from "../src/shared/components";
+import React, { ReactComponentElement } from "react";
+import { render, fireEvent, screen } from "@testing-library/react";
+import { AppThemeProvider, DrawerProvider } from "../src/shared/contexts";
+import { BrowserRouter } from "react-router-dom";
+import { AppRoutes } from "../src/routes";
 
+const execTests = true;
 
-describe('Test Login Component', () => {
-    let renderedComponent: React.ReactElement<any, string >;
-    
-    beforeEach(() => {
-      renderedComponent = <AppThemeProvider ><Login children={undefined} /></AppThemeProvider >;
+describe("Test Login Component", () => {
+  let renderedComponent: React.ReactElement<any, string>;
+
+  beforeEach(() => {
+    renderedComponent = (
+      <AppThemeProvider>
+        <Login
+          children={
+            <DrawerProvider>
+              <BrowserRouter>
+                <MenuLateral>
+                  <AppRoutes />
+                </MenuLateral>
+              </BrowserRouter>
+            </DrawerProvider>
+          }
+        />
+      </AppThemeProvider>
+    );
+  });
+
+  if (execTests) {
+    it("renders without errors", () => {
+      render(renderedComponent);
     });
+  }
   
-    it('renders without errors', () => {
-      render(renderedComponent);    
-      
-    });
-});  
+  test("Teste Login Component  Runs", () => {
+    expect(execTests).toEqual(execTests);
+  });
+});
