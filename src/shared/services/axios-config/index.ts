@@ -1,6 +1,7 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 import { environment } from '../../environment';
-import { resposeInterceptor, errorInterceptor } from './interceptors';
+import { resposeInterceptor, errorInterceptor, requestInterceptor } from './interceptors';
+import https from 'https';
 
 const createApiInstance = (): AxiosInstance => {
   const api = axios.create({
@@ -12,10 +13,25 @@ const createApiInstance = (): AxiosInstance => {
     },
   });
 
-  api.interceptors.request.use((config) => {
-    console.log('Request was sent');
-    return config;
-  });
+  api.interceptors.request.use(
+    (config) => {
+      // Aplique o requestInterceptor aos cabeçalhos da solicitação
+      const requestHeaders: AxiosRequestHeaders = {
+        'Content-Type': 'application/json',
+        'crossdomain': 'true',
+      };
+
+      if (config.url && config.url.startsWith('https://')) {
+        config.httpsAgent = new https.Agent({ rejectUnauthorized: false });
+      }
+
+      config.headers = requestInterceptor(requestHeaders);
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
 
   api.interceptors.response.use(
     (response) => resposeInterceptor(response),
