@@ -183,7 +183,7 @@ export const Categorias: React.FC = () => {
             <MenuItem value={2}>Receitas</MenuItem>
           </Select>
         </FormControl>
-        <TextField size="small" label="Descrição" inputProps={{ maxLength: 50 }} fullWidth
+        <TextField id="descricao" size="small" label="Descrição" inputProps={{ maxLength: 50 }} fullWidth
           value={values.descricao}
           onChange={handleChange('descricao')}
         />
@@ -214,10 +214,10 @@ export const Categorias: React.FC = () => {
                 rows.map((row: { id: number; idTipoCategoria: number; descricao: any; }) => (
                   <TableRow key={row.id}>
                     <TableCell align='center'>
-                      <IconButton onClick={() => handleDelete(row.id, row.idTipoCategoria)}>
+                      <IconButton id='delete' onClick={() => handleDelete(row.id, row.idTipoCategoria)}>
                         <Delete />
                       </IconButton>
-                      <IconButton onClick={() => handleEdit(row.id)}>
+                      <IconButton id='edit' onClick={() => handleEdit(row.id)}>
                         <Edit />
                       </IconButton>
                     </TableCell>

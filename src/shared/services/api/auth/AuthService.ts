@@ -34,7 +34,7 @@ const auth = async (email: string, password: string): Promise<any> => {
 
 const recoveryPassword = async (email: string): Promise<any> => {
     try {
-        const  { data } = await Api.get('/ControleAcesso/RecoveryPassword/' + email);
+        const  { data } = await Api.post('/ControleAcesso/RecoveryPassword', email);
         if (data) {
             return data;
         }

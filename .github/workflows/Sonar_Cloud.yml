@@ -2,15 +2,21 @@ name: Test and Analysis Code in Sonar Cloud
 on:
   push:
     branches:
-      - hotfix/*
-      - release/*
-      - pre-release
+      - main
       - develop
+      - hotfix/*
       - feature/*      
-      - bgfix/*      
-      
+      - bugfix/*      
+
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
+      - hotfix/*
+      - feature/*      
+      - bugfix/*      
+      
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -22,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: npm install --force
         
-      - name: Test and coverage
+      - name: Test and Generate Report Coverage
         run: npm run test:coverage
         continue-on-error: true
         
