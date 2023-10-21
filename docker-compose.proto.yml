@@ -5,8 +5,8 @@ services:
     image: alexfariakof/despesas-pessoais-frontend-react-prototipo-img
     build:
       context: .
-      dockerfile: ./DockerFile-Production
+      dockerfile: ./DockerFile-Prototipo
     environment:
       NODE_ENV: production
     ports:
-      - 80:80
+      - 3001:80
