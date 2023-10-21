@@ -29,7 +29,7 @@ const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioV
       return null;
     }
   }
-  catch (error) {
+  catch {
     return null;
   }
 };
