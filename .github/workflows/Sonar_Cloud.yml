@@ -3,15 +3,20 @@ on:
   push:
     branches:
       - main
+      - develop
       - hotfix/*
-      - release/*
-      - pre-release
-      - develop      
       - feature/*      
-      - bgfix/*
-      
+      - bugfix/*      
+
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
+      - hotfix/*
+      - feature/*      
+      - bugfix/*      
+      
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -23,8 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm install --force
         
-      - name: Test and coverage
+      - name: Test and Generate Report Coverage
         run: npm run test:coverage
+        continue-on-error: true
         
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

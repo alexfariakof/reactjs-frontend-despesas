@@ -2,9 +2,36 @@ name: Build Test Deploy and Publish Production Project In AWS
 on:
   push:
     branches:
-      - main      
+      - release/*
+      
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - release/*
+
 jobs:
+  build_and_test:
+    name: Build_And_Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install dependencies
+        run: npm install --force
+        continue-on-error: false
+
+      - name: Build
+        run: npm run build
+        continue-on-error: false
+  
+      - name: Test
+        run: npm run test
+        continue-on-error: false
+
   sonarcloud:
+    needs: build_and_test
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
@@ -15,7 +42,7 @@ jobs:
         run: npm install --force
         continue-on-error: false
 
-      - name: Test and coverage
+      - name: Test and Generate Report Coverage
         run: npm run test:coverage
         continue-on-error: false
 
@@ -36,7 +63,7 @@ jobs:
         env:
            DOCKER_CLI_AGGREGATE: 1  
         run: |          
-          docker-compose build          
+          docker-compose -f docker-compose.prod.yml build          
         continue-on-error: false
 
       - name: Push Docker image to Docker Hub
@@ -71,4 +98,5 @@ jobs:
             docker rm --force $container_id
             docker rmi --force $image_id
             docker pull $IMAGEM            
+            image_id=$(docker images --format "{{.ID}}" "$IMAGEM")
             docker run -d -p 80:80 $IMAGEM

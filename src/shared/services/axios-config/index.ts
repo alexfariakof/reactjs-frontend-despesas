@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
 import { environment } from '../../environment';
 import { resposeInterceptor, errorInterceptor } from './interceptors';
 
@@ -10,11 +10,6 @@ const createApiInstance = (): AxiosInstance => {
     validateStatus: function (status) {
       return status >= 200 && status < 300; // default
     },
-  });
-
-  api.interceptors.request.use((config) => {
-    console.log('Request was sent');
-    return config;
   });
 
   api.interceptors.response.use(
