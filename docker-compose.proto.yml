@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  despesas-pessoais-frontend-react:
+    image: alexfariakof/despesas-pessoais-frontend-react-prototipo-img
+    build:
+      context: .
+      dockerfile: ./DockerFile-Prototipo
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3001:80
