@@ -21,9 +21,7 @@ export const AppThemeProvider : React.FC<IThemeProviderProps> =({children}) => {
         setThemeName(oldThemeName => oldThemeName === 'light' ? 'dark' : 'light');
     }, []);
 
-    const changeTheme = useCallback(() => {
-        
-    }, []);    
+    /* const changeTheme = useCallback(() => { }, []); */
 
     const theme = useMemo(() => {
         if(themeName ==='light') return LightTheme;
