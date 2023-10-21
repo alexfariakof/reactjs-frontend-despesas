@@ -210,7 +210,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         <Link
                             className=" btn-floating m-2 border-0 bg-transparent"
                             target="_blank"
-                            href="https://github.com/stars/alexfariakof/lists/portif%C3%B3lio"
+                            href="https://github.com/stars/alexfariakof"
                         >
                             <GitHub  />
                         </Link>
