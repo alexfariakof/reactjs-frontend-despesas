@@ -26,8 +26,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     const avatarStyle = { backgroundColor: '#1bbd7e' }
 
     const [values, setValues] = useState<State>({
-        email: '',
-        password: '',
+        email: 'teste@teste.com',
+        password: 'teste',
         showPassword: false,
     });
 
