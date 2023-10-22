@@ -55,7 +55,7 @@ const createImagemPerfilUsuario = async (file: File): Promise<any> => {
     }
   } 
   catch (error) {
-    console.log(error);
+    return { message: 'Erro ao incluir imagem de perfil do usuário!'};
   }
 };
 
@@ -78,11 +78,11 @@ const updateImagemPerfilUsuario = async (file: File): Promise<any> => {
     if (data) {
       return data;
     } else {
-      throw new Error('Erro ao alterar imagem de perfil do usuário!');
+      throw new Error();
     }
   } 
-  catch (error) {
-    console.log(error);
+  catch {
+    return { message: 'Erro ao alterar imagem de perfil do usuário!'};
   }
 };
 
@@ -102,11 +102,11 @@ const deleteImagemPerfilUsuario = async (): Promise<any> => {
     if (data) {
       return data;
     } else {
-      throw new Error('Erro ao alterar imagem de perfil do usuário!');
+      throw new Error();
     }
   } 
   catch (error) {
-    console.log(error);
+    return { message: 'Erro ao deletar imagem de perfil do usuário!'};
   }
 };
 
