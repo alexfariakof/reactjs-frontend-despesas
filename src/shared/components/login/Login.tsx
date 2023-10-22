@@ -26,8 +26,8 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     const avatarStyle = { backgroundColor: '#1bbd7e' }
 
     const [values, setValues] = useState<State>({
-        email: '',
-        password: '',
+        email: 'teste@teste.com',
+        password: 'teste',
         showPassword: false,
     });
 
@@ -210,7 +210,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         <Link
                             className=" btn-floating m-2 border-0 bg-transparent"
                             target="_blank"
-                            href="https://github.com/stars/alexfariakof"
+                            href="https://github.com/alexfariakof"
                         >
                             <GitHub  />
                         </Link>

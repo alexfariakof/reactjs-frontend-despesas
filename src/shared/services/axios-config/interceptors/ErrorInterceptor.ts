@@ -1,10 +1,10 @@
 import {AxiosError}  from 'axios';
 
 export const errorInterceptor = (error: AxiosError) => {    
-    var data:any;
+    //var data:any;
     
-    if (error.response?.status === 400){ // Este erro é um erro de BadRequest e deverá ser tratado dentro das requisições 
-        //return Promise.reject(false);
+    if (error.response?.status === 400){ 
+        //console.log(error);        
     } else  if (error.response?.status ===  401){
         localStorage.clear();        
         // eslint-disable-next-line no-restricted-globals

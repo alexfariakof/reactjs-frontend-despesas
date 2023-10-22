@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar, ChartProps } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { useMediaQuery, Theme } from "@mui/material";
 import { LancamentosService } from "../../services/api/LancamentosService";
 import { Dayjs } from "dayjs";
@@ -91,11 +91,12 @@ interface IBarChartsProps {
 export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const [barKey, setBarKey] = useState(0);
-  const [orientation, setOrientation] = useState<any>(window.matchMedia("(orientation: portrait)").matches);
+  const [orientation] = useState<any>(window.matchMedia("(orientation: portrait)").matches);
   const [dadosGrafico, setDadosGrafico] = useState<any>(dataNull); // Inicializa com os dados nulos
 
   useEffect(() => {
     updateDadosGrafico();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valorAno, smDown]);
 
   const updateDadosGrafico = () => {

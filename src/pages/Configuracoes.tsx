@@ -7,8 +7,8 @@ import ChangeAvatar from '../shared/components/Configuracoes/ChangeAvatar';
 
 export const Configuracoes = () => {
     const [height, setHeight] = useState(0);
-    const [file, setFile] = useState<File | any>(null);
-    const [fileLoaded, setFileLoaded] = useState<boolean>(false);    
+    const [, setFile] = useState<File | any>(null);
+    const [, setFileLoaded] = useState<boolean>(false);    
     const { toggleTheme } = useAppThemeContext();
     const [alignment, setAlignment] = useState('web');
 
