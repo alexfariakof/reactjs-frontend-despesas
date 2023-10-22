@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestHeaders } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { environment } from '../../environment';
 import { resposeInterceptor, errorInterceptor } from './interceptors';
 

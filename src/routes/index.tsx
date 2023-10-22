@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Button } from '@mui/material';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAppThemeContext, useDrawerContext } from '../shared/contexts';
+import { useDrawerContext } from '../shared/contexts';
 import { Dashboard } from '../pages/Dashboard';
 import { Despesas } from '../pages/Despesas';
 import { Lancamentos } from '../pages/Lancamentos';
@@ -10,7 +10,6 @@ import { Categorias } from '../pages/Categorias';
 import { Configuracoes } from '../pages/Configuracoes';
 
 export const AppRoutes = () => {
-    const { toggleTheme } = useAppThemeContext();
     const { toggleDrawerOpen, setDrawerOptions } = useDrawerContext();    
 
     useEffect(() => {
