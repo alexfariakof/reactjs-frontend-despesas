@@ -41,6 +41,11 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => 
                             setFileLoaded(false); 
                             setImagemPerfilUsuario(result.imagemPerfilUsuario);
                         }
+                        else
+                        {
+                            alert(result.message);
+                        }
+
                     });
             } else {
                 ImagemPerfilUsuarioService.updateImagemPerfilUsuario(file)
@@ -51,6 +56,11 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => 
                             setFile(null); 
                             setFileLoaded(false);                             
                             setImagemPerfilUsuario(result.imagemPerfilUsuario);
+
+                        }
+                        else
+                        {
+                            alert(result.message);
                         }
                     });
             }
@@ -68,8 +78,11 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => 
                     setFileLoaded(false);
                     setImagemPerfilUsuario(null);
                 }
+                else
+                {
+                    alert(result.message);
+                }
             });
-
     };
 
     const getRandomQueryParameter = (): string => {
@@ -109,7 +122,7 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({ handleAvatarUploaded }) => 
                     id='upload-photo'
                     name='upload-photo'
                     type="file"
-                    accept="image/jpeg, image/png"
+                    accept=".png, .jpg, .jpeg"
                     onChange={handleAvatarUpload}
                 />
 
