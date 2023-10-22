@@ -109,20 +109,6 @@ export const Categorias: React.FC = () => {
   }
 
   useEffect(() => {
-    const handleResize = () => {
-      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
-    };
-
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Define a altura ao montar o componente
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-
-  }, []);
-
-  useEffect(() => {
     if (values.idTipoCategoria === 0) {
       CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
         .then((result) => {
@@ -146,6 +132,18 @@ export const Categorias: React.FC = () => {
         });
     }
 
+    const handleResize = () => {
+      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Define a altura ao montar o componente
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+
+
   }, [values.idTipoCategoria]);
 
   return (
@@ -163,7 +161,7 @@ export const Categorias: React.FC = () => {
         gap={1}
         margin={1}
         padding={1}
-        paddingX={2}
+        paddingX={2}        
         display="flex"
         flexDirection="column"        
         alignItems="start"
@@ -193,6 +191,7 @@ export const Categorias: React.FC = () => {
         margin={1}
         marginTop={0}
         padding={1}
+        height="100%"
         display="flex"
         flexDirection="column"
         alignItems="stretch"
