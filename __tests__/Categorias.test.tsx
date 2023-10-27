@@ -23,11 +23,12 @@ describe("Categorias Component", () => {
     );
   });
 
-  it("renders without errors", () => {
+  it("Should Renders Without Errors", () => {
     render(renderedComponent);
   });
   if (execTests) {
-    it("handles input change correctly", () => {
+
+    it("Should Handles Input Change Correctly", () => {
       render(renderedComponent);
       const descricaoInput = screen.getByTestId("descricao");
 
@@ -38,7 +39,7 @@ describe("Categorias Component", () => {
       expect(descricaoInput).toHaveTextContent("New Description");
     });
 
-    it("handles TipoCategoria change correctly", () => {
+    it("Should Handles TipoCategoria Change Correctly", () => {
       render(renderedComponent);
       const tipoCategoriaSelect = screen.getByLabelText("Tipo de Categoria");
 
@@ -47,7 +48,7 @@ describe("Categorias Component", () => {
       expect(tipoCategoriaSelect).toHaveValue("1");
     });
 
-    it("calls handleSave when save button is clicked", () => {
+    it("Should Calls andleSave When Save button is Clicked", () => {
       // Mock a function to replace the actual handleSave function
       const mockHandleSave = jest.fn();
 
@@ -60,7 +61,7 @@ describe("Categorias Component", () => {
       expect(mockHandleSave).toHaveBeenCalled();
     });
 
-    it("calls handleEdit when edit button is clicked", () => {
+    it("Shuold Calls handleEdit When Edit button is Clicked", () => {
       // Mock a function to replace the actual handleEdit function
       const mockHandleEdit = jest.fn();
 
@@ -73,7 +74,7 @@ describe("Categorias Component", () => {
       expect(mockHandleEdit).toHaveBeenCalled();
     });
 
-    it("calls handleDelete when delete button is clicked", () => {
+    it("Should Calls handleDelete When Delete button is Clicked", () => {
       // Mock a function to replace the actual handleDelete function
       const mockHandleDelete = jest.fn();
 
@@ -87,7 +88,7 @@ describe("Categorias Component", () => {
     });
   }
 
-  test("Teste Categoria Component  Runs", () => {
+  test("Test Categoria Component is Running", () => {
     expect(execTests).toEqual(execTests);
   });
 });

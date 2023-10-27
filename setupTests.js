@@ -6,11 +6,25 @@ if (typeof TextEncoder === 'undefined') {
 
 const fs = require('fs');
 const { JSDOM } = require('jsdom');
+const path = require('path');
 
-// Ler os arquivos de certificado e chave privada
-const cert = fs.readFileSync('./certificate/ssl_certificate.pem', 'utf8');
-const key = fs.readFileSync('./certificate/ssl_certificate_key.pem', 'utf8');
+// Ler os arquivos de certificado e chave privada se forem existentes 
+const certificateDirectory = './certificate'; // Diretório onde os arquivos estão localizados
+const cert = '';
+const key = '';
 
+// Verifica se o diretório existe
+if (fs.existsSync(certificateDirectory) && fs.statSync(certificateDirectory).isDirectory()) {
+  // O diretório existe, agora você pode ler os arquivos de certificado e chave privada
+  const certPath = path.join(certificateDirectory, 'ssl_certificate.pem');
+  const keyPath = path.join(certificateDirectory, 'ssl_certificate_key.pem');
+
+  if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
+     cert = fs.readFileSync(certPath, 'utf8');
+     key = fs.readFileSync(keyPath, 'utf8');
+    
+  }
+}
 // Configurar as opções para o JSDOM
 const jsdomOptions = {
     url: process.env.NODE_ENV === 'production' ? 'http://alexfariakof.com:42535/api' : 'http://alexfariakof.dev.com:42535/api',

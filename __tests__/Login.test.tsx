@@ -34,7 +34,7 @@ describe("Test Login Component", () => {
     });
   }
   
-  test("Teste Login Component  Runs", () => {
+  test("Test Login Component id Running", () => {
     expect(execTests).toEqual(execTests);
   });
 });
