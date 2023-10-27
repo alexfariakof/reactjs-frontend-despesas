@@ -1,0 +1,1 @@
+openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout ssl_certificate_key.pem -out ssl_certificate.pem  -config openssl.cnf

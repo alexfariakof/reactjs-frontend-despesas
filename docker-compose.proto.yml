@@ -10,3 +10,4 @@ services:
       NODE_ENV: production
     ports:
       - 3001:80
+      - 443:443

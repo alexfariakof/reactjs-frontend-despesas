@@ -366,3 +366,4 @@ build/*
 *.yarn
 coverage/
 coverage/*
+certificate/*.pem

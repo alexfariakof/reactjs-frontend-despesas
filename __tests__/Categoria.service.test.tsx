@@ -26,7 +26,6 @@ jest.mock("../__mocks__/axios-config", () => ({
   createapiInstance: () => axiosMock,
 }));
 
-
 describe("CategoriasService", () => {
   const mockCategoria: ICategoriaVM = {
     id: 1,
@@ -40,6 +39,7 @@ describe("CategoriasService", () => {
   });
 
   if (execTests) {
+    
     it("getAll should return data when the API call is successful", async () => {
       axiosMock.get.mockResolvedValue({ data: [mockCategoria] });
 
@@ -114,9 +114,8 @@ describe("CategoriasService", () => {
       }
     });
   }
-  
-  test("Teste Categoria Services Runs", () => {
-     expect(execTests).toEqual(execTests);
+
+  test("Test Categoria Services is Running", () => {
+    expect(execTests).toEqual(execTests);
   });
-  
 });

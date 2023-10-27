@@ -2,11 +2,18 @@ version: '3.4'
 
 services:
   despesas-pessoais-frontend-react:
+    container_name: despesas-frontend-prod
     image: alexfariakof/despesas-pessoais-react-img
+    working_dir: /usr/share/nginx/html
     build:
       context: .
       dockerfile: ./DockerFile-Production
-    environment:
-      NODE_ENV: production
     ports:
       - 80:80
+      - 443:443
+    restart: always
+    environment:
+      NODE_ENV: production
+      DOMAINS: http://alexfariakof.com
+      STAGE: production
+      FORCE_RENEW: false      
