@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  despesas-pessoais-frontend-dev-react:
+    container_name: despesas-frontend-dev
+    image: alexfariakof/despesas-pessoais-react-dev-img
+    volumes:
+      - ./certificate:/etc/nginx/certificate
+    working_dir: /usr/share/nginx/html
+    build:
+      context: .
+      dockerfile: ./DockerFile-Development
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    environment:
+      NODE_ENV: development
+      DOMAINS: http://alexfariakof.dev.com
+      STAGE: development
+      FORCE_RENEW: false

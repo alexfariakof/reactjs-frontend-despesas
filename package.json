@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "set PORT=80 && react-scripts start",
-    "docker": "./node_modules/.bin/react-scripts start",
+    "start:prod": "set BABEL_ENV=production && set NODE_ENV=production && set PORT=80 && react-scripts start",
     "build": "react-scripts build",
     "test": "jest --no-cache --bail",
     "test:coverage": "jest --coverage"
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@types/babel__core": "^7.20.3",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.8.4",
     "@testing-library/jest-dom": "^5.17.0",

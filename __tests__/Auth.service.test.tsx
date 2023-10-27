@@ -1,39 +1,113 @@
-
 import { environment } from "../src/shared/environment";
-import { AuthService,  ControleAcessoVM, LoginVM} from "../src/shared/services/api/auth/AuthService";
-import MockAdapter from 'axios-mock-adapter';
+import { AuthService, ControleAcessoVM, LoginVM } from "../src/shared/services/api/auth/AuthService";
+import MockAdapter from "axios-mock-adapter";
 import createApiInstance from "../src/shared/services/axios-config";
 
-const execTests = false;
+const execTests = true;
 const mockApi = new MockAdapter(createApiInstance());
 
-// Create a new instance of MockAdapter with the provided options
-const mock = new MockAdapter(createApiInstance());
+describe("AuthService", () => {
+  afterEach(() => {
+    mockApi.reset();
+  });
+  afterAll(() => {
+    mockApi.restore();
+  });
 
-describe('AuthService', () => {
-    afterEach(() => {
-        mockApi.reset()
+  it("should call auth and return data", async () => {
+    //Arrange
+    const mockData = { email: "teste@teste.com", senha: "teste" };
+    mockApi
+      .onPost(environment.URL_BASE + "/ControleAcesso/SignIn")
+      .replyOnce(200, mockData);
+    const spy = jest.spyOn(AuthService, "auth");
 
-    })
-    afterAll(()=>{
-        mockApi.restore()
-    })
-
-  it('should call auth and return data', async () => {
-    const mockData = { email: 'teste@teste.com', senha: 'teste' };
-    mockApi.onPost(environment.URL_BASE + '/ControleAcesso/SignIn').replyOnce(200, mockData).onAny().passThrough();
-    const spy = jest.spyOn(AuthService, 'auth');
-
-    const email = 'teste@teste.com';
-    const password = 'teste';
+    // Act
+    const email = "teste@teste.com";
+    const password = "teste";
     const result = await AuthService.auth(email, password);
-    expect(result.data).not.toBeNull();
-    //expect(result.data).toEqual(mockData);
+
+    // Assert
+    expect(result).not.toBeNull();
+    expect(result.authenticated).toBeTruthy();
+    expect(result.message).toEqual("OK");
+
+    spy.mockClear();
+  });
+
+  it("Should Throw Erro With Empty Email and Password", async () => {
+    // Arrange
+    mockApi
+      .onPost(environment.URL_BASE + "/ControleAcesso/SignIn")
+      .reply(400, { error: "Server Error" });
+    const spy = jest.spyOn(AuthService, "auth");
+
+    //Act
+    const email = "";
+    const password = "";
+    let error: any;
+    try {
+      await AuthService.auth(email, password);
+    } catch (e) {
+      error = e;
+    }
+
+    // Assert
+    expect(error).toBeDefined();
+    expect(error.message).toEqual('Request failed with status code 400');
+
+    spy.mockClear();
+  });
+
+  it("Should Throw Erro With Wrong Email", async () => {
+    // Arrange
+    mockApi
+      .onPost(environment.URL_BASE + "/ControleAcesso/SignIn")
+      .reply(500, { error: "Server Error" });
+    const spy = jest.spyOn(AuthService, "auth");
+
+    //Act
+    const email = "teste";
+    const password = "teste";
+    let error: any;
+    try {
+      await AuthService.auth(email, password);
+    } catch (e) {
+      error = e;
+    }
+
+    // Assert
+    expect(error).toBeDefined();
+    expect(error.message).toEqual('Request failed with status code 400');
+
+    spy.mockClear();
+  });
+
+  it("Should Throw Erro With Empty Password", async () => {
+    // Arrange
+    mockApi
+      .onPost(environment.URL_BASE + "/ControleAcesso/SignIn")
+      .reply(500, { error: "Server Error" });
+    const spy = jest.spyOn(AuthService, "auth");
+
+    //Act
+    const email = "teste@teste.com";
+    const password = "";
+    let error: any;
+    try {
+     var result =  await AuthService.auth(email, password);
+    } catch (e) {
+      error = e;
+    }
+
+    // Assert
+    expect(error).toBeDefined();
+    expect(error.message).toEqual('Request failed with status code 400');
+
     spy.mockClear();
   });
 
   test("Teste Auth Services Runs", () => {
     expect(execTests).toEqual(execTests);
- });
- 
+  });
 });

@@ -8,12 +8,12 @@ const fs = require('fs');
 const { JSDOM } = require('jsdom');
 
 // Ler os arquivos de certificado e chave privada
-const cert = fs.readFileSync('cert.pem', 'utf8');
-const key = fs.readFileSync('key.pem', 'utf8');
+const cert = fs.readFileSync('./certificate/ssl_certificate.pem', 'utf8');
+const key = fs.readFileSync('./certificate/ssl_certificate_key.pem', 'utf8');
 
 // Configurar as opções para o JSDOM
 const jsdomOptions = {
-    url: 'http://localhost:42535/api',
+    url: process.env.NODE_ENV === 'production' ? 'http://alexfariakof.com:42535/api' : 'http://alexfariakof.dev.com:42535/api',
     resources: 'usable',
     pretendToBeVisual: true,
     beforeParse(window) {
