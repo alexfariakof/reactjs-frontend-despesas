@@ -8,23 +8,16 @@ RUN npm install react-scripts
 RUN npm install && mv node_modules ../
 COPY . ./
 RUN npm run build
-# Gerando Certificado SSL
-FROM alpine as certgen
-RUN apk add --no-cache openssl
-WORKDIR /certificates
-COPY ./certificate/openssl.cnf /certificates
-COPY ./certificate/generate_cert.sh /certificates
-RUN chmod +x /certificates/generate_cert.sh
-RUN /certificates/generate_cert.sh
 
 # production env
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=certgen /certificates/ssl_certificate.pem /etc/nginx/certificate/ssl_certificate.pem
-COPY --from=certgen /certificates/ssl_certificate_key.pem /etc/nginx/certificate/ssl_certificate_key.pem
-RUN chmod +r /etc/nginx/certificate/ssl_certificate_key.pem
-RUN chmod +r /etc/nginx/certificate/ssl_certificate.pem
+
+# Gerando Certificado SSL
+RUN apk add --no-cache openssl
+COPY ./certificate/openssl.cnf /etc/nginx/certificate/openssl.cnf
+RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout /etc/nginx/certificate/ssl_certificate_key.pem -out /etc/nginx/certificate/ssl_certificate.pem  -config /etc/nginx/certificate/openssl.cnf
 
 EXPOSE 80
 EXPOSE 443
