@@ -88,7 +88,8 @@ describe("Categorias Component", () => {
     });
   }
 
-  test("Test Categoria Component is Running", () => {
+  test("Categoria Component Test is Running", () => {
     expect(execTests).toEqual(execTests);
   });
+  
 });
