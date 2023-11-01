@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  despesas-frontend-react-debug:
-    container_name: despesas-frontend-react-debug
+  despesas-frontend-react:
+    container_name: debug
     image: despesas-frontend-react-debug-img
     build:
       context: .

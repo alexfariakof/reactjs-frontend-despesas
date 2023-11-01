@@ -1,13 +1,13 @@
 version: '3.4'
 
 services:
-  despesas-pessoais-frontend-react:
-    container_name: despesas-frontend-prod
+  despesas-frontend-react:
+    container_name: prod
     image: alexfariakof/despesas-pessoais-react-img
     working_dir: /usr/share/nginx/html
     build:
       context: .
-      dockerfile: ./DockerFile-Production
+      dockerfile: ./Dockerfile-Production
     ports:
       - 80:80
       - 443:443

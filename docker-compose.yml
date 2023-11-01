@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  despesas-frontend-react-local:
-    container_name: despesas-frontend-react-local
+  despesas-frontend-react:
+    container_name: local
     image: despesas-frontend-react-local-img
     build:
       context: .
