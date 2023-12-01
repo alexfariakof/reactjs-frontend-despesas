@@ -27,7 +27,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
 
     const [values, setValues] = useState<State>({
         email: 'teste@teste.com',
-        password: 'teste',
+        password: '12345T!',
         showPassword: false,
     });
 
