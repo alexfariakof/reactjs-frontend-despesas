@@ -16,4 +16,3 @@ services:
       NODE_ENV: production
       DOMAINS: http://alexfariakof.com
       STAGE: production
-      FORCE_RENEW: false      
