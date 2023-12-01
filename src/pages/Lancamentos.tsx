@@ -23,7 +23,7 @@ export const Lancamentos = () => {
                 alert(result.message);
             }
             else {
-                setRows(result);
+                setRows(result.lancamentos);
             }
         });
     }
@@ -35,7 +35,7 @@ export const Lancamentos = () => {
                     alert(result.message);
                 }
                 else {
-                    setRows(result);
+                    setRows(result.lancamentos);
                 }
             }));
 
@@ -114,9 +114,9 @@ export const Lancamentos = () => {
                                 <TableCell align='center' width="100vw" >Ações</TableCell>
                                 <TableCell>Data</TableCell>
                                 <TableCell>Tipo</TableCell>
-                                <TableCell>Valor</TableCell>
-                                <TableCell>Descrição</TableCell>
                                 <TableCell>Categoria</TableCell>
+                                <TableCell>Descrição</TableCell>                               
+                                <TableCell>Valor</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -131,10 +131,16 @@ export const Lancamentos = () => {
                                             </IconButton>
                                         </TableCell>
                                         <TableCell>{row.data}</TableCell>
-                                        <TableCell>{row.tipo }</TableCell>                                        
-                                        <TableCell>R$ {row.valor}</TableCell>
+                                        <TableCell>{row.tipoCategoria }</TableCell>                                        
+                                        <TableCell>{row.categoria}</TableCell>                                        
                                         <TableCell>{row.descricao}</TableCell>
-                                        <TableCell>{row.tipoCategoria}</TableCell>
+                                        <TableCell>{row.valor.toLocaleString('pt-BR', {
+                                                        style: 'currency',
+                                                        currency: 'BRL',
+                                                        minimumFractionDigits: 2,
+                                                        maximumFractionDigits: 2
+                                                    })} 
+                                        </TableCell>                                        
                                     </TableRow>
                                 ))
                             }

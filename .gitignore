@@ -351,12 +351,6 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-*.vscode
-.vscode*
-.vscode/
-.vscode/*
-
-
 *documents
 documents/
 documents*
@@ -366,3 +360,4 @@ build/*
 *.yarn
 coverage/
 coverage/*
+certificate/*.pem

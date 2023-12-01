@@ -1,14 +1,15 @@
 version: '3.4'
 
 services:
-  despesaspessoaisfrontendreact:
-    image: despesaspessoaisfrontendreact
+  despesas-frontend-react:
+    container_name: debug
+    image: despesas-frontend-react-debug-img
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile-Debug
     environment:
       NODE_ENV: development
+      NODE_OPTIONS: "--inspect=0.0.0.0:9229"
     ports:
-      - 3000:3000
-      - 9229:9229
-    command: ["node", "--inspect=0.0.0.0:9229", "index.js"]
+      - 3001:80
+      - 9229:9229    

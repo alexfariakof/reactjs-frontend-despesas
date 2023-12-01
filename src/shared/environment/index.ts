@@ -1,5 +1,6 @@
-export const environment = {
-    LIMITE_DE_LINHAS: 10,
-    INPUT_DE_BUSCA : '',    
-    URL_BASE: 'http://alexfariakof.com:42535/api'
-};
+import { environment as devEnvironment } from './environment.dev';
+import { environment as prodEnvironment } from './environment.prod';
+
+const environmentConfig = process.env.NODE_ENV === 'production' ? prodEnvironment : devEnvironment;
+
+export const environment = environmentConfig;

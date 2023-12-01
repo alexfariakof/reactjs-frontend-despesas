@@ -1,0 +1,12 @@
+[req]
+distinguished_name = req_distinguished_name
+prompt = no
+
+[req_distinguished_name]
+C = BR
+ST = Rio de Janeiro
+L = Rio de Janeiro
+O = Honey TI
+OU = Software Developer
+CN = Alex Ribeiro de Faria
+emailAddress = alexfariakof@yahoo.com.br

@@ -4,13 +4,13 @@ const Api = createApiInstance();
 export interface ILancamentoVM {
     id: number;
     idUsuario: number;
-    tipo: string;
     idDespesa: number;
     idReceita: number;
-    valor: number;
     data: string;
-    descricao: string;
     tipoCategoria: string;
+    categoria: string;
+    descricao: string;
+    valor: number;
 } 
 
 const getByMesAnoByIdUsuario = async (mesano: Dayjs, idUsuario:number): Promise<any> => {

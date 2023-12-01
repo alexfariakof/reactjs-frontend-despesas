@@ -21,7 +21,7 @@ module.exports = {
   testEnvironmentOptions: {
     NODE_TLS_REJECT_UNAUTHORIZED: 0,
   },
-  //setupFiles: ['./setupTests.js'],
+  setupFiles: ['./setupTests.js'],
   moduleNameMapper: {
     'src/shared/services/axios-config/index.js': './__mocks__/axios-config.ts', // Mock the axios-config module
   },

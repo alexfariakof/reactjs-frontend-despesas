@@ -11,9 +11,17 @@ RUN npm install && mv node_modules ../
 COPY . ./
 RUN npm run build
 
+
 # production env
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Gerando Certificado SSL
+RUN apk add --no-cache openssl
+COPY ./certificate/openssl.cnf /etc/nginx/certificate/openssl.cnf
+RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout /etc/nginx/certificate/ssl_certificate_key.pem -out /etc/nginx/certificate/ssl_certificate.pem  -config /etc/nginx/certificate/openssl.cnf
+
 EXPOSE 3001
+EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
