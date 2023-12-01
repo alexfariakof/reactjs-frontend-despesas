@@ -355,9 +355,10 @@ MigrationBackup/
 documents/
 documents*
 documents/*
-AWS-doker.txt
 build/*
 *.yarn
 coverage/
 coverage/*
 certificate/*.pem
+.vscode
+certifi
