@@ -15,5 +15,4 @@ services:
     environment:
       NODE_ENV: development
       DOMAINS: http://alexfariakof.dev.com
-      STAGE: development
-      FORCE_RENEW: false
+      STAGE: development      
