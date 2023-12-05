@@ -1,11 +1,28 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, IconButton } from "@mui/material";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import { BarraFerramentas } from '../shared/components';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  IconButton,
+} from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
-import { CategoriasService, ICategoriaVM } from '../shared/services/api';
-import { Delete, Edit } from '@mui/icons-material';
+import { CategoriasService, ICategoriaVM } from "../shared/services/api";
+import { Delete, Edit } from "@mui/icons-material";
 interface State {
   id: number;
   descricao: string;
@@ -19,14 +36,15 @@ export const Categorias: React.FC = () => {
   const [rows, setRows] = useState<ICategoriaVM[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
-    descricao: '',
+    descricao: "",
     idUsuario: 0,
-    idTipoCategoria: 0
+    idTipoCategoria: 0,
   });
 
-  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+  const handleChange =
+    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValues({ ...values, [prop]: event.target.value });
+    };
 
   const handleChangeTipoCategoria = (event: SelectChangeEvent) => {
     setValues({ ...values, idTipoCategoria: Number(event.target.value) });
@@ -37,65 +55,54 @@ export const Categorias: React.FC = () => {
     dados = {
       id: values.id,
       descricao: values.descricao,
-      idUsuario: Number(localStorage.getItem('idUsuario')),
-      idTipoCategoria: values.idTipoCategoria
+      idUsuario: Number(localStorage.getItem("idUsuario")),
+      idTipoCategoria: values.idTipoCategoria,
     };
 
     if (dados.id === 0) {
-      CategoriasService
-        .create(dados)
-        .then((result) => {
-          if (result.message === true) {
-            alert('Despesa cadastrada com sucesso!');
-            handleClear();
-          }
-        });
+      CategoriasService.create(dados).then((result) => {
+        if (result.message === true) {
+          alert("Despesa cadastrada com sucesso!");
+          handleClear();
+        }
+      });
     } else {
-      CategoriasService
-        .updateById(dados.id, dados)
-        .then((result) => {
-          if (result.message === true) {
-            alert('Despesa atualizada com sucesso!');
-          }
-        });
+      CategoriasService.updateById(dados.id, dados).then((result) => {
+        if (result.message === true) {
+          alert("Despesa atualizada com sucesso!");
+        }
+      });
     }
-  }
+  };
 
   const handleEdit = (id: number) => {
-    CategoriasService.getById(id)
-      .then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        }
-        else {
-          setValues({
-            idUsuario: result.idUsuario,
-            id: result.id,
-            idTipoCategoria: result.idTipoCategoria,
-            descricao: result.descricao
-
-          });
-        }
-      })
+    CategoriasService.getById(id).then((result) => {
+      if (result instanceof Error) {
+        alert(result.message);
+      } else {
+        setValues({
+          idUsuario: result.idUsuario,
+          id: result.id,
+          idTipoCategoria: result.idTipoCategoria,
+          descricao: result.descricao,
+        });
+      }
+    });
   };
 
   const handleDelete = (id: number, idTipoCategoria: number) => {
     if (idTipoCategoria !== 0) {
-      CategoriasService
-        .deleteById(id)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
-          }
-          else if (result === true) {
-            handleClear();
-            alert('Despesa exluída com sucesso!');
-          }
-        });
-    }
-    else {
+      CategoriasService.deleteById(id).then((result) => {
+        if (result instanceof Error) {
+          alert(result.message);
+        } else if (result === true) {
+          handleClear();
+          alert("Despesa exluída com sucesso!");
+        }
+      });
+    } else {
       handleClear();
-      alert('Está categoria não pode ser exluída!');
+      alert("Está categoria não pode ser exluída!");
     }
   };
 
@@ -104,68 +111,69 @@ export const Categorias: React.FC = () => {
       ...values,
       id: 0,
       idTipoCategoria: 0,
-      descricao: '',
+      descricao: "",
     });
-  }
+  };
 
   useEffect(() => {
     if (values.idTipoCategoria === 0) {
-      CategoriasService.getByIdUsuario(Number(localStorage.getItem('idUsuario')))
-        .then((result) => {
+      CategoriasService.getAll().then((result) => {
+        if (result instanceof Error) {
+          alert(result.message);
+        } else {
+          setRows(result);
+        }
+      });
+    } else {
+      CategoriasService.getByTipoCategoria(values.idTipoCategoria).then(
+        (result) => {
           if (result instanceof Error) {
             alert(result.message);
-          }
-          else {
+          } else {
             setRows(result);
           }
-        });
-    }
-    else {
-      CategoriasService.getByTipoCategoria(Number(localStorage.getItem('idUsuario')), values.idTipoCategoria)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
-          }
-          else {
-            setRows(result);
-          }
-        });
+        }
+      );
     }
 
     const handleResize = () => {
       setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     handleResize(); // Define a altura ao montar o componente
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
-
-
   }, [values.idTipoCategoria]);
 
   return (
     <LayoutMasterPage
-      titulo="Categorias" height={height}
-      barraDeFerramentas={(
+      titulo="Categorias"
+      height={height}
+      barraDeFerramentas={
         <BarraFerramentas
           isOpenTxtBusca={false}
-          btnVoltar onClickVoltar={() => navigate('/Categorias')}
-          btnNovo onClickNovo={() => handleClear()}
-          btnSalvar onClickSalvar={() => handleSave()} />
-      )}
+          btnVoltar
+          onClickVoltar={() => navigate("/Categorias")}
+          btnNovo
+          onClickNovo={() => handleClear()}
+          btnSalvar
+          onClickSalvar={() => handleSave()}
+        />
+      }
     >
       <Box
         gap={1}
         margin={1}
         padding={1}
-        paddingX={2}        
+        paddingX={2}
         display="flex"
-        flexDirection="column"        
+        flexDirection="column"
         alignItems="start"
-        component={Paper} >
+        component={Paper}
+      >
         <FormControl size="small" fullWidth>
           <InputLabel id="txtTipoCategoria">Tipo de Categoria</InputLabel>
           <Select
@@ -174,16 +182,21 @@ export const Categorias: React.FC = () => {
             value={values.idTipoCategoria.toString()}
             label="Tipo de Categoria"
             onChange={handleChangeTipoCategoria}
-            defaultValue='0'
+            defaultValue="0"
           >
             <MenuItem value={0}>Nenhum Tipo de Categoria Selecionada</MenuItem>
             <MenuItem value={1}>Despesas</MenuItem>
             <MenuItem value={2}>Receitas</MenuItem>
           </Select>
         </FormControl>
-        <TextField id="descricao" size="small" label="Descrição" inputProps={{ maxLength: 50 }} fullWidth
+        <TextField
+          id="descricao"
+          size="small"
+          label="Descrição"
+          inputProps={{ maxLength: 50 }}
+          fullWidth
           value={values.descricao}
-          onChange={handleChange('descricao')}
+          onChange={handleChange("descricao")}
         />
       </Box>
       <Box
@@ -202,34 +215,45 @@ export const Categorias: React.FC = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align='center'>Ações</TableCell>
+                <TableCell align="center">Ações</TableCell>
                 <TableCell>ID</TableCell>
                 <TableCell>Tipo</TableCell>
                 <TableCell>Descrição</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {
-                rows.map((row: { id: number; idTipoCategoria: number; descricao: any; }) => (
+              {rows.map(
+                (row: {
+                  id: number;
+                  idTipoCategoria: number;
+                  descricao: any;
+                }) => (
                   <TableRow key={row.id}>
-                    <TableCell align='center'>
-                      <IconButton id='delete' onClick={() => handleDelete(row.id, row.idTipoCategoria)}>
+                    <TableCell align="center">
+                      <IconButton
+                        id="delete"
+                        onClick={() =>
+                          handleDelete(row.id, row.idTipoCategoria)
+                        }
+                      >
                         <Delete />
                       </IconButton>
-                      <IconButton id='edit' onClick={() => handleEdit(row.id)}>
+                      <IconButton id="edit" onClick={() => handleEdit(row.id)}>
                         <Edit />
                       </IconButton>
                     </TableCell>
                     <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.idTipoCategoria === 1 ? 'Despesas' : 'Receitas'}</TableCell>
+                    <TableCell>
+                      {row.idTipoCategoria === 1 ? "Despesas" : "Receitas"}
+                    </TableCell>
                     <TableCell>{row.descricao}</TableCell>
                   </TableRow>
-                ))
-              }
+                )
+              )}
             </TableBody>
           </Table>
         </TableContainer>
       </Box>
     </LayoutMasterPage>
   );
-}
+};
