@@ -9,15 +9,14 @@ export interface ImagemPerfilUsuarioVM {
   idUsuario: number;
 }
 
-const url = '/ImagemPerfilUsuario';
-const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-const headers = {
-  Authorization: `Bearer ${accessToken}`,
-  'Content-Type': 'multipart/form-data',
-};
-
 const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | any> => {
   try {
+    const url = '/ImagemPerfilUsuario';
+    const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
+    };
     const { data } = await Api.get(url, { headers });
     if (data.message === true) {
       return data.imagemPerfilUsuario;
@@ -32,6 +31,14 @@ const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioV
 
 const createImagemPerfilUsuario = async (file: File): Promise<any> => {
   try {
+    const url = '/ImagemPerfilUsuario';
+    const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
+    };
+
+
     const formData = new FormData();
     formData.append('file', file);
     const { data } = await Api.post(url, formData, { headers });
@@ -47,6 +54,14 @@ const createImagemPerfilUsuario = async (file: File): Promise<any> => {
 
 const updateImagemPerfilUsuario = async (file: File): Promise<any> => {
   try {
+    const url = '/ImagemPerfilUsuario';
+    const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
+    };
+
+
     const formData = new FormData();
     formData.append('file', file);
     const { data } = await Api.put(url, formData, { headers });
@@ -64,6 +79,14 @@ const updateImagemPerfilUsuario = async (file: File): Promise<any> => {
 
 const deleteImagemPerfilUsuario = async (): Promise<any> => {
   try {
+    const url = '/ImagemPerfilUsuario';
+    const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
+    };
+
+
     const idUsuario = Number(localStorage.getItem('idUsuario'));
     const { data } = await Api.delete(`${url}/ ${idUsuario}`, { headers });
 
