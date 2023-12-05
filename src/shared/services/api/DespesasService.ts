@@ -1,9 +1,9 @@
-import  createApiInstance   from "../axios-config";
+import createApiInstance from "../axios-config";
 import { Dayjs } from "dayjs";
 
 const Api = createApiInstance();
 export interface IDespesaVM {
-    id:number;
+    id: number;
     idUsuario: number;
     idCategoria: number;
     data: Dayjs | null;
@@ -13,9 +13,9 @@ export interface IDespesaVM {
 }
 
 const getAll = async (): Promise<IDespesaVM[] | any | Error> => {
-    try {        
+    try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get('/despesa', {headers: { Authorization: `Bearer ${accessToken}` }});
+        const { data } = await Api.get('/despesa', { headers: { Authorization: `Bearer ${accessToken}` } });
         if (data) {
             return data;
         }
@@ -25,39 +25,21 @@ const getAll = async (): Promise<IDespesaVM[] | any | Error> => {
 };
 
 const getById = async (id: number): Promise<IDespesaVM | any | Error> => {
-    try {        
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get('/despesa/GetById/' + id, {headers: { Authorization: `Bearer ${accessToken}` }});
-        if (data) {
-            return data.despesa as IDespesaVM;
-        }        
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const getByIdUsuario = async (idUsuario: number): Promise<IDespesaVM[] | any | Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get('/despesa/GetByIdUsuario/' + idUsuario, {
-            headers: {
-                 Authorization: `Bearer ${accessToken}` 
-                }
-            });
+        const { data } = await Api.get('/despesa/GetById/' + id, { headers: { Authorization: `Bearer ${accessToken}` } });
         if (data) {
-            return data;
+            return data.despesa as IDespesaVM;
         }
-
-        return Error('Erro getByIdUsuario ao listar Categorias.');
     } catch (error) {
         console.log(error);
     }
 };
 
 const create = async (dados: Omit<IDespesaVM, 'id'>): Promise<any | Error> => {
-    try {        
+    try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.post<IDespesaVM>('/despesa', dados, {headers: { Authorization: `Bearer ${accessToken}` }} );
+        const { data } = await Api.post<IDespesaVM>('/despesa', dados, { headers: { Authorization: `Bearer ${accessToken}` } });
         if (data) {
             return data;
         }
@@ -66,11 +48,11 @@ const create = async (dados: Omit<IDespesaVM, 'id'>): Promise<any | Error> => {
     }
 };
 
-const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | any| Error> => {
+const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | any | Error> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        dados.id = id;        
-        const { data } = await Api.put<IDespesaVM>('/despesa', dados, {headers: { Authorization: `Bearer ${accessToken}` }});
+        dados.id = id;
+        const { data } = await Api.put<IDespesaVM>('/despesa', dados, { headers: { Authorization: `Bearer ${accessToken}` } });
         if (data) {
             return data
         }
@@ -78,12 +60,12 @@ const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | a
         console.log(error);
     }
 
- };
+};
 
-const deleteById = async (id: number): Promise<any | Error> => { 
-    try {        
+const deleteById = async (id: number): Promise<any | Error> => {
+    try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.delete('/despesa/'+ id, {headers: { Authorization: `Bearer ${accessToken}` }});
+        const { data } = await Api.delete('/despesa/' + id, { headers: { Authorization: `Bearer ${accessToken}` } });
         if (data.message === true) {
             return Boolean(data.message);
         }
@@ -96,7 +78,6 @@ const deleteById = async (id: number): Promise<any | Error> => {
 export const DespesasService = {
     getAll,
     getById,
-    getByIdUsuario,
     create,
     updateById,
     deleteById
