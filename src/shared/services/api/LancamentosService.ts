@@ -1,5 +1,5 @@
 import { Dayjs } from "dayjs";
-import  createApiInstance   from "../axios-config";
+import createApiInstance from "../axios-config";
 const Api = createApiInstance();
 export interface ILancamentoVM {
     id: number;
@@ -11,47 +11,45 @@ export interface ILancamentoVM {
     categoria: string;
     descricao: string;
     valor: number;
-} 
+}
 
-const getByMesAnoByIdUsuario = async (mesano: Dayjs, idUsuario:number): Promise<any> => {
+const getByMesAnoByIdUsuario = async (mesano: Dayjs, idUsuario: number): Promise<any> => {
     try {
         var mesAno = mesano.toISOString().substring(0, 7);
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const  { data } = await Api.get('/lancamento/' + mesAno + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        const { data } = await Api.get('/lancamento/' + mesAno + '/' + idUsuario, { headers: { Authorization: `Bearer ${accessToken}` } });
         if (data) {
             return data;
         }
-    } 
+    }
     catch (error) {
-         console.log(error);
+        console.log(error);
     }
 };
 
 const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     try {
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const idUsuario = Number(localStorage.getItem('idUsuario'));
-        const { data } = await Api.get('/lancamento/Saldo/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        const { data } = await Api.get('/Saldo', { headers: { Authorization: `Bearer ${accessToken}` } });
         return data;
-    } 
+    }
     catch (error) {
         console.log(error);
     }
 };
 
-const getDadosGraficoByAnoByIdUsuario = async (mesano: Dayjs | null, idUsuario:number): Promise<any | []> => {
+const getDadosGraficoByAnoByIdUsuario = async (mesano: Dayjs | null, idUsuario: number): Promise<any | []> => {
     try {
         var mesAno = mesano?.toISOString().substring(0, 7);
         const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const  { data } = await Api.get('/lancamento/GetDadosGraficoByAnoByIdUsuario/' + mesAno + '/' + idUsuario, {headers: { Authorization: `Bearer ${accessToken}` }});
+        const { data } = await Api.get(`Graficos/Bar/ ${mesAno}`, { headers: { Authorization: `Bearer ${accessToken}` } });
         if (data) {
             return data;
         }
-    } 
-    catch (error) {
-         console.log(error);
     }
-
+    catch (error) {
+        console.log(error);
+    }
 };
 
 export const LancamentosService = {

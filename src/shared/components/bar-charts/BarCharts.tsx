@@ -30,10 +30,7 @@ const optionsTop = {
     legend: {
       position: "top" as const,
     },
-    title: {
-      display: true,
-      text: "Lançamentos Ano 2023",
-    },
+    //title: { display: true, text: "Lançamentos Ano 2023",  },
   },
 };
 
@@ -45,10 +42,7 @@ const optionsRight = {
     legend: {
       position: "right" as const,
     },
-    title: {
-      display: true,
-      text: "Lançamentos Ano 2023",
-    },
+    //title: { display: true, text: "Lançamentos Ano 2023",  },
   },
 };
 
@@ -91,12 +85,14 @@ interface IBarChartsProps {
 export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
   const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const [barKey, setBarKey] = useState(0);
-  const [orientation] = useState<any>(window.matchMedia("(orientation: portrait)").matches);
+  const [orientation] = useState<any>(
+    window.matchMedia("(orientation: portrait)").matches
+  );
   const [dadosGrafico, setDadosGrafico] = useState<any>(dataNull); // Inicializa com os dados nulos
 
   useEffect(() => {
     updateDadosGrafico();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valorAno, smDown]);
 
   const updateDadosGrafico = () => {
@@ -113,7 +109,6 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
       }
     };
     fetchData();
-
   };
 
   return (
@@ -121,19 +116,39 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
       {(() => {
         if (orientation && smDown) {
           return (
-            <Bar key={barKey} height={height} options={optionsRight} data={dadosGrafico} />
+            <Bar
+              key={barKey}
+              height={height}
+              options={optionsRight}
+              data={dadosGrafico}
+            />
           );
         } else if (!orientation && smDown) {
           return (
-            <Bar key={barKey} height={height} options={optionsRight} data={dadosGrafico} />
+            <Bar
+              key={barKey}
+              height={height}
+              options={optionsRight}
+              data={dadosGrafico}
+            />
           );
         } else if (!orientation && !smDown) {
           return (
-            <Bar key={barKey} height={height} options={optionsTop} data={dadosGrafico} />
+            <Bar
+              key={barKey}
+              height={height}
+              options={optionsTop}
+              data={dadosGrafico}
+            />
           );
         } else {
           return (
-            <Bar key={barKey} height={height} options={optionsTop} data={dadosGrafico} />
+            <Bar
+              key={barKey}
+              height={height}
+              options={optionsTop}
+              data={dadosGrafico}
+            />
           );
         }
       })()}
