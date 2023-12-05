@@ -62,14 +62,14 @@ export const Categorias: React.FC = () => {
     if (dados.id === 0) {
       CategoriasService.create(dados).then((result) => {
         if (result.message === true) {
-          alert("Despesa cadastrada com sucesso!");
+          alert("Categotia cadastrada com sucesso!");
           handleClear();
         }
       });
     } else {
       CategoriasService.updateById(dados.id, dados).then((result) => {
         if (result.message === true) {
-          alert("Despesa atualizada com sucesso!");
+          alert("Categoria atualizada com sucesso!");
         }
       });
     }
