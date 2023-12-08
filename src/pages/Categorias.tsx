@@ -58,18 +58,36 @@ export const Categorias: React.FC = () => {
     };
 
     if (dados.id === 0) {
-      CategoriasService.create(dados).then((result) => {
-        if (result.message === true) {
-          alert("Categotia cadastrada com sucesso!");
-          handleClear();
-        }
-      });
+      CategoriasService.create(dados)
+        .then((result) => {
+          if (
+            result.message === true &&
+            result.categoria !== undefined &&
+            result.categoria !== null
+          ) {
+            alert("Categotia cadastrada com sucesso!");
+            handleClear();
+            initializeCategorias();
+          }
+        })
+        .catch((error) => {
+          alert("Erro ao cadastrar categoria!");
+        });
     } else {
-      CategoriasService.updateById(dados.id, dados).then((result) => {
-        if (result.message === true) {
-          alert("Categoria atualizada com sucesso!");
-        }
-      });
+      CategoriasService.updateById(dados.id, dados)
+        .then((result) => {
+          if (
+            result.message === true &&
+            result.categoria !== undefined &&
+            result.categoria !== null
+          ) {
+            initializeCategorias();
+            alert("Categoria atualizada com sucesso!");
+          }
+        })
+        .catch((error) => {
+          alert("Erro ao atualizar categoria!");
+        });
     }
   };
 
@@ -113,6 +131,21 @@ export const Categorias: React.FC = () => {
   };
 
   useEffect(() => {
+    initializeCategorias();
+
+    const handleResize = () => {
+      setHeight(document.body.clientHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [values.idTipoCategoria]);
+
+  const initializeCategorias = (): void => {
     if (values.idTipoCategoria === 0) {
       CategoriasService.getAll().then((result) => {
         if (result instanceof Error) {
@@ -132,18 +165,7 @@ export const Categorias: React.FC = () => {
         }
       );
     }
-
-    const handleResize = () => {
-      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Define a altura ao montar o componente
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [values.idTipoCategoria]);
+  };
 
   return (
     <LayoutMasterPage
@@ -181,7 +203,9 @@ export const Categorias: React.FC = () => {
             onChange={handleChangeTipoCategoria}
             defaultValue="0"
           >
-            <MenuItem value={0}>Nenhum Tipo de Categoria Selecionada</MenuItem>
+            <MenuItem disabled value={0}>
+              Nenhum Tipo de Categoria Selecionada
+            </MenuItem>
             <MenuItem value={1}>Despesas</MenuItem>
             <MenuItem value={2}>Receitas</MenuItem>
           </Select>

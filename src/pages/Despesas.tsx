@@ -72,30 +72,44 @@ export const Despesas: React.FC = () => {
       dataVencimento: values.dtVencimento,
     };
 
-    if (id === 0) {
-      DespesasService.create(dados).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else {
-          if (dados.id === 0 && result.message === true) {
-            alert("Despesa cadastrada com sucesso!");
-            handleClear();
+    if (id === 0 && dados.idCategoria !== 0) {
+      DespesasService.create(dados)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
           } else {
-            alert("Despesa atualizada com sucesso!");
-            navigate(`/lancamentos`);
+            if (
+              result.despesa !== undefined &&
+              result.despesa !== null &&
+              result.message === true
+            ) {
+              alert("Despesa cadastrada com sucesso!");
+              handleClear();
+            }
           }
-        }
-      });
-    } else {
-      DespesasService.updateById(Number(id), dados).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else {
-          if (true) {
-            navigate("/despesas");
+        })
+        .catch((error) => {
+          alert("Erro ao cadastrar despesa!");
+        });
+    } else if (dados.idCategoria !== 0) {
+      DespesasService.updateById(Number(id), dados)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+          } else {
+            if (
+              result.despesa !== undefined &&
+              result.despesa !== null &&
+              result.message === true
+            ) {
+              alert("Despesa atualizada com sucesso!");
+              navigate(`/lancamentos`);
+            }
           }
-        }
-      });
+        })
+        .catch((error) => {
+          alert("Erro ao atualizar despesa!");
+        });
     }
   };
 
@@ -142,11 +156,11 @@ export const Despesas: React.FC = () => {
     });
 
     const handleResize = () => {
-      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
+      setHeight(document.body.clientHeight);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Define a altura ao montar o componente
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -189,7 +203,7 @@ export const Despesas: React.FC = () => {
             label="Categoria"
             onChange={handleChangeCategoria}
           >
-            <MenuItem value={0}>
+            <MenuItem value={0} disabled>
               <em>Nenhuma Categoria Selecionada</em>
             </MenuItem>
             {Array.isArray(categorias) &&
@@ -245,6 +259,7 @@ export const Despesas: React.FC = () => {
             }
             label="Valor"
             type="number"
+            inputProps={{ mask: "R$ ###.##0,00" }}
           />
         </FormControl>
       </Box>

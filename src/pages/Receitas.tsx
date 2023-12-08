@@ -62,31 +62,45 @@ export const Receitas: React.FC = () => {
       valor: values.valor,
     };
 
-    if (id === 0) {
-      ReceitasService.create(dados).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else {
-          if (dados.id === 0 && result.message === true) {
-            alert("Recetita cadastrada com sucesso!");
-            handleClear();
+    if (id === 0 && dados.idCategoria !== 0) {
+      ReceitasService.create(dados)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
           } else {
-            alert("Recetita atualizada com sucesso!");
-            navigate(`/lancamentos`);
+            if (
+              result.receita !== undefined &&
+              result.receita !== null &&
+              result.message === true
+            ) {
+              alert("Recetita cadastrada com sucesso!");
+              handleClear();
+            }
           }
-        }
-      });
-    } else {
-      ReceitasService.updateById(Number(id), dados).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-          return false;
-        } else {
-          if (true) {
-            navigate("/Receitas");
+        })
+        .catch((error) => {
+          alert("Erro ao cadastrar receita!");
+        });
+    } else if (dados.idCategoria !== 0) {
+      ReceitasService.updateById(Number(id), dados)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+            return false;
+          } else {
+            if (
+              result.receita !== undefined &&
+              result.receita !== null &&
+              result.message === true
+            ) {
+              alert("Recetita atualizada com sucesso!");
+              navigate(`/lancamentos`);
+            }
           }
-        }
-      });
+        })
+        .catch((error) => {
+          alert("Erro ao atualizar receita!");
+        });
     }
   };
 
@@ -114,11 +128,11 @@ export const Receitas: React.FC = () => {
     });
 
     const handleResize = () => {
-      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
+      setHeight(document.body.clientHeight);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Define a altura ao montar o componente
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -175,7 +189,7 @@ export const Receitas: React.FC = () => {
             label="Categoria"
             onChange={handleChangeCategoria}
           >
-            <MenuItem value={0}>
+            <MenuItem value={0} disabled>
               <em>Nenhuma Categoria Selecionada</em>
             </MenuItem>
             {Array.isArray(categorias) &&
@@ -218,6 +232,7 @@ export const Receitas: React.FC = () => {
             }
             label="Valor"
             type="number"
+            inputProps={{ mask: "R$ ###.##0,00" }}
           />
         </FormControl>
       </Box>

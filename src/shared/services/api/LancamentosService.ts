@@ -3,9 +3,8 @@ import createApiInstance from "../axios-config";
 
 const Api = createApiInstance();
 
-const getByMesAnoByIdUsuario = async (mesano: Dayjs): Promise<any> => {
+const getByMesAnoByIdUsuario = async (mesAno: Dayjs): Promise<any> => {
     try {
-        var mesAno = mesano.toISOString().substring(0, 7);
         const { data } = await Api.get(`/lancamento/${mesAno}`);
         if (data) {
             return data;
@@ -26,9 +25,8 @@ const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     }
 };
 
-const getDadosGraficoByAnoByIdUsuario = async (mesano: Dayjs | null): Promise<any | []> => {
+const getDadosGraficoByAnoByIdUsuario = async (mesAno: Dayjs | null): Promise<any | []> => {
     try {
-        var mesAno = mesano?.toISOString().substring(0, 7);
         const { data } = await Api.get(`Graficos/Bar/ ${mesAno}`);
         if (data) {
             return data;
