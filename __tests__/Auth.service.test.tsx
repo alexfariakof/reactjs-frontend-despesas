@@ -1,5 +1,5 @@
 import { environment } from "../src/shared/environment";
-import { AuthService, ControleAcessoVM, LoginVM} from "../src/shared/services/api/auth/AuthService";
+import { AuthService } from "../src/shared/services/api/auth/AuthService";
 import MockAdapter from "axios-mock-adapter";
 import createApiInstance from "../src/shared/services/axios-config";
 
@@ -112,5 +112,4 @@ describe("AuthService", () => {
   test("Test Auth Services is Running", () => {
     expect(execTests).toEqual(execTests);
   });
-
 });

@@ -1,4 +1,5 @@
-import { CategoriasService, ICategoriaVM } from "../src/shared/services/api";
+import { ICategoriaVM } from "../src/shared/interfaces";
+import { CategoriasService } from "../src/shared/services/api";
 
 const execTests = false;
 
@@ -30,7 +31,6 @@ describe("CategoriasService", () => {
   const mockCategoria: ICategoriaVM = {
     id: 1,
     descricao: "Categoria 1",
-    idUsuario: 1,
     idTipoCategoria: 1,
   };
 
@@ -39,7 +39,6 @@ describe("CategoriasService", () => {
   });
 
   if (execTests) {
-    
     it("getAll should return data when the API call is successful", async () => {
       axiosMock.get.mockResolvedValue({ data: [mockCategoria] });
 
