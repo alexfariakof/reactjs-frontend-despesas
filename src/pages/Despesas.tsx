@@ -18,16 +18,11 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
-import {
-  CategoriasService,
-  DespesasService,
-  ICategoriaVM,
-  IDespesaVM,
-} from "../shared/services/api";
+import { CategoriasService, DespesasService } from "../shared/services/api";
 import { useDebounce } from "../shared/hooks";
+import { ICategoriaVM, IDespesaVM } from "../shared/interfaces";
 
 interface State {
-  idUsuario: number;
   idCategoria: string;
   data: Dayjs | null;
   descricao: string;
@@ -42,7 +37,6 @@ export const Despesas: React.FC = () => {
   const { id = 0 } = useParams<"id">();
   const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
   const [values, setValues] = useState<State>({
-    idUsuario: 0,
     valor: 0,
     descricao: "",
     idCategoria: "0",
@@ -71,7 +65,6 @@ export const Despesas: React.FC = () => {
     let dados: IDespesaVM;
     dados = {
       id: Number(id),
-      idUsuario: Number(localStorage.getItem("idUsuario")),
       idCategoria: Number(values.idCategoria),
       data: values.data,
       descricao: values.descricao,
@@ -111,7 +104,6 @@ export const Despesas: React.FC = () => {
       setCategorias(result);
     });
     setValues({
-      idUsuario: desp.idUsuario,
       idCategoria: desp.idCategoria.toString(),
       data: desp.data,
       descricao: desp.descricao,

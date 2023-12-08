@@ -1,23 +1,12 @@
 import { Dayjs } from "dayjs";
 import createApiInstance from "../axios-config";
-const Api = createApiInstance();
-export interface ILancamentoVM {
-    id: number;
-    idUsuario: number;
-    idDespesa: number;
-    idReceita: number;
-    data: string;
-    tipoCategoria: string;
-    categoria: string;
-    descricao: string;
-    valor: number;
-}
 
-const getByMesAnoByIdUsuario = async (mesano: Dayjs, idUsuario: number): Promise<any> => {
+const Api = createApiInstance();
+
+const getByMesAnoByIdUsuario = async (mesano: Dayjs): Promise<any> => {
     try {
         var mesAno = mesano.toISOString().substring(0, 7);
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get('/lancamento/' + mesAno + '/' + idUsuario, { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await Api.get(`/lancamento/${mesAno}`);
         if (data) {
             return data;
         }
@@ -29,8 +18,7 @@ const getByMesAnoByIdUsuario = async (mesano: Dayjs, idUsuario: number): Promise
 
 const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get('/Saldo', { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await Api.get('/Saldo');
         return data;
     }
     catch (error) {
@@ -38,11 +26,10 @@ const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     }
 };
 
-const getDadosGraficoByAnoByIdUsuario = async (mesano: Dayjs | null, idUsuario: number): Promise<any | []> => {
+const getDadosGraficoByAnoByIdUsuario = async (mesano: Dayjs | null): Promise<any | []> => {
     try {
         var mesAno = mesano?.toISOString().substring(0, 7);
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await Api.get(`Graficos/Bar/ ${mesAno}`, { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await Api.get(`Graficos/Bar/ ${mesAno}`);
         if (data) {
             return data;
         }

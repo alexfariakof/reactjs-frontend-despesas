@@ -18,14 +18,9 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
-import {
-  ReceitasService,
-  IReceitaVM,
-  CategoriasService,
-  ICategoriaVM,
-} from "../shared/services/api";
+import { ReceitasService, CategoriasService } from "../shared/services/api";
+import { ICategoriaVM, IReceitaVM } from "../shared/interfaces";
 interface State {
-  idUsuario: number;
   idCategoria: string;
   data: Dayjs | null;
   descricao: string;
@@ -38,7 +33,6 @@ export const Receitas: React.FC = () => {
   const { id = 0 } = useParams<"id">();
   const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
   const [values, setValues] = useState<State>({
-    idUsuario: 0,
     valor: 0,
     descricao: "",
     idCategoria: "0",
@@ -62,7 +56,6 @@ export const Receitas: React.FC = () => {
     let dados: IReceitaVM;
     dados = {
       id: Number(id),
-      idUsuario: Number(localStorage.getItem("idUsuario")),
       idCategoria: Number(values.idCategoria),
       data: values.data,
       descricao: values.descricao,
@@ -99,7 +92,6 @@ export const Receitas: React.FC = () => {
 
   const handleEdit = (recetita: IReceitaVM) => {
     setValues({
-      idUsuario: recetita.idUsuario,
       idCategoria: recetita.idCategoria.toString(),
       data: recetita.data,
       descricao: recetita.descricao,

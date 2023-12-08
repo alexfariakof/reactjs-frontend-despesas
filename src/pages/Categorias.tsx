@@ -21,12 +21,12 @@ import {
 } from "@mui/material";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
-import { CategoriasService, ICategoriaVM } from "../shared/services/api";
+import { CategoriasService } from "../shared/services/api";
 import { Delete, Edit } from "@mui/icons-material";
+import { ICategoriaVM } from "../shared/interfaces";
 interface State {
   id: number;
   descricao: string;
-  idUsuario: number;
   idTipoCategoria: number;
 }
 
@@ -37,7 +37,6 @@ export const Categorias: React.FC = () => {
   const [values, setValues] = useState<State>({
     id: 0,
     descricao: "",
-    idUsuario: 0,
     idTipoCategoria: 0,
   });
 
@@ -55,7 +54,6 @@ export const Categorias: React.FC = () => {
     dados = {
       id: values.id,
       descricao: values.descricao,
-      idUsuario: Number(localStorage.getItem("idUsuario")),
       idTipoCategoria: values.idTipoCategoria,
     };
 
@@ -81,7 +79,6 @@ export const Categorias: React.FC = () => {
         alert(result.message);
       } else {
         setValues({
-          idUsuario: result.idUsuario,
           id: result.id,
           idTipoCategoria: result.idTipoCategoria,
           descricao: result.descricao,

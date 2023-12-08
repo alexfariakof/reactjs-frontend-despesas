@@ -14,7 +14,6 @@ import { LayoutMasterPage } from "../shared/layouts";
 import { BarraFerramentas } from "../shared/components";
 import {
   LancamentosService,
-  ILancamentoVM,
   DespesasService,
   ReceitasService,
 } from "../shared/services/api";
@@ -23,6 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import dayjs, { Dayjs } from "dayjs";
+import { ILancamentoVM } from "../shared/interfaces";
 
 export const Lancamentos = () => {
   const navigate = useNavigate();
@@ -32,10 +32,7 @@ export const Lancamentos = () => {
   const [rows, setRows] = useState<Omit<ILancamentoVM, "id">[]>([]);
   const handleAtualizarLancamento = (valorMesAno: Dayjs) => {
     setLancamentoMesAno(valorMesAno);
-    LancamentosService.getByMesAnoByIdUsuario(
-      valorMesAno,
-      Number(localStorage.getItem("idUsuario"))
-    ).then((result) => {
+    LancamentosService.getByMesAnoByIdUsuario(valorMesAno).then((result) => {
       if (result instanceof Error) {
         alert(result.message);
       } else {
@@ -46,16 +43,15 @@ export const Lancamentos = () => {
 
   useEffect(() => {
     debounce(() =>
-      LancamentosService.getByMesAnoByIdUsuario(
-        lancamentoMesAno,
-        Number(localStorage.getItem("idUsuario"))
-      ).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else {
-          setRows(result.lancamentos);
+      LancamentosService.getByMesAnoByIdUsuario(lancamentoMesAno).then(
+        (result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+          } else {
+            setRows(result.lancamentos);
+          }
         }
-      })
+      )
     );
 
     const handleResize = () => {
