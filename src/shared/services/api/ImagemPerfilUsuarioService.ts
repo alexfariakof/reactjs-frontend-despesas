@@ -2,7 +2,10 @@ import { ImagemPerfilUsuarioVM } from "../../interfaces";
 import createApiInstance from "../axios-config";
 
 const Api = createApiInstance();
-const endPoint = '/ImagemPerfilUsuario';
+const endPoint = '/Usuario/ImagemPerfil';
+const headers = {
+  'Content-Type': 'multipart/form-data',
+};
 
 const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | any> => {
   try {
@@ -22,7 +25,7 @@ const createImagemPerfilUsuario = async (file: File): Promise<any> => {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    const { data } = await Api.post(endPoint);
+    const { data } = await Api.post(endPoint, formData, { headers: headers });
 
     if (data) {
       return data;
@@ -37,7 +40,7 @@ const updateImagemPerfilUsuario = async (file: File): Promise<any> => {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    const { data } = await Api.put(endPoint);
+    const { data } = await Api.put(endPoint, formData, { headers: headers });
 
     if (data) {
       return data;
