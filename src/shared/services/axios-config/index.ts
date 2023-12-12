@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { environment } from '../../environment';
-import { resposeInterceptor, errorInterceptor } from './interceptors';
+import { resposeInterceptor, errorInterceptor, requestInterceptor } from './interceptors';
 
 const createApiInstance = (): AxiosInstance => {
   const api = axios.create({
@@ -11,6 +11,10 @@ const createApiInstance = (): AxiosInstance => {
       return status >= 200 && status < 300; // default
     },
   });
+
+  api.interceptors.request.use(
+    (config) => requestInterceptor(config),
+  );
 
   api.interceptors.response.use(
     (response) => resposeInterceptor(response),

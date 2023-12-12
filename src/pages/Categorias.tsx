@@ -21,12 +21,12 @@ import {
 } from "@mui/material";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
-import { CategoriasService, ICategoriaVM } from "../shared/services/api";
+import { CategoriasService } from "../shared/services/api";
 import { Delete, Edit } from "@mui/icons-material";
+import { ICategoriaVM } from "../shared/interfaces";
 interface State {
   id: number;
   descricao: string;
-  idUsuario: number;
   idTipoCategoria: number;
 }
 
@@ -37,7 +37,6 @@ export const Categorias: React.FC = () => {
   const [values, setValues] = useState<State>({
     id: 0,
     descricao: "",
-    idUsuario: 0,
     idTipoCategoria: 0,
   });
 
@@ -55,23 +54,40 @@ export const Categorias: React.FC = () => {
     dados = {
       id: values.id,
       descricao: values.descricao,
-      idUsuario: Number(localStorage.getItem("idUsuario")),
       idTipoCategoria: values.idTipoCategoria,
     };
 
     if (dados.id === 0) {
-      CategoriasService.create(dados).then((result) => {
-        if (result.message === true) {
-          alert("Categotia cadastrada com sucesso!");
-          handleClear();
-        }
-      });
+      CategoriasService.create(dados)
+        .then((result) => {
+          if (
+            result.message === true &&
+            result.categoria !== undefined &&
+            result.categoria !== null
+          ) {
+            alert("Categotia cadastrada com sucesso!");
+            handleClear();
+            initializeCategorias();
+          }
+        })
+        .catch((error) => {
+          alert("Erro ao cadastrar categoria!");
+        });
     } else {
-      CategoriasService.updateById(dados.id, dados).then((result) => {
-        if (result.message === true) {
-          alert("Categoria atualizada com sucesso!");
-        }
-      });
+      CategoriasService.updateById(dados.id, dados)
+        .then((result) => {
+          if (
+            result.message === true &&
+            result.categoria !== undefined &&
+            result.categoria !== null
+          ) {
+            initializeCategorias();
+            alert("Categoria atualizada com sucesso!");
+          }
+        })
+        .catch((error) => {
+          alert("Erro ao atualizar categoria!");
+        });
     }
   };
 
@@ -81,7 +97,6 @@ export const Categorias: React.FC = () => {
         alert(result.message);
       } else {
         setValues({
-          idUsuario: result.idUsuario,
           id: result.id,
           idTipoCategoria: result.idTipoCategoria,
           descricao: result.descricao,
@@ -116,6 +131,21 @@ export const Categorias: React.FC = () => {
   };
 
   useEffect(() => {
+    initializeCategorias();
+
+    const handleResize = () => {
+      setHeight(document.body.clientHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
+  const initializeCategorias = (): void => {
     if (values.idTipoCategoria === 0) {
       CategoriasService.getAll().then((result) => {
         if (result instanceof Error) {
@@ -135,18 +165,7 @@ export const Categorias: React.FC = () => {
         }
       );
     }
-
-    const handleResize = () => {
-      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Define a altura ao montar o componente
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [values.idTipoCategoria]);
+  };
 
   return (
     <LayoutMasterPage
@@ -184,7 +203,9 @@ export const Categorias: React.FC = () => {
             onChange={handleChangeTipoCategoria}
             defaultValue="0"
           >
-            <MenuItem value={0}>Nenhum Tipo de Categoria Selecionada</MenuItem>
+            <MenuItem disabled value={0}>
+              Nenhum Tipo de Categoria Selecionada
+            </MenuItem>
             <MenuItem value={1}>Despesas</MenuItem>
             <MenuItem value={2}>Receitas</MenuItem>
           </Select>

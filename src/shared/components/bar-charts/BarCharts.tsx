@@ -98,8 +98,7 @@ export const BarCharts: React.FC<IBarChartsProps> = ({ valorAno, height }) => {
   const updateDadosGrafico = () => {
     const fetchData = async () => {
       const result = await LancamentosService.getDadosGraficoByAnoByIdUsuario(
-        valorAno,
-        Number(localStorage.getItem("idUsuario"))
+        valorAno
       );
       if (result) {
         // Atualiza os dados do gráfico com os dados obtidos

@@ -1,20 +1,20 @@
-import {AxiosError}  from 'axios';
+import { AxiosError } from 'axios';
 
-export const errorInterceptor = (error: AxiosError) => {    
+export const errorInterceptor = (error: AxiosError) => {
     //var data:any;
-    
-    if (error.response?.status === 400){ 
-        //console.log(error);        
-    } else  if (error.response?.status ===  401){
-        localStorage.clear();        
+
+    if (error.response?.status === 400) {
+        throw error;
+    } else if (error.response?.status === 401) {
+        localStorage.clear();
         // eslint-disable-next-line no-restricted-globals
         location.reload();
         console.log(error);
-    } else if (error.message === 'Network Error'){
-        localStorage.clear();        
+    } else if (error.message === 'Network Error') {
+        localStorage.clear();
         // eslint-disable-next-line no-restricted-globals
         location.reload();
-        console.log('Erro de conexão!');        
+        console.log('Erro de conexão!');
     }
     return Promise.reject(error);
 };

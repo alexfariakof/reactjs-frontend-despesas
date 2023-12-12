@@ -1,17 +1,11 @@
-import createapiInstance from "../axios-config";
-const api = createapiInstance();
+import { ICategoriaVM } from '../../interfaces';
+import createapiInstance from '../axios-config';
 
-export interface ICategoriaVM {
-    id: number;
-    descricao: string;
-    idUsuario: number;
-    idTipoCategoria: number;
-}
+const api = createapiInstance();
 
 const getAll = async (): Promise<ICategoriaVM[] | any | Error> => {
     try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.get('/Categoria', { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await api.get('/Categoria');
         if (data) {
             return data;
         }
@@ -22,8 +16,7 @@ const getAll = async (): Promise<ICategoriaVM[] | any | Error> => {
 
 const getById = async (idCategoria: number): Promise<ICategoriaVM | any | Error> => {
     try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.get('/Categoria/GetById/' + idCategoria, { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await api.get('/Categoria/GetById/' + idCategoria);
         if (data) {
             return data;
         }
@@ -34,8 +27,7 @@ const getById = async (idCategoria: number): Promise<ICategoriaVM | any | Error>
 
 const getByTipoCategoria = async (idTipoCategoria: number): Promise<ICategoriaVM[] | any | Error> => {
     try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.get(`/Categoria/GetByTipoCategoria/${idTipoCategoria}`, { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await api.get(`/Categoria/GetByTipoCategoria/${idTipoCategoria}`);
         if (data) {
             return data;
         }
@@ -48,8 +40,7 @@ const getByTipoCategoria = async (idTipoCategoria: number): Promise<ICategoriaVM
 
 const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => {
     try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.post<ICategoriaVM>('/Categoria', dados, { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await api.post<ICategoriaVM>('/Categoria', dados);
         if (data) {
             return data
         }
@@ -63,8 +54,7 @@ const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => 
 const updateById = async (id: number, dados: ICategoriaVM): Promise<any | any | Error> => {
     try {
         dados.id = id;
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.put<ICategoriaVM>('/Categoria', dados, { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await api.put<ICategoriaVM>('/Categoria', dados);
         if (data) {
             return data
         }
@@ -78,8 +68,7 @@ const updateById = async (id: number, dados: ICategoriaVM): Promise<any | any | 
 
 const deleteById = async (id: number): Promise<any | Error> => {
     try {
-        const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
-        const { data } = await api.delete('/Categoria/' + id, { headers: { Authorization: `Bearer ${accessToken}` } });
+        const { data } = await api.delete(`/Categoria/${id} `);
         if (data) {
             return Boolean(data.message)
         }
