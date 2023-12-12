@@ -143,7 +143,7 @@ export const Categorias: React.FC = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  });
 
   const initializeCategorias = (): void => {
     if (values.idTipoCategoria === 0) {
