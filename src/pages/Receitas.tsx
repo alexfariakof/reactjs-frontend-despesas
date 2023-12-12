@@ -18,14 +18,9 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
-import {
-  ReceitasService,
-  IReceitaVM,
-  CategoriasService,
-  ICategoriaVM,
-} from "../shared/services/api";
+import { ReceitasService, CategoriasService } from "../shared/services/api";
+import { ICategoriaVM, IReceitaVM } from "../shared/interfaces";
 interface State {
-  idUsuario: number;
   idCategoria: string;
   data: Dayjs | null;
   descricao: string;
@@ -38,7 +33,6 @@ export const Receitas: React.FC = () => {
   const { id = 0 } = useParams<"id">();
   const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
   const [values, setValues] = useState<State>({
-    idUsuario: 0,
     valor: 0,
     descricao: "",
     idCategoria: "0",
@@ -62,44 +56,56 @@ export const Receitas: React.FC = () => {
     let dados: IReceitaVM;
     dados = {
       id: Number(id),
-      idUsuario: Number(localStorage.getItem("idUsuario")),
       idCategoria: Number(values.idCategoria),
       data: values.data,
       descricao: values.descricao,
       valor: values.valor,
     };
 
-    if (id === 0) {
-      ReceitasService.create(dados).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else {
-          if (dados.id === 0 && result.message === true) {
-            alert("Recetita cadastrada com sucesso!");
-            handleClear();
+    if (id === 0 && dados.idCategoria !== 0) {
+      ReceitasService.create(dados)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
           } else {
-            alert("Recetita atualizada com sucesso!");
-            navigate(`/lancamentos`);
+            if (
+              result.receita !== undefined &&
+              result.receita !== null &&
+              result.message === true
+            ) {
+              alert("Recetita cadastrada com sucesso!");
+              handleClear();
+            }
           }
-        }
-      });
-    } else {
-      ReceitasService.updateById(Number(id), dados).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-          return false;
-        } else {
-          if (true) {
-            navigate("/Receitas");
+        })
+        .catch((error) => {
+          alert("Erro ao cadastrar receita!");
+        });
+    } else if (dados.idCategoria !== 0) {
+      ReceitasService.updateById(Number(id), dados)
+        .then((result) => {
+          if (result instanceof Error) {
+            alert(result.message);
+            return false;
+          } else {
+            if (
+              result.receita !== undefined &&
+              result.receita !== null &&
+              result.message === true
+            ) {
+              alert("Recetita atualizada com sucesso!");
+              navigate(`/lancamentos`);
+            }
           }
-        }
-      });
+        })
+        .catch((error) => {
+          alert("Erro ao atualizar receita!");
+        });
     }
   };
 
   const handleEdit = (recetita: IReceitaVM) => {
     setValues({
-      idUsuario: recetita.idUsuario,
       idCategoria: recetita.idCategoria.toString(),
       data: recetita.data,
       descricao: recetita.descricao,
@@ -122,11 +128,11 @@ export const Receitas: React.FC = () => {
     });
 
     const handleResize = () => {
-      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
+      setHeight(document.body.clientHeight);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Define a altura ao montar o componente
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -183,7 +189,7 @@ export const Receitas: React.FC = () => {
             label="Categoria"
             onChange={handleChangeCategoria}
           >
-            <MenuItem value={0}>
+            <MenuItem value={0} disabled>
               <em>Nenhuma Categoria Selecionada</em>
             </MenuItem>
             {Array.isArray(categorias) &&
@@ -226,6 +232,7 @@ export const Receitas: React.FC = () => {
             }
             label="Valor"
             type="number"
+            inputProps={{ mask: "R$ ###.##0,00" }}
           />
         </FormControl>
       </Box>

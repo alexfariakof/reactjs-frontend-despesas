@@ -1,9 +1,14 @@
-import {AxiosRequestHeaders}  from 'axios';
+import { AxiosRequestConfig } from "axios";
 
-export const requestInterceptor = (requestHeader: AxiosRequestHeaders) => {
-    requestHeader = {        
-            'Content-Type': 'application/json',
-            'crossdomain': 'true'        
+export const requestInterceptor = (config: AxiosRequestConfig) => {
+
+    const accessToken = localStorage.getItem('@dpApiAccess')?.replaceAll('"', '');
+
+    if (accessToken) {
+        config.headers = {
+            ...config.headers,
+            Authorization: `Bearer ${accessToken}`,
+        };
     }
-    return requestHeader;
+    return config;
 };
