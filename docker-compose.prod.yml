@@ -2,15 +2,14 @@ version: '3.4'
 
 services:
   despesas-frontend-react:
-    container_name: prod
+    container_name: prod-react
     image: alexfariakof/despesas-pessoais-react-img
     working_dir: /usr/share/nginx/html
     build:
       context: .
       dockerfile: ./Dockerfile-Production
     ports:
-      - 80:80
-      - 443:443
+      - 3000:3000
     restart: always
     environment:
       NODE_ENV: production
