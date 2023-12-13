@@ -19,6 +19,6 @@ RUN apk add --no-cache openssl
 COPY ./certificate/openssl.cnf /etc/nginx/certificate/openssl.cnf
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout /etc/nginx/certificate/ssl_certificate_key.pem -out /etc/nginx/certificate/ssl_certificate.pem  -config /etc/nginx/certificate/openssl.cnf
 
-EXPOSE 80
+EXPOSE 3000
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
