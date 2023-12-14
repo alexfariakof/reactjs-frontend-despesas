@@ -23,7 +23,8 @@ import { useDebounce } from "../shared/hooks";
 import { ICategoriaVM, IDespesaVM } from "../shared/interfaces";
 
 interface State {
-  idCategoria: string;
+  id: number;
+  categoria: ICategoriaVM | undefined | null;
   data: Dayjs | null;
   descricao: string;
   dtVencimento: Dayjs | null;
@@ -37,9 +38,10 @@ export const Despesas: React.FC = () => {
   const { id = 0 } = useParams<"id">();
   const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
   const [values, setValues] = useState<State>({
+    id: 0,
     valor: 0,
     descricao: "",
-    idCategoria: "0",
+    categoria: null,
     data: dayjs(),
     dtVencimento: null,
   });
@@ -50,7 +52,15 @@ export const Despesas: React.FC = () => {
     };
 
   const handleChangeCategoria = (event: SelectChangeEvent) => {
-    setValues({ ...values, idCategoria: event.target.value });
+    const categoriaId = event.target.value;
+    const categoriaSelecionada = categorias.find(
+      (categoria) => categoria.id === Number(categoriaId)
+    );
+
+    setValues((prevValues) => ({
+      ...prevValues,
+      categoria: categoriaSelecionada || null,
+    }));
   };
 
   const handleChangeData = (newValue: Dayjs | null) => {
@@ -65,14 +75,14 @@ export const Despesas: React.FC = () => {
     let dados: IDespesaVM;
     dados = {
       id: Number(id),
-      idCategoria: Number(values.idCategoria),
+      categoria: values.categoria as ICategoriaVM,
       data: values.data,
       descricao: values.descricao,
       valor: values.valor,
       dataVencimento: values.dtVencimento,
     };
 
-    if (id === 0 && dados.idCategoria !== 0) {
+    if (id === 0 && dados.categoria !== null) {
       DespesasService.create(dados)
         .then((result) => {
           if (result instanceof Error) {
@@ -91,7 +101,7 @@ export const Despesas: React.FC = () => {
         .catch((error) => {
           alert("Erro ao cadastrar despesa!");
         });
-    } else if (dados.idCategoria !== 0) {
+    } else if (dados.categoria !== null) {
       DespesasService.updateById(Number(id), dados)
         .then((result) => {
           if (result instanceof Error) {
@@ -114,22 +124,30 @@ export const Despesas: React.FC = () => {
   };
 
   const handleEdit = async (desp: IDespesaVM) => {
-    await CategoriasService.getByTipoCategoria(1).then((result: any) => {
-      setCategorias(result);
-    });
-    setValues({
-      idCategoria: desp.idCategoria.toString(),
-      data: desp.data,
-      descricao: desp.descricao,
-      dtVencimento: desp.dataVencimento,
-      valor: desp.valor,
-    });
+    await CategoriasService.getByTipoCategoria(1).then(
+      (result: ICategoriaVM[]) => {
+        setCategorias(result);
+        const categoriaDespesa = result.find(
+          (categoria) => categoria.id === desp.categoria.id
+        );
+
+        setValues({
+          id: desp.id,
+          categoria: categoriaDespesa,
+          data: desp.data,
+          descricao: desp.descricao,
+          dtVencimento: desp.dataVencimento,
+          valor: desp.valor,
+        });
+      }
+    );
   };
 
   const handleClear = () => {
     setValues({
       ...values,
-      idCategoria: "0",
+      id: 0,
+      categoria: null,
       data: dayjs("2014-08-18T21:11:54"),
       descricao: "",
       dtVencimento: dayjs("2014-08-18T21:11:54"),
@@ -199,7 +217,7 @@ export const Despesas: React.FC = () => {
           <Select
             labelId="txtCategoria"
             id="txtCategoria"
-            value={values.idCategoria}
+            value={values.categoria ? values.categoria?.id.toString() : "null"}
             label="Categoria"
             onChange={handleChangeCategoria}
           >
