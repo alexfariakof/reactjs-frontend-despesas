@@ -1,8 +1,8 @@
 import { Dayjs } from "dayjs";
-
+import { ICategoriaVM } from "./ICategoriaVM";
 export interface IReceitaVM {
   id: number;
-  idCategoria: Number;
+  categoria: ICategoriaVM;
   data: Dayjs | null;
   descricao: string;
   valor: number;
