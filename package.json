@@ -3,7 +3,7 @@
   "version": "1.1.4",
   "private": true,
   "scripts": {
-    "start": "set PORT=80 && react-scripts start",
+    "start": "react-scripts start",
     "start:prod": "set BABEL_ENV=production && set NODE_ENV=production && set PORT=80 && react-scripts start",
     "build": "react-scripts build",
     "test": "jest --no-cache --bail",
