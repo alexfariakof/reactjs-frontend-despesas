@@ -21,7 +21,8 @@ import { LayoutMasterPage } from "../shared/layouts";
 import { ReceitasService, CategoriasService } from "../shared/services/api";
 import { ICategoriaVM, IReceitaVM } from "../shared/interfaces";
 interface State {
-  idCategoria: string;
+  id: number;
+  categoria: ICategoriaVM | null;
   data: Dayjs | null;
   descricao: string;
   valor: number;
@@ -33,9 +34,10 @@ export const Receitas: React.FC = () => {
   const { id = 0 } = useParams<"id">();
   const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
   const [values, setValues] = useState<State>({
+    id: 0,
+    categoria: null,
     valor: 0,
     descricao: "",
-    idCategoria: "0",
     data: dayjs("2014-08-18T21:11:54"),
   });
 
@@ -45,7 +47,15 @@ export const Receitas: React.FC = () => {
     };
 
   const handleChangeCategoria = (event: SelectChangeEvent) => {
-    setValues({ ...values, idCategoria: event.target.value });
+    const categoriaId = event.target.value;
+    const categoriaSelecionada = categorias.find(
+      (categoria) => categoria.id === Number(categoriaId)
+    );
+
+    setValues((prevValues) => ({
+      ...prevValues,
+      categoria: categoriaSelecionada || null,
+    }));
   };
 
   const handleChangeData = (newValue: Dayjs | null) => {
@@ -56,13 +66,13 @@ export const Receitas: React.FC = () => {
     let dados: IReceitaVM;
     dados = {
       id: Number(id),
-      idCategoria: Number(values.idCategoria),
+      categoria: values.categoria as ICategoriaVM,
       data: values.data,
       descricao: values.descricao,
       valor: values.valor,
     };
 
-    if (id === 0 && dados.idCategoria !== 0) {
+    if (id === 0 && dados.categoria !== null) {
       ReceitasService.create(dados)
         .then((result) => {
           if (result instanceof Error) {
@@ -81,7 +91,7 @@ export const Receitas: React.FC = () => {
         .catch((error) => {
           alert("Erro ao cadastrar receita!");
         });
-    } else if (dados.idCategoria !== 0) {
+    } else if (dados.categoria !== null) {
       ReceitasService.updateById(Number(id), dados)
         .then((result) => {
           if (result instanceof Error) {
@@ -106,7 +116,8 @@ export const Receitas: React.FC = () => {
 
   const handleEdit = (recetita: IReceitaVM) => {
     setValues({
-      idCategoria: recetita.idCategoria.toString(),
+      id: recetita.id,
+      categoria: recetita.categoria,
       data: recetita.data,
       descricao: recetita.descricao,
       valor: recetita.valor,
@@ -116,7 +127,8 @@ export const Receitas: React.FC = () => {
   const handleClear = () => {
     setValues({
       ...values,
-      idCategoria: "0",
+      id: 0,
+      categoria: null,
       data: dayjs("2014-08-18T21:11:54"),
       descricao: "",
       valor: 0,
@@ -185,7 +197,7 @@ export const Receitas: React.FC = () => {
           <Select
             labelId="txtCategoria"
             id="txtCategoria"
-            value={values.idCategoria}
+            value={values.categoria ? values.categoria?.id.toString() : "null"}
             label="Categoria"
             onChange={handleChangeCategoria}
           >
