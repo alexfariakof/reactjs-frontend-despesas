@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Box,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { Box, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
@@ -20,11 +12,11 @@ import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService, DespesasService } from "../shared/services/api";
 import { useDebounce } from "../shared/hooks";
-import { ICategoriaVM, IDespesaVM } from "../shared/interfaces";
+import { Categoria, Despesa } from "../shared/models";
 
 interface State {
   id: number;
-  categoria: ICategoriaVM | undefined | null;
+  categoria: Categoria | undefined | null;
   data: Dayjs | null;
   descricao: string;
   dtVencimento: Dayjs | null;
@@ -36,7 +28,7 @@ export const Despesas: React.FC = () => {
   const { debounce } = useDebounce(true, true);
   const [height, setHeight] = useState(0);
   const { id = 0 } = useParams<"id">();
-  const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
+  const [categorias, setCategorias] = useState<Omit<Categoria, "">[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
     valor: 0,
@@ -72,10 +64,10 @@ export const Despesas: React.FC = () => {
   };
 
   const handleSave = () => {
-    let dados: IDespesaVM;
+    let dados: Despesa;
     dados = {
       id: Number(id),
-      categoria: values.categoria as ICategoriaVM,
+      categoria: values.categoria as Categoria,
       data: values.data,
       descricao: values.descricao,
       valor: values.valor,
@@ -123,9 +115,9 @@ export const Despesas: React.FC = () => {
     }
   };
 
-  const handleEdit = async (desp: IDespesaVM) => {
+  const handleEdit = async (desp: Despesa) => {
     await CategoriasService.getByTipoCategoria(1).then(
-      (result: ICategoriaVM[]) => {
+      (result: Categoria[]) => {
         setCategorias(result);
         const categoriaDespesa = result.find(
           (categoria) => categoria.id === desp.categoria.id

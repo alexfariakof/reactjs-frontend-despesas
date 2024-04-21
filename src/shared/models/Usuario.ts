@@ -1,4 +1,4 @@
-export interface IUsuarioVM {
+export interface Usuario {
   Id: number;
   Nome: string;
   Telefone: string;

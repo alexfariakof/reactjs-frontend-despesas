@@ -56,7 +56,6 @@ const ChangePassword: React.FC = () => {
                 .then((result) => {
                     if (result === true) {
                         alert("Senha alterada com sucesso");
-                        localStorage.clear();
                         logout();
                     }
                 });

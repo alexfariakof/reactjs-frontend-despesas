@@ -1,35 +1,21 @@
 import { useEffect, useState } from "react";
-import {
-  Box,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { LayoutMasterPage } from "../shared/layouts";
 import { BarraFerramentas } from "../shared/components";
-import {
-  LancamentosService,
-  DespesasService,
-  ReceitasService,
-} from "../shared/services/api";
+import { LancamentosService, DespesasService, ReceitasService } from "../shared/services/api";
 import { useDebounce } from "../shared/hooks";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import dayjs, { Dayjs } from "dayjs";
-import { ILancamentoVM } from "../shared/interfaces";
+import { Lancamento } from "../shared/models";
 
 export const Lancamentos = () => {
   const navigate = useNavigate();
   const { debounce } = useDebounce(true, false);
   const [height, setHeight] = useState(0);
   const [lancamentoMesAno, setLancamentoMesAno] = useState<Dayjs>(dayjs());
-  const [rows, setRows] = useState<Omit<ILancamentoVM, "id">[]>([]);
+  const [rows, setRows] = useState<Omit<Lancamento, "id">[]>([]);
   const handleAtualizarLancamento = (valorMesAno: Dayjs) => {
     setLancamentoMesAno(valorMesAno);
     LancamentosService.getByMesAnoByIdUsuario(valorMesAno).then((result) => {

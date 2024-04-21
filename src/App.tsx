@@ -4,6 +4,7 @@ import { Login, MenuLateral } from "./shared/components";
 import { AuthProvider, AppThemeProvider, DrawerProvider } from "./shared/contexts";
 
 export const App = () => {
+    
     return (
         <AuthProvider>
             <AppThemeProvider >

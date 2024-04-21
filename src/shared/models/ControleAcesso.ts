@@ -1,4 +1,4 @@
-export interface ControleAcessoVM {
+export interface ControleAcesso {
   Nome: string;
   SobreNome: string;
   Telefone: string;

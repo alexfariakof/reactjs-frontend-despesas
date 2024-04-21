@@ -1,9 +1,9 @@
-import { ICategoriaVM } from '../../interfaces';
+import { Categoria } from '../../models';
 import createapiInstance from '../axios-config';
 
 const api = createapiInstance();
 
-const getAll = async (): Promise<ICategoriaVM[] | any | Error> => {
+const getAll = async (): Promise<Categoria[] | any | Error> => {
     try {
         const { data } = await api.get('/Categoria');
         if (data) {
@@ -14,7 +14,7 @@ const getAll = async (): Promise<ICategoriaVM[] | any | Error> => {
     }
 };
 
-const getById = async (idCategoria: number): Promise<ICategoriaVM | any | Error> => {
+const getById = async (idCategoria: number): Promise<Categoria | any | Error> => {
     try {
         const { data } = await api.get('/Categoria/GetById/' + idCategoria);
         if (data) {
@@ -25,7 +25,7 @@ const getById = async (idCategoria: number): Promise<ICategoriaVM | any | Error>
     }
 };
 
-const getByTipoCategoria = async (idTipoCategoria: number): Promise<ICategoriaVM[] | any | Error> => {
+const getByTipoCategoria = async (idTipoCategoria: number): Promise<Categoria[] | any | Error> => {
     try {
         const { data } = await api.get(`/Categoria/GetByTipoCategoria/${idTipoCategoria}`);
         if (data) {
@@ -38,9 +38,9 @@ const getByTipoCategoria = async (idTipoCategoria: number): Promise<ICategoriaVM
     }
 };
 
-const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => {
+const create = async (dados: Omit<Categoria, 'id'>): Promise<any | Error> => {
     try {
-        const { data } = await api.post<ICategoriaVM>('/Categoria', dados);
+        const { data } = await api.post<Categoria>('/Categoria', dados);
         if (data) {
             return data
         }
@@ -51,10 +51,10 @@ const create = async (dados: Omit<ICategoriaVM, 'id'>): Promise<any | Error> => 
     }
 };
 
-const updateById = async (id: number, dados: ICategoriaVM): Promise<any | any | Error> => {
+const updateById = async (id: number, dados: Categoria): Promise<any | any | Error> => {
     try {
         dados.id = id;
-        const { data } = await api.put<ICategoriaVM>('/Categoria', dados);
+        const { data } = await api.put<Categoria>('/Categoria', dados);
         if (data) {
             return data
         }

@@ -1,4 +1,4 @@
-import { ImagemPerfilUsuarioVM } from "../../interfaces";
+import { ImagemPerfilUsuario } from "../../models";
 import createApiInstance from "../axios-config";
 
 const Api = createApiInstance();
@@ -7,7 +7,7 @@ const headers = {
   'Content-Type': 'multipart/form-data',
 };
 
-const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | any> => {
+const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuario | any> => {
   try {
     const { data } = await Api.get(endPoint);
     if (data.message === true) {

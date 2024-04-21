@@ -1,5 +1,7 @@
-import { ControleAcessoVM } from "../../../interfaces";
+import { environment } from "../../../environment";
+import { ControleAcesso, Auth } from "../../../models";
 import createApiInstance from "../../axios-config";
+import axios from 'axios';
 
 const Api = createApiInstance();
 
@@ -36,7 +38,7 @@ const recoveryPassword = async (email: string): Promise<any> => {
 
 }
 
-const createUsuario = async (dados: Omit<ControleAcessoVM, ''>): Promise<any | Error> => {
+const createUsuario = async (dados: Omit<ControleAcesso, ''>): Promise<any | Error> => {
     try {
         const { data } = await Api.post('/ControleAcesso', dados);
         if (data) {
@@ -65,9 +67,19 @@ const changePassword = async (password: string, confirmaSenha: string): Promise<
     }
 };
 
+const refreshToken = async (refreshToken: string): Promise<Auth | any>  => {
+    try {
+        const { data } = await axios.get(`${ environment.URL_BASE }/ControleAcesso/refresh/${refreshToken}`);
+        return data;
+    } catch (error) {
+        console.error('Erro ao atualizar o token:', error);
+    }
+};
+
 export const AuthService = {
     auth,
     recoveryPassword,
     createUsuario,
-    changePassword
+    changePassword,
+    refreshToken
 };

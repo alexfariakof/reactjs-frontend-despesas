@@ -1,17 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  InputLabel,
-  Paper,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Avatar, Box, Button, InputLabel, Paper, Typography, useTheme } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ImagemPerfilUsuarioService } from "../../services/api";
-import { ImagemPerfilUsuarioVM } from "../../interfaces";
+import { ImagemPerfilUsuario } from "../../models";
 interface ChangeAvatarProps {
   handleAvatarUploaded?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -23,7 +15,7 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({
   const [file, setFile] = useState<File | any>(null);
   const [fileLoaded, setFileLoaded] = useState<boolean>(false);
   const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<
-    ImagemPerfilUsuarioVM | any
+    ImagemPerfilUsuario | any
   >(null);
   const [refreshAvatar, setRefreshAvatar] = useState<boolean>(false);
 

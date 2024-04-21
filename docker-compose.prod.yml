@@ -7,7 +7,7 @@ services:
     working_dir: /usr/share/nginx/html
     build:
       context: .
-      dockerfile: ./Dockerfile-Production
+      dockerfile: ./Dockerfile.Production
     ports:
       - 3000:3000
     restart: always

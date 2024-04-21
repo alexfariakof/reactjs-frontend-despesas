@@ -1,29 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  SelectChangeEvent,
-  TextField,
-  IconButton,
-} from "@mui/material";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, IconButton } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService } from "../shared/services/api";
 import { Delete, Edit } from "@mui/icons-material";
-import { ICategoriaVM } from "../shared/interfaces";
+import { Categoria } from "../shared/models";
 interface State {
   id: number;
   descricao: string;
@@ -33,7 +16,7 @@ interface State {
 export const Categorias: React.FC = () => {
   const navigate = useNavigate();
   const [height, setHeight] = useState(0);
-  const [rows, setRows] = useState<ICategoriaVM[]>([]);
+  const [rows, setRows] = useState<Categoria[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
     descricao: "",
@@ -50,7 +33,7 @@ export const Categorias: React.FC = () => {
   };
 
   const handleSave = () => {
-    let dados: ICategoriaVM;
+    let dados: Categoria;
     dados = {
       id: values.id,
       descricao: values.descricao,
@@ -143,7 +126,7 @@ export const Categorias: React.FC = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  });
+  }, []);
 
   const initializeCategorias = (): void => {
     if (values.idTipoCategoria === 0) {
