@@ -53,8 +53,11 @@ const ChangePassword: React.FC = () => {
         else {
 
             AuthService.changePassword(valuesTC.password, valuesTC.cPassword)
-                .then((result) => {
-                    if (result === true) {
+                .then((response) => {
+                    if (response instanceof Error) {
+                        alert("Erro ao alterar Senha!");
+                    }          
+                    else {
                         alert("Senha alterada com sucesso");
                         logout();
                     }

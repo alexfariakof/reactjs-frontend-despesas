@@ -18,51 +18,47 @@ export const Lancamentos = () => {
   const [rows, setRows] = useState<Omit<Lancamento, "id">[]>([]);
   const handleAtualizarLancamento = (valorMesAno: Dayjs) => {
     setLancamentoMesAno(valorMesAno);
-    LancamentosService.getByMesAnoByIdUsuario(valorMesAno).then((result) => {
-      if (result instanceof Error) {
-        alert(result.message);
-      } else {
-        setRows(result.lancamentos);
-      }
-    });
+    updateLancamentos();
   };
 
   useEffect(() => {
-    debounce(() =>
-      LancamentosService.getByMesAnoByIdUsuario(lancamentoMesAno).then(
-        (result) => {
-          if (result instanceof Error) {
-            alert(result.message);
-          } else {
-            setRows(result.lancamentos);
-          }
-        }
-      )
-    );
+    debounce(() =>  updateLancamentos());
 
     const handleResize = () => {
-      setHeight(document.body.clientHeight); // Define a altura 0.8 da altura da janela
+      setHeight(document.body.clientHeight);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Define a altura ao montar o componente
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [debounce, lancamentoMesAno, rows]);
+  }, [rows]);
+
+  const updateLancamentos = ():void => {
+    LancamentosService.getByMesAnoByIdUsuario(lancamentoMesAno).then((response: Lancamento[]) => {
+      if (response instanceof Error) {
+          alert(response);
+        } else {
+          setRows(response);
+        }
+      }
+    );
+  }
 
   const handleDelete = (tipoCategoria: string, id: number) => {
     if (tipoCategoria === "Despesa") {
-      DespesasService.deleteById(id).then((result) => {
-        if (result === true) {
+      DespesasService.deleteById(id).then((response: boolean) => {
+        if (response) {
+          updateLancamentos();
           alert("Despesa exluída com sucesso!");
         }
       });
     } else {
-      ReceitasService.deleteById(id).then((result) => {
-        if (result === true) {
-          navigate("/lancamentos");
+      ReceitasService.deleteById(id).then((response: boolean) => {
+        if (response) {
+          updateLancamentos();
           alert("Receita exluídas com sucesso!");
         }
       });

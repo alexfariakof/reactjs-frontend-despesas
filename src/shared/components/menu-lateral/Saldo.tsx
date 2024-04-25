@@ -6,8 +6,8 @@ const Saldo: React.FC = () => {
   const [saldo, setSaldo] = useState<number>(0);
 
   useEffect(() => {
-    LancamentosService.getSaldoByIdUsuario().then((result: any) => {
-      if (result.message === true) setSaldo(result.saldo);
+    LancamentosService.getSaldoByIdUsuario().then((response: number) => {
+      if (response) setSaldo(response);
     });
   }, []);
 

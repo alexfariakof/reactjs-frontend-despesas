@@ -1,8 +1,8 @@
 export interface ControleAcesso {
-  Nome: string;
-  SobreNome: string;
-  Telefone: string;
-  Email: string;
-  Senha: string;
-  ConfirmaSenha: string;
+  nome: string;
+  sobreNome: string;
+  telefone: string;
+  email: string;
+  senha: string;
+  confirmaSenha: string;
 } 

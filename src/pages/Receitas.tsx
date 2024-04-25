@@ -66,15 +66,11 @@ export const Receitas: React.FC = () => {
 
     if (id === 0 && dados.categoria !== null) {
       ReceitasService.create(dados)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        .then((response: Receita | Error) => {
+          if (response instanceof Error) {
+            alert(response);
           } else {
-            if (
-              result.receita !== undefined &&
-              result.receita !== null &&
-              result.message === true
-            ) {
+            if (response !== undefined && response !== null && response) {
               alert("Recetita cadastrada com sucesso!");
               handleClear();
             }
@@ -85,16 +81,12 @@ export const Receitas: React.FC = () => {
         });
     } else if (dados.categoria !== null) {
       ReceitasService.updateById(Number(id), dados)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        .then((response: Receita | Error) => {
+          if (response instanceof Error) {
+            alert(response);
             return false;
           } else {
-            if (
-              result.receita !== undefined &&
-              result.receita !== null &&
-              result.message === true
-            ) {
+            if (response !== undefined && response !== null && response) {
               alert("Recetita atualizada com sucesso!");
               navigate(`/lancamentos`);
             }

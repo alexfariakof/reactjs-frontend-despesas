@@ -42,33 +42,33 @@ export const Categorias: React.FC = () => {
 
     if (dados.id === 0) {
       CategoriasService.create(dados)
-        .then((result) => {
+        .then((response : Categoria) => {
           if (
-            result.message === true &&
-            result.categoria !== undefined &&
-            result.categoria !== null
+            response &&
+            response !== undefined &&
+            response !== null
           ) {
             alert("Categotia cadastrada com sucesso!");
             handleClear();
             initializeCategorias();
           }
         })
-        .catch((error) => {
+        .catch(() => {
           alert("Erro ao cadastrar categoria!");
         });
     } else {
       CategoriasService.updateById(dados.id, dados)
-        .then((result) => {
+        .then((response: Categoria) => {
           if (
-            result.message === true &&
-            result.categoria !== undefined &&
-            result.categoria !== null
+            response &&
+            response !== undefined &&
+            response !== null
           ) {
             initializeCategorias();
             alert("Categoria atualizada com sucesso!");
           }
         })
-        .catch((error) => {
+        .catch(() => {
           alert("Erro ao atualizar categoria!");
         });
     }
@@ -90,12 +90,12 @@ export const Categorias: React.FC = () => {
 
   const handleDelete = (id: number, idTipoCategoria: number) => {
     if (idTipoCategoria !== 0) {
-      CategoriasService.deleteById(id).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else if (result === true) {
+      CategoriasService.deleteById(id).then((response: boolean | Error) => {
+        if (response instanceof Error) {
+          alert(response);
+        } else if (response) {
           handleClear();
-          alert("Despesa exluída com sucesso!");
+          alert("Categoria exluída com sucesso!");
         }
       });
     } else {
@@ -126,24 +126,24 @@ export const Categorias: React.FC = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [rows]);
 
   const initializeCategorias = (): void => {
     if (values.idTipoCategoria === 0) {
-      CategoriasService.getAll().then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
+      CategoriasService.getAll().then((response: Categoria[] | Error) => {
+        if (response instanceof Error) {
+          alert(response);
         } else {
-          setRows(result);
+          setRows(response);
         }
       });
     } else {
       CategoriasService.getByTipoCategoria(values.idTipoCategoria).then(
-        (result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        (response: Categoria[] | Error) => {
+          if (response instanceof Error) {
+            alert(response.message);
           } else {
-            setRows(result);
+            setRows(response);
           }
         }
       );

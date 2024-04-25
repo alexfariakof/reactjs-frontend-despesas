@@ -152,8 +152,11 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
             alert("Campo Senha e Confirma Senha são diferentes!!");
             return false;
         }
-         createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password, valuesPA.cPassword).then((data: any) => {
-            if (data === true) {
+        createUsuario(valuesPA.nome, valuesPA.sobreNome, valuesPA.telefone, valuesPA.email, valuesPA.password, valuesPA.cPassword).then((response: any | Error) => {
+            if (response instanceof Error) {
+                alert(response);
+            } 
+            else if (response) {
                 alert('Usuário cadastrado com sucesso!');
                 valuesPA.nome = '';
                 valuesPA.sobreNome = '';

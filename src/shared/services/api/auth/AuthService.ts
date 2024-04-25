@@ -18,7 +18,7 @@ const auth = async (email: string, password: string): Promise<any> => {
     } catch (error) {
 
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro services Auth.');
+        return error || 'Erro services Auth.';
     }
 };
 
@@ -33,23 +33,19 @@ const recoveryPassword = async (email: string): Promise<any> => {
     } catch (error) {
 
         console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao enviar email.');
+        return error || 'Erro ao enviar email.';
     }
 
 }
 
 const createUsuario = async (dados: Omit<ControleAcesso, ''>): Promise<any | Error> => {
     try {
-        const { data } = await Api.post('/ControleAcesso', dados);
-        if (data) {
-            return data.message;
-        }
+    const { data } = await axios.post<any>(`${ environment.URL_BASE }/ControleAcesso`, dados);
+        if (data) return data;   
 
-        return Error('Erro Authservices ao criar usuário.');
     } catch (error) {
 
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro Authservices ao criar usuário.');
+        return error
     }
 };
 
@@ -57,13 +53,9 @@ const changePassword = async (password: string, confirmaSenha: string): Promise<
     try {
         let dados = { senha: password, ConfirmaSenha: confirmaSenha };
         const { data } = await Api.post('/ControleAcesso/ChangePassword', dados);
-        if (data) {
-            return data.message;
-        }
-
+        if (data) return data;
     } catch (error) {
-        console.log(error);
-        return Error((error as { message: string }).message || 'Erro ao atualizar senha.');
+        return error;
     }
 };
 

@@ -20,7 +20,7 @@ const getById = async (id: Number): Promise<Receita | any | Error> => {
     try {
         const { data } = await Api.get(`${endPoint}/GetById/${id}`);
         if (data) {
-            return data.receita as Receita;
+            return data as Receita;
         }
     }
     catch (error) {
@@ -57,7 +57,7 @@ const updateById = async (id: number, dados: Receita): Promise<Receita | any | E
 const deleteById = async (id: number): Promise<any | Error> => {
     try {
         const { data } = await Api.delete(`${endPoint}/${id}`);
-        if (data.message) {
+        if (data) {
             return Boolean(data)
         }
     }

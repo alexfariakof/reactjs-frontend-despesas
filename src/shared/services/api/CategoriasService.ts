@@ -51,7 +51,7 @@ const create = async (dados: Omit<Categoria, 'id'>): Promise<any | Error> => {
     }
 };
 
-const updateById = async (id: number, dados: Categoria): Promise<any | any | Error> => {
+const updateById = async (id: number, dados: Categoria): Promise<any | Error> => {
     try {
         dados.id = id;
         const { data } = await api.put<Categoria>('/Categoria', dados);
@@ -70,7 +70,7 @@ const deleteById = async (id: number): Promise<any | Error> => {
     try {
         const { data } = await api.delete(`/Categoria/${id} `);
         if (data) {
-            return Boolean(data.message)
+            return Boolean(data)
         }
 
         return Error('Erro ao deletar registro de Categoria.');

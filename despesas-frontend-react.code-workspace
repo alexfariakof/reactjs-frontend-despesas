@@ -12,7 +12,7 @@
             "name": "Debugger In Chrome",
             "request": "launch",
             "type": "chrome",
-            "url": "http://localhost:80",
+            "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}",
             "address": "localhost",
             "port": 9229, // Porta de depuração 

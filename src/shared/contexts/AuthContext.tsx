@@ -16,7 +16,7 @@ interface IAuthContextData {
     email: string,
     senha: string,
     ConfirmaSenha: string
-  ) => Promise<string | void>;
+  ) => Promise<any | void | Error>;
 }
 
 interface IAuthProviderProps {  children: React.ReactNode; }
@@ -69,17 +69,17 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
     ) => {
       let data: ControleAcesso;
       data = {
-        Nome: nome,
-        SobreNome: sobreNome,
-        Telefone: telefone,
-        Email: email,
-        Senha: senha,
-        ConfirmaSenha: confirmaSenha,
+        nome: nome,
+        sobreNome: sobreNome,
+        telefone: telefone,
+        email: email,
+        senha: senha,
+        confirmaSenha: confirmaSenha,
       };
 
       const result = await AuthService.createUsuario(data);
       if (result instanceof Error) {
-        return result.message;
+        return result;
       }
       return result;
     },
