@@ -2,13 +2,7 @@ name: Build Test Deploy and Publish Production Project In AWS
 on:
   push:
     branches:
-      - release/*
-      
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - release/*
-
+      - main
 jobs:
   build_and_test:
     name: Build_And_Test
