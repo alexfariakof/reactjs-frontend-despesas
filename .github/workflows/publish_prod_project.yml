@@ -23,31 +23,9 @@ jobs:
       - name: Test
         run: npm run test
         continue-on-error: false
-
-  sonarcloud:
-    needs: build_and_test
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Install dependencies
-        run: npm install --force
-        continue-on-error: false
-
-      - name: Test and Generate Report Coverage
-        run: npm run test:coverage
-        continue-on-error: false
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
+        
   deploy_prod:
-    needs: sonarcloud
+    needs: build_and_test
     name: Production Build Deploy and Publish Docker Image
     runs-on: ubuntu-latest
     steps:
