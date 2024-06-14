@@ -1,4 +1,4 @@
-export interface ILancamentoVM {
+export interface Lancamento {
   id: number;
   idDespesa: number;
   idReceita: number;

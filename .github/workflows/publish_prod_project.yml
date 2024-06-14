@@ -33,16 +33,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Build Docker image
         env:
-           DOCKER_CLI_AGGREGATE: 1  
+          DOCKER_CLI_AGGREGATE: 1  
         run: |          
           docker-compose -f docker-compose.prod.yml build          
         continue-on-error: false
 
       - name: Push Docker image to Docker Hub
         env:
-           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
-           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-           DOCKER_CLI_AGGREGATE: 1  
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_CLI_AGGREGATE: 1  
         run: |
             docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}    
             docker push ${{ secrets.DOCKER_IMAGE_PROD }}
@@ -50,11 +50,11 @@ jobs:
 
       - name: Execute SSH Commands into EC2 
         env:
-           EC2_HOST: ${{ secrets.EC2_HOST }}
-           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
-           AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
-           DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
-           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+          AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+          DOCKER_LOGIN: ${{ secrets.DOCKER_LOGIN }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
         uses: appleboy/ssh-action@master
         with:

@@ -1,4 +1,4 @@
-import { ImagemPerfilUsuarioVM } from "../../interfaces";
+import { ImagemPerfilUsuario } from "../../models";
 import createApiInstance from "../axios-config";
 
 const Api = createApiInstance();
@@ -7,14 +7,11 @@ const headers = {
   'Content-Type': 'multipart/form-data',
 };
 
-const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuarioVM | any> => {
+const getImagemPerfilUsuarioByIdUsuario = async (): Promise<ImagemPerfilUsuario | any> => {
   try {
     const { data } = await Api.get(endPoint);
-    if (data.message === true) {
-      return data.imagemPerfilUsuario;
-    } else {
-      return null;
-    }
+    if (data)  return data;
+    else return null;
   }
   catch {
     return null;
@@ -25,14 +22,12 @@ const createImagemPerfilUsuario = async (file: File): Promise<any> => {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    const { data } = await Api.post(endPoint, formData, { headers: headers });
+    const { data } = await Api.post<ImagemPerfilUsuario>(endPoint, formData, { headers: headers });
+    if (data)  return data as ImagemPerfilUsuario;
 
-    if (data) {
-      return data;
-    }
   }
   catch (error) {
-    return { message: 'Erro ao incluir imagem de perfil do usuário!' };
+    return error;
   }
 };
 
@@ -40,31 +35,21 @@ const updateImagemPerfilUsuario = async (file: File): Promise<any> => {
   try {
     const formData = new FormData();
     formData.append('file', file);
-    const { data } = await Api.put(endPoint, formData, { headers: headers });
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error();
-    }
+    const { data } = await Api.put<ImagemPerfilUsuario>(endPoint, formData, { headers: headers });
+    if (data) return data as ImagemPerfilUsuario;
   }
-  catch {
-    return { message: 'Erro ao alterar imagem de perfil do usuário!' };
+  catch (error) {
+    return error;
   }
 };
 
 const deleteImagemPerfilUsuario = async (): Promise<any> => {
   try {
     const { data } = await Api.delete(endPoint);
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error();
-    }
+    if (data) return data;
   }
   catch (error) {
-    return { message: 'Erro ao deletar imagem de perfil do usuário!' };
+    return error;
   }
 };
 

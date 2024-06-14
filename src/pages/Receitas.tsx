@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Box,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { Box, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
@@ -19,10 +11,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
 import { ReceitasService, CategoriasService } from "../shared/services/api";
-import { ICategoriaVM, IReceitaVM } from "../shared/interfaces";
+import { Categoria, Receita } from "../shared/models";
 interface State {
   id: number;
-  categoria: ICategoriaVM | null;
+  categoria: Categoria | null;
   data: Dayjs | null;
   descricao: string;
   valor: number;
@@ -32,7 +24,7 @@ export const Receitas: React.FC = () => {
   const navigate = useNavigate();
   const [height, setHeight] = useState(0);
   const { id = 0 } = useParams<"id">();
-  const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
+  const [categorias, setCategorias] = useState<Omit<Categoria, "">[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
     categoria: null,
@@ -63,10 +55,10 @@ export const Receitas: React.FC = () => {
   };
 
   const handleSave = () => {
-    let dados: IReceitaVM;
+    let dados: Receita;
     dados = {
       id: Number(id),
-      categoria: values.categoria as ICategoriaVM,
+      categoria: values.categoria as Categoria,
       data: values.data,
       descricao: values.descricao,
       valor: values.valor,
@@ -74,15 +66,11 @@ export const Receitas: React.FC = () => {
 
     if (id === 0 && dados.categoria !== null) {
       ReceitasService.create(dados)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        .then((response: Receita | Error) => {
+          if (response instanceof Error) {
+            alert(response);
           } else {
-            if (
-              result.receita !== undefined &&
-              result.receita !== null &&
-              result.message === true
-            ) {
+            if (response !== undefined && response !== null && response) {
               alert("Recetita cadastrada com sucesso!");
               handleClear();
             }
@@ -93,16 +81,12 @@ export const Receitas: React.FC = () => {
         });
     } else if (dados.categoria !== null) {
       ReceitasService.updateById(Number(id), dados)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        .then((response: Receita | Error) => {
+          if (response instanceof Error) {
+            alert(response);
             return false;
           } else {
-            if (
-              result.receita !== undefined &&
-              result.receita !== null &&
-              result.message === true
-            ) {
+            if (response !== undefined && response !== null && response) {
               alert("Recetita atualizada com sucesso!");
               navigate(`/lancamentos`);
             }
@@ -114,7 +98,7 @@ export const Receitas: React.FC = () => {
     }
   };
 
-  const handleEdit = (recetita: IReceitaVM) => {
+  const handleEdit = (recetita: Receita) => {
     setValues({
       id: recetita.id,
       categoria: recetita.categoria,

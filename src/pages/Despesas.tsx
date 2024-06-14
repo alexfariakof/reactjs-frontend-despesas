@@ -1,14 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Box,
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { Box, FormControl, InputAdornment, InputLabel, OutlinedInput, Paper, TextField } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
@@ -20,11 +12,11 @@ import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService, DespesasService } from "../shared/services/api";
 import { useDebounce } from "../shared/hooks";
-import { ICategoriaVM, IDespesaVM } from "../shared/interfaces";
+import { Categoria, Despesa } from "../shared/models";
 
 interface State {
   id: number;
-  categoria: ICategoriaVM | undefined | null;
+  categoria: Categoria | undefined | null;
   data: Dayjs | null;
   descricao: string;
   dtVencimento: Dayjs | null;
@@ -36,7 +28,7 @@ export const Despesas: React.FC = () => {
   const { debounce } = useDebounce(true, true);
   const [height, setHeight] = useState(0);
   const { id = 0 } = useParams<"id">();
-  const [categorias, setCategorias] = useState<Omit<ICategoriaVM, "">[]>([]);
+  const [categorias, setCategorias] = useState<Omit<Categoria, "">[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
     valor: 0,
@@ -72,10 +64,10 @@ export const Despesas: React.FC = () => {
   };
 
   const handleSave = () => {
-    let dados: IDespesaVM;
+    let dados: Despesa;
     dados = {
       id: Number(id),
-      categoria: values.categoria as ICategoriaVM,
+      categoria: values.categoria as Categoria,
       data: values.data,
       descricao: values.descricao,
       valor: values.valor,
@@ -84,15 +76,11 @@ export const Despesas: React.FC = () => {
 
     if (id === 0 && dados.categoria !== null) {
       DespesasService.create(dados)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        .then((response: Despesa) => {
+          if (response instanceof Error) {
+            alert(response);
           } else {
-            if (
-              result.despesa !== undefined &&
-              result.despesa !== null &&
-              result.message === true
-            ) {
+            if (response !== undefined && response !== null && response) {
               alert("Despesa cadastrada com sucesso!");
               handleClear();
             }
@@ -103,15 +91,11 @@ export const Despesas: React.FC = () => {
         });
     } else if (dados.categoria !== null) {
       DespesasService.updateById(Number(id), dados)
-        .then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        .then((response: Despesa) => {
+          if (response instanceof Error) {
+            alert(response);
           } else {
-            if (
-              result.despesa !== undefined &&
-              result.despesa !== null &&
-              result.message === true
-            ) {
+            if (response !== undefined && response !== null && response) {
               alert("Despesa atualizada com sucesso!");
               navigate(`/lancamentos`);
             }
@@ -123,17 +107,13 @@ export const Despesas: React.FC = () => {
     }
   };
 
-  const handleEdit = async (desp: IDespesaVM) => {
-    await CategoriasService.getByTipoCategoria(1).then(
-      (result: ICategoriaVM[]) => {
-        setCategorias(result);
-        const categoriaDespesa = result.find(
-          (categoria) => categoria.id === desp.categoria.id
-        );
-
+  
+  const handleEdit = async (desp: Despesa | any) => {
+    await CategoriasService.getByTipoCategoria(1).then((response: Categoria[]) => {
+        setCategorias(response);
         setValues({
           id: desp.id,
-          categoria: categoriaDespesa,
+          categoria: desp.categoria,
           data: desp.data,
           descricao: desp.descricao,
           dtVencimento: desp.dataVencimento,
@@ -158,17 +138,17 @@ export const Despesas: React.FC = () => {
   useEffect(() => {
     debounce(() => {
       if (id !== 0) {
-        DespesasService.getById(Number(id)).then((result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        DespesasService.getById(Number(id)).then((response: Despesa) => {
+          if (response instanceof Error) {
+            alert(response);
           } else {
-            handleEdit(result);
-            console.log(result.id);
+            handleEdit(response);
+            console.log(response.id);
           }
         });
       } else {
-        CategoriasService.getByTipoCategoria(1).then((result: any) => {
-          setCategorias(result);
+        CategoriasService.getByTipoCategoria(1).then((response: Categoria[]) => {
+          setCategorias(response);
         });
       }
     });

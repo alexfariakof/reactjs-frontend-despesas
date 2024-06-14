@@ -1,12 +1,6 @@
 import { useState, MouseEvent, ChangeEvent, useEffect } from "react";
 import { useAppThemeContext } from "../shared/contexts";
-import {
-  Box,
-  Typography,
-  Paper,
-  ToggleButtonGroup,
-  ToggleButton,
-} from "@mui/material";
+import { Box, Typography, Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { LayoutMasterPage } from "../shared/layouts";
 import ChangePassword from "../shared/components/Configuracoes/ChangePassword";
 import ChangeAvatar from "../shared/components/Configuracoes/ChangeAvatar";

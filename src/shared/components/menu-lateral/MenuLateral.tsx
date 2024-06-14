@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Avatar,
-  Divider,
-  Drawer,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  useTheme,
-} from "@mui/material";
+import { Avatar, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import HomeIcon from "@mui/icons-material/Home";
 import StarIcon from "@mui/icons-material/Star";
@@ -21,7 +12,7 @@ import { useAuthContext, useDrawerContext } from "../../contexts";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 import { ImagemPerfilUsuarioService } from "../../services/api/ImagemPerfilUsuarioService";
 import Saldo from "./Saldo";
-import { ImagemPerfilUsuarioVM } from "../../interfaces";
+import { ImagemPerfilUsuario } from "../../models";
 
 interface IListItemLinkProps {
   to: string;
@@ -78,7 +69,7 @@ export const MenuLateral: React.FC<React.PropsWithChildren> = ({
 }) => {
   const theme = useTheme();
   const [imagemPerfilUsuario, setImagemPerfilUsuario] =
-    useState<ImagemPerfilUsuarioVM | null>(null);
+    useState<ImagemPerfilUsuario | null>(null);
   const smDown = useMediaQuery(theme.breakpoints.down("sm"));
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext();
   const { logout } = useAuthContext();

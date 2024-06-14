@@ -1,14 +1,8 @@
-import {
-  createContext,
-  useCallback,
-  useState,
-  useContext,
-  useMemo,
-  useEffect,
-} from "react";
+import { createContext, useCallback, useState, useContext, useMemo, useEffect } from "react";
 import { AuthService } from "../services/api";
 import dayjs from "dayjs";
-import { ControleAcessoVM } from "../interfaces";
+import { ControleAcesso } from "../models";
+import { TokenStorageService }  from "../services/token-storage/token.storage.service"; 
 
 interface IAuthContextData {
   isAuthenticated: boolean;
@@ -22,48 +16,39 @@ interface IAuthContextData {
     email: string,
     senha: string,
     ConfirmaSenha: string
-  ) => Promise<string | void>;
+  ) => Promise<any | void | Error>;
 }
 
-interface IAuthProviderProps {
-  children: React.ReactNode;
-}
+interface IAuthProviderProps {  children: React.ReactNode; }
 
 const AuthContext = createContext({} as IAuthContextData);
+const tokenStorageService = new TokenStorageService(); 
 
 export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   const [accessToken, setAccessToken] = useState<string>();
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("@dpApiAccess");
-    try {
-      if (accessToken) {
-        setAccessToken(JSON.parse(accessToken));
-      } else {
-        setAccessToken(undefined);
-        localStorage.clear();
-      }
-    } catch {
-      setAccessToken(undefined);
-      localStorage.clear();
+    const accessToken = tokenStorageService.getToken();
+    if (accessToken) {
+      setAccessToken(accessToken);
     }
-  }, []);
+  }, [accessToken]);
 
   const handleLogin = useCallback(async (email: string, password: string) => {
     const result = await AuthService.auth(email, password);
     if (result.authenticated === true) {
-      localStorage.setItem("@dpApiAccess", JSON.stringify(result.accessToken));
-      localStorage.setItem("@expiration", result.expiration);
-      setAccessToken(result);
+      tokenStorageService.saveToken(result.accessToken);
+      tokenStorageService.saveRefreshToken(result.refreshToken);
+      tokenStorageService.saveUser(result);
+      setAccessToken(result.accessToken);
     } else {
       alert("Email ou Senha inválidos!");
     }
   }, []);
 
   const handleLogout = useCallback(() => {
-    localStorage.removeItem("@dpApiAccess");
     setAccessToken(undefined);
-    localStorage.clear();
+    tokenStorageService.signOut();
   }, []);
 
   const handleRecoveryPassword = useCallback(async (email: string) => {
@@ -82,19 +67,19 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
       senha: string,
       confirmaSenha: string
     ) => {
-      let data: ControleAcessoVM;
+      let data: ControleAcesso;
       data = {
-        Nome: nome,
-        SobreNome: sobreNome,
-        Telefone: telefone,
-        Email: email,
-        Senha: senha,
-        ConfirmaSenha: confirmaSenha,
+        nome: nome,
+        sobreNome: sobreNome,
+        telefone: telefone,
+        email: email,
+        senha: senha,
+        confirmaSenha: confirmaSenha,
       };
 
       const result = await AuthService.createUsuario(data);
       if (result instanceof Error) {
-        return result.message;
+        return result;
       }
       return result;
     },
@@ -102,16 +87,15 @@ export const AuthProvider: React.FC<IAuthProviderProps> = ({ children }) => {
   );
 
   const handleIsAuthenticated = useMemo(() => {
-    const expiration = dayjs(localStorage.getItem("@expiration"));
+    const expiration = dayjs(tokenStorageService.getUser().expiration);
     const dataAtual = dayjs();
     try {
       if (expiration <= dataAtual) {
-        localStorage.clear();
-        return false;
+        tokenStorageService.refreshToken();
       }
       return !!accessToken;
     } catch {
-      localStorage.clear();
+      tokenStorageService.signOut();
       return false;
     }
   }, [accessToken]);

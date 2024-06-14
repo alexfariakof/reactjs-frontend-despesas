@@ -1,29 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  SelectChangeEvent,
-  TextField,
-  IconButton,
-} from "@mui/material";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, TextField, IconButton } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { BarraFerramentas } from "../shared/components";
 import { LayoutMasterPage } from "../shared/layouts";
 import { CategoriasService } from "../shared/services/api";
 import { Delete, Edit } from "@mui/icons-material";
-import { ICategoriaVM } from "../shared/interfaces";
+import { Categoria } from "../shared/models";
 interface State {
   id: number;
   descricao: string;
@@ -33,7 +16,7 @@ interface State {
 export const Categorias: React.FC = () => {
   const navigate = useNavigate();
   const [height, setHeight] = useState(0);
-  const [rows, setRows] = useState<ICategoriaVM[]>([]);
+  const [rows, setRows] = useState<Categoria[]>([]);
   const [values, setValues] = useState<State>({
     id: 0,
     descricao: "",
@@ -50,7 +33,7 @@ export const Categorias: React.FC = () => {
   };
 
   const handleSave = () => {
-    let dados: ICategoriaVM;
+    let dados: Categoria;
     dados = {
       id: values.id,
       descricao: values.descricao,
@@ -59,33 +42,33 @@ export const Categorias: React.FC = () => {
 
     if (dados.id === 0) {
       CategoriasService.create(dados)
-        .then((result) => {
+        .then((response : Categoria) => {
           if (
-            result.message === true &&
-            result.categoria !== undefined &&
-            result.categoria !== null
+            response &&
+            response !== undefined &&
+            response !== null
           ) {
             alert("Categotia cadastrada com sucesso!");
             handleClear();
             initializeCategorias();
           }
         })
-        .catch((error) => {
+        .catch(() => {
           alert("Erro ao cadastrar categoria!");
         });
     } else {
       CategoriasService.updateById(dados.id, dados)
-        .then((result) => {
+        .then((response: Categoria) => {
           if (
-            result.message === true &&
-            result.categoria !== undefined &&
-            result.categoria !== null
+            response &&
+            response !== undefined &&
+            response !== null
           ) {
             initializeCategorias();
             alert("Categoria atualizada com sucesso!");
           }
         })
-        .catch((error) => {
+        .catch(() => {
           alert("Erro ao atualizar categoria!");
         });
     }
@@ -107,12 +90,12 @@ export const Categorias: React.FC = () => {
 
   const handleDelete = (id: number, idTipoCategoria: number) => {
     if (idTipoCategoria !== 0) {
-      CategoriasService.deleteById(id).then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
-        } else if (result === true) {
+      CategoriasService.deleteById(id).then((response: boolean | Error) => {
+        if (response instanceof Error) {
+          alert(response);
+        } else if (response) {
           handleClear();
-          alert("Despesa exluída com sucesso!");
+          alert("Categoria exluída com sucesso!");
         }
       });
     } else {
@@ -143,24 +126,24 @@ export const Categorias: React.FC = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  });
+  }, [rows]);
 
   const initializeCategorias = (): void => {
     if (values.idTipoCategoria === 0) {
-      CategoriasService.getAll().then((result) => {
-        if (result instanceof Error) {
-          alert(result.message);
+      CategoriasService.getAll().then((response: Categoria[] | Error) => {
+        if (response instanceof Error) {
+          alert(response);
         } else {
-          setRows(result);
+          setRows(response);
         }
       });
     } else {
       CategoriasService.getByTipoCategoria(values.idTipoCategoria).then(
-        (result) => {
-          if (result instanceof Error) {
-            alert(result.message);
+        (response: Categoria[] | Error) => {
+          if (response instanceof Error) {
+            alert(response.message);
           } else {
-            setRows(result);
+            setRows(response);
           }
         }
       );

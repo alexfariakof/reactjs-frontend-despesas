@@ -1,9 +1,9 @@
-import { IDespesaVM } from "../../interfaces";
+import { Despesa } from "../../models";
 import createApiInstance from "../axios-config";
 
 const Api = createApiInstance();
 
-const getAll = async (): Promise<IDespesaVM[] | any | Error> => {
+const getAll = async (): Promise<Despesa[] | any | Error> => {
     try {
         const { data } = await Api.get('/despesa');
         if (data) {
@@ -14,20 +14,20 @@ const getAll = async (): Promise<IDespesaVM[] | any | Error> => {
     }
 };
 
-const getById = async (id: number): Promise<IDespesaVM | any | Error> => {
+const getById = async (id: number): Promise<Despesa | any | Error> => {
     try {
         const { data } = await Api.get(`/despesa/GetById/${id}`);
         if (data) {
-            return data.despesa as IDespesaVM;
+            return data as Despesa;
         }
     } catch (error) {
         console.log(error);
     }
 };
 
-const create = async (dados: Omit<IDespesaVM, 'id'>): Promise<any | Error> => {
+const create = async (dados: Omit<Despesa, 'id'>): Promise<any | Error> => {
     try {
-        const { data } = await Api.post<IDespesaVM>('/despesa', dados);
+        const { data } = await Api.post<Despesa>('/despesa', dados);
         if (data) {
             return data;
         }
@@ -36,10 +36,10 @@ const create = async (dados: Omit<IDespesaVM, 'id'>): Promise<any | Error> => {
     }
 };
 
-const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | any | Error> => {
+const updateById = async (id: number, dados: Despesa): Promise<Despesa | any | Error> => {
     try {
         dados.id = id;
-        const { data } = await Api.put<IDespesaVM>('/despesa', dados);
+        const { data } = await Api.put<Despesa>('/despesa', dados);
         if (data) {
             return data
         }
@@ -52,8 +52,8 @@ const updateById = async (id: number, dados: IDespesaVM): Promise<IDespesaVM | a
 const deleteById = async (id: number): Promise<any | Error> => {
     try {
         const { data } = await Api.delete(`/despesa/${id} `);
-        if (data.message === true) {
-            return Boolean(data.message);
+        if (data) {
+            return Boolean(data);
         }
     } catch (error) {
         console.log(error);

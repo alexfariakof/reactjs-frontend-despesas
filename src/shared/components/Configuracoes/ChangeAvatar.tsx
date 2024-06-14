@@ -1,17 +1,9 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  InputLabel,
-  Paper,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Avatar, Box, Button, InputLabel, Paper, Typography, useTheme } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ImagemPerfilUsuarioService } from "../../services/api";
-import { ImagemPerfilUsuarioVM } from "../../interfaces";
+import { ImagemPerfilUsuario } from "../../models";
 interface ChangeAvatarProps {
   handleAvatarUploaded?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -22,9 +14,7 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({
   const theme = useTheme();
   const [file, setFile] = useState<File | any>(null);
   const [fileLoaded, setFileLoaded] = useState<boolean>(false);
-  const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<
-    ImagemPerfilUsuarioVM | any
-  >(null);
+  const [imagemPerfilUsuario, setImagemPerfilUsuario] = useState<ImagemPerfilUsuario | any>(null);
   const [refreshAvatar, setRefreshAvatar] = useState<boolean>(false);
 
   const handleAvatarUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,30 +37,30 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({
   const handleImagePerfil = () => {
     if (file !== null) {
       if (imagemPerfilUsuario === null) {
-        ImagemPerfilUsuarioService.createImagemPerfilUsuario(file).then(
-          (result) => {
-            if (result.message === true) {
+        ImagemPerfilUsuarioService.createImagemPerfilUsuario(file).then((response: ImagemPerfilUsuario | Error ) => {
+            if (response instanceof Error) {
+              alert("Errro ao incluir imagem de perfil do usuário.");
+            }
+            else {
               alert("Imagem de perfil usuário incluída com sucesso");
               setRefreshAvatar(!refreshAvatar);
               setFile(null);
               setFileLoaded(false);
-              setImagemPerfilUsuario(result.imagemPerfilUsuario);
-            } else {
-              alert(result.message);
+              setImagemPerfilUsuario(response);
             }
           }
         );
       } else {
         ImagemPerfilUsuarioService.updateImagemPerfilUsuario(file).then(
-          (result) => {
-            if (result.message === true) {
+          (response) => {
+            if (response) {
               alert("Imagem de perfil usuário alterada com sucesso");
               setRefreshAvatar(!refreshAvatar);
               setFile(null);
               setFileLoaded(false);
-              setImagemPerfilUsuario(result.imagemPerfilUsuario);
+              setImagemPerfilUsuario(response);
             } else {
-              alert(result.message);
+              alert(response);
             }
           }
         );
@@ -80,15 +70,15 @@ const ChangeAvatar: React.FC<ChangeAvatarProps> = ({
 
   const handleDeleteImagePerfil = async () => {
     await ImagemPerfilUsuarioService.deleteImagemPerfilUsuario().then(
-      (result) => {
-        if (result.message === true) {
+      (response) => {
+        if (response) {
           alert("Imagem de perfil usuário excluída com sucesso");
           setRefreshAvatar(!refreshAvatar);
           setFile(null);
           setFileLoaded(false);
           setImagemPerfilUsuario(null);
         } else {
-          alert(result.message);
+          alert(response);
         }
       }
     );

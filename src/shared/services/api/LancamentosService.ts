@@ -18,7 +18,7 @@ const getByMesAnoByIdUsuario = async (mesAno: Dayjs): Promise<any> => {
 const getSaldoByIdUsuario = async (): Promise<any | 0> => {
     try {
         const { data } = await Api.get('/Saldo');
-        return data;
+        return data.saldo;
     }
     catch (error) {
         console.log(error);

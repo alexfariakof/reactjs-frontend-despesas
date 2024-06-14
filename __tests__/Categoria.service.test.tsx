@@ -1,4 +1,4 @@
-import { ICategoriaVM } from "../src/shared/interfaces";
+import { ICategoria } from "../src/shared/interfaces";
 import { CategoriasService } from "../src/shared/services/api";
 
 const execTests = false;
@@ -28,7 +28,7 @@ jest.mock("../__mocks__/axios-config", () => ({
 }));
 
 describe("CategoriasService", () => {
-  const mockCategoria: ICategoriaVM = {
+  const mockCategoria: ICategoria = {
     id: 1,
     descricao: "Categoria 1",
     idTipoCategoria: 1,
