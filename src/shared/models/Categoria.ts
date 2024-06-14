@@ -1,5 +1,5 @@
 
-export interface ICategoriaVM {
+export interface Categoria {
   id: number;
   descricao: string;
   idTipoCategoria: number;

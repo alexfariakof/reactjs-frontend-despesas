@@ -2,15 +2,14 @@ version: '3.4'
 
 services:
   despesas-frontend-react:
-    container_name: dev
-    image: alexfariakof/despesas-pessoais-react-dev-img
+    container_name: local
+    image: alexfariakof/despesas-pessoais-react-local-img
     working_dir: /usr/share/nginx/html
     build:
       context: .
-      dockerfile: ./Dockerfile.Development
+      dockerfile: ./Dockerfile.Local
     ports:
-      - 3001:80
-      - 443:443
+      - 3000:3000
     restart: always
     environment:
       NODE_ENV: development

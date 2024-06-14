@@ -6,7 +6,7 @@ services:
     image: despesas-frontend-react-debug-img
     build:
       context: .
-      dockerfile: ./Dockerfile-Debug
+      dockerfile: ./Dockerfile.Debug
     environment:
       NODE_ENV: development
       NODE_OPTIONS: "--inspect=0.0.0.0:9229"

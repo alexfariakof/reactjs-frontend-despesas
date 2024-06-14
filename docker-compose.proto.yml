@@ -6,7 +6,7 @@ services:
     image: alexfariakof/despesas-pessoais-frontend-react-prototipo-img
     build:
       context: .
-      dockerfile: ./Dockerfile-Prototipo
+      dockerfile: ./Dockerfile.Prototipo
     environment:
       NODE_ENV: production
     ports:
