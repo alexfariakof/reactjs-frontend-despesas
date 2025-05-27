@@ -10,8 +10,13 @@ services:
       dockerfile: ./Dockerfile.Production
     ports:
       - 3000:3000
+      - 3001:3001
     restart: always
     environment:
       NODE_ENV: production
       DOMAINS: http://alexfariakof.com
       STAGE: production
+    volumes:
+        - ./certificate/ssl_certificate.crt:/etc/nginx/certificate/ssl_certificate.crt
+        - ./certificate/ssl_certificate.key:/etc/nginx/certificate/ssl_certificate.key
+ 

@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:22-slim
 ENV NODE_ENV=production
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "./"]

@@ -12,3 +12,6 @@ services:
     ports:
       - 3001:80
       - 443:443
+    volumes:
+        - ./certificate/ssl_certificate.crt:/etc/nginx/certificate/ssl_certificate.crt
+        - ./certificate/ssl_certificate.key:/etc/nginx/certificate/ssl_certificate.key

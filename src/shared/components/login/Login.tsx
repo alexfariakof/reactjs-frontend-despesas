@@ -217,7 +217,43 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
                         >
                             <GitHub  />
                         </Link>
-                    </section>
+                        {/* webtrust_ca */}
+                        <Link
+                            href="https://www.cpacanada.ca/webtrustseal?sealid=11508"
+                            target="_blank"
+                            underline="none"
+                            sx={{ display: 'inline-block' }} >
+                              <Box
+                                    component="img"
+                                    src="/assets/webtrust_ca.png"
+                                    alt="WebTrust para certificação de autoridades"
+                                    className="icon-img" />
+                        </Link>
+                        {/* webtrust_baseline */}
+                       <Link
+                            href="https://www.cpacanada.ca/webtrustseal?sealid=11509"
+                            target="_blank"
+                            underline="none"
+                            sx={{ display: 'inline-block'}} >
+                              <Box
+                                    component="img"
+                                    src="/assets/webtrust_baseline.png"
+                                    alt="WebTrust para certificação de autoridades - SSL básico"
+                                    className="icon-img" />
+                        </Link>
+                        {/* webtrust_ev */}
+                        <Link
+                            href="https://www.cpacanada.ca/webtrustseal?sealid=11510"
+                            target="_blank"
+                            underline="none"
+                            sx={{ display: 'inline-block' }} >
+                              <Box
+                                    component="img"
+                                    src="/assets/webtrust_ev.png"
+                                    alt="WebTrust para certificação de autoridades - EV SSL"
+                                    className="icon-img" />
+                        </Link>     
+                        </section>
                 </Box>
                 <Box
                 >

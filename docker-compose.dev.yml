@@ -16,3 +16,6 @@ services:
       NODE_ENV: development
       DOMAINS: http://alexfariakof.dev.com
       STAGE: development      
+    volumes:
+        - ./certificate/ssl_certificate.crt:/etc/nginx/certificate/ssl_certificate.crt
+        - ./certificate/ssl_certificate.key:/etc/nginx/certificate/ssl_certificate.key
